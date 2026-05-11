@@ -1,15 +1,17 @@
 ---
-import { site, navigation, whatsappLink } from '../config/site';
+import { navigation, whatsappLink } from '../config/site';
+import LogoMark from './LogoMark.astro';
+import Wordmark from './Wordmark.astro';
 ---
 
 <header class="site-header">
-  <div class="container-page flex items-center justify-between py-5">
-    <a href="/" class="brand" aria-label={site.name}>
-      <span class="brand-mark">A</span>
-      <span class="brand-name">{site.name}</span>
+  <div class="container-page header-row">
+    <a href="/" class="brand" aria-label="AtingeHUB — Home">
+      <LogoMark size={32} />
+      <Wordmark size="sm" />
     </a>
 
-    <nav class="hidden md:flex items-center gap-7 text-sm" aria-label="Principal">
+    <nav class="nav-desktop" aria-label="Principal">
       {navigation.map((item) => (
         <a href={item.href} class="nav-link">
           {item.label}
@@ -21,25 +23,25 @@ import { site, navigation, whatsappLink } from '../config/site';
       href={whatsappLink()}
       target="_blank"
       rel="noopener"
-      class="btn btn-whatsapp hidden md:inline-flex text-sm"
+      class="btn btn-primary nav-cta"
     >
-      WhatsApp
+      $ iniciar conversa
     </a>
 
     <button
       type="button"
-      class="md:hidden flex flex-col gap-1.5 p-2"
+      class="menu-toggle"
       aria-label="Abrir menu"
       data-menu-toggle
     >
-      <span class="block w-6 h-0.5 bg-current"></span>
-      <span class="block w-6 h-0.5 bg-current"></span>
-      <span class="block w-6 h-0.5 bg-current"></span>
+      <span></span>
+      <span></span>
+      <span></span>
     </button>
   </div>
 
   <div class="mobile-menu" data-mobile-menu hidden>
-    <div class="container-page py-8 flex flex-col gap-4">
+    <div class="container-page mobile-menu-inner">
       {navigation.map((item) => (
         <a href={item.href} class="mobile-nav-link">
           {item.label}
@@ -49,9 +51,9 @@ import { site, navigation, whatsappLink } from '../config/site';
         href={whatsappLink()}
         target="_blank"
         rel="noopener"
-        class="btn btn-whatsapp mt-4"
+        class="btn btn-primary mt-4"
       >
-        Falar no WhatsApp
+        $ iniciar conversa →
       </a>
     </div>
   </div>
@@ -62,55 +64,115 @@ import { site, navigation, whatsappLink } from '../config/site';
     position: sticky;
     top: 0;
     z-index: 50;
-    background: color-mix(in srgb, var(--color-paper) 90%, transparent);
-    backdrop-filter: blur(12px);
-    border-bottom: 1px solid var(--color-line);
+    background: color-mix(in srgb, var(--bg) 88%, transparent);
+    backdrop-filter: blur(14px);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .header-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 18px 32px;
+    gap: 16px;
   }
 
   .brand {
-    display: flex;
+    display: inline-flex;
     align-items: center;
-    gap: 0.625rem;
-    font-family: var(--font-display);
-    font-size: 1.25rem;
-    font-weight: 500;
-    color: var(--color-ink);
-    letter-spacing: -0.01em;
+    gap: 12px;
+    color: var(--text);
+    transition: opacity 0.2s;
   }
-  .brand:hover { color: var(--color-ink); }
+  .brand:hover {
+    opacity: 0.85;
+    color: var(--text);
+  }
 
-  .brand-mark {
-    width: 2rem;
-    height: 2rem;
-    border-radius: var(--radius-full);
-    background: var(--color-ink);
-    color: var(--color-paper);
-    display: grid;
-    place-items: center;
-    font-family: var(--font-display);
-    font-weight: 600;
-    font-size: 1.125rem;
-    font-style: italic;
+  .nav-desktop {
+    display: none;
+    align-items: center;
+    gap: 32px;
+    margin-left: auto;
+    margin-right: 24px;
+  }
+  @media (min-width: 920px) {
+    .nav-desktop {
+      display: flex;
+    }
   }
 
   .nav-link {
-    color: var(--color-ink-soft);
-    font-weight: 500;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--text-muted);
+    letter-spacing: 0.5px;
+    text-transform: lowercase;
     transition: color 0.15s;
   }
-  .nav-link:hover { color: var(--color-ink); }
+  .nav-link:hover {
+    color: var(--text);
+  }
+
+  .nav-cta {
+    display: none;
+  }
+  @media (min-width: 920px) {
+    .nav-cta {
+      display: inline-flex;
+    }
+  }
+
+  .menu-toggle {
+    display: inline-flex;
+    flex-direction: column;
+    gap: 5px;
+    padding: 10px;
+    background: transparent;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+  }
+  .menu-toggle span {
+    display: block;
+    width: 18px;
+    height: 1.5px;
+    background: var(--text);
+  }
+  @media (min-width: 920px) {
+    .menu-toggle {
+      display: none;
+    }
+  }
 
   .mobile-menu {
-    border-top: 1px solid var(--color-line);
-    background: var(--color-paper);
+    border-top: 1px solid var(--border);
+    background: var(--bg);
   }
-  .mobile-menu[hidden] { display: none; }
-
+  .mobile-menu[hidden] {
+    display: none;
+  }
+  .mobile-menu-inner {
+    padding: 32px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
   .mobile-nav-link {
     font-family: var(--font-display);
-    font-size: 1.5rem;
-    color: var(--color-ink);
-    padding: 0.5rem 0;
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--text);
+    padding: 8px 0;
+    letter-spacing: -0.02em;
+  }
+  .mobile-nav-link:hover {
+    color: var(--claude);
+  }
+
+  .mt-4 {
+    margin-top: 16px;
+    align-self: flex-start;
   }
 </style>
 

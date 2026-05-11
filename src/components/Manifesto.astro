@@ -1,38 +1,39 @@
 ---
-interface Props {
-  variant?: 'default' | 'compact';
-}
-const { variant = 'default' } = Astro.props;
-
 const pilares = [
   {
-    eyebrow: 'Sistema',
-    title: 'Sistema, não chatbot.',
-    body: 'Cada solução nasce de um problema concreto do seu negócio — não de um catálogo de IA pronto.',
+    eyebrow: '01 · Sistema',
+    title: 'Sistema, <em>não chatbot.</em>',
+    body: 'Cada solução nasce de um problema concreto do seu negócio — não de catálogo de IA pronto. O que entra na sua loja foi feito pra você, junto com você.',
+    glow: 'var(--claude-glow)',
   },
   {
-    eyebrow: 'Humano',
-    title: 'Relação primeiro.',
-    body: 'A IA é extensão de quem você é, nunca substituto. Quem conduz o relacionamento continua sendo você.',
+    eyebrow: '02 · Humano',
+    title: 'Relação <em>primeiro.</em>',
+    body: 'A IA é extensão de quem você é, nunca substituto. Quem conduz o relacionamento com seu cliente continua sendo você — a IA só remove fricção.',
+    glow: 'var(--cerebro-glow)',
   },
   {
-    eyebrow: 'Dono',
-    title: 'Você fica com tudo.',
-    body: 'Dados, código, infraestrutura. Stack aberta e self-hosted. Sem lock-in, sem dependência.',
+    eyebrow: '03 · Dono',
+    title: 'Você fica <em>com tudo.</em>',
+    body: 'Dados, código, infraestrutura. Stack 100% aberta ou self-hosted. Sem lock-in, sem dependência. Se um dia quiser tocar sozinho, consegue.',
+    glow: 'var(--cadencia-glow)',
   },
 ];
 ---
 
-<section class={`manifesto ${variant}`}>
+<section class="row manifesto">
   <div class="container-page">
-    {variant === 'default' && (
-      <p class="eyebrow">Manifesto</p>
-    )}
-    <div class={`grid gap-10 md:gap-14 ${variant === 'compact' ? 'md:grid-cols-3' : 'md:grid-cols-3'} mt-6`}>
+    <div class="row-header">
+      <span class="num">01</span>
+      <h2>Princípios não-negociáveis</h2>
+    </div>
+    <p class="sub">3 regras que sustentam toda decisão</p>
+
+    <div class="pilares">
       {pilares.map((p) => (
-        <div class="pilar">
+        <div class="glow-card pilar" style={`--glow: ${p.glow}`}>
           <p class="eyebrow">{p.eyebrow}</p>
-          <h3 class="pilar-title">{p.title}</h3>
+          <h3 class="pilar-title" set:html={p.title} />
           <p class="pilar-body">{p.body}</p>
         </div>
       ))}
@@ -42,20 +43,35 @@ const pilares = [
 
 <style>
   .manifesto {
-    padding: var(--space-24) 0;
+    padding-top: 80px;
   }
-  .manifesto.compact {
-    padding: var(--space-16) 0;
+
+  .pilares {
+    margin-top: 32px;
+    display: grid;
+    gap: 18px;
+    grid-template-columns: 1fr;
+  }
+  @media (min-width: 768px) {
+    .pilares {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  .pilar {
+    padding: 32px 28px;
+    min-height: 240px;
   }
 
   .pilar-title {
-    margin-top: 0.5rem;
-    font-size: 1.5rem;
+    margin-top: 14px;
+    font-size: 24px;
     line-height: 1.2;
   }
   .pilar-body {
-    margin-top: 0.625rem;
-    color: var(--color-ink-soft);
+    margin-top: 14px;
+    color: var(--text-muted);
+    font-size: 14.5px;
     line-height: 1.65;
   }
 </style>

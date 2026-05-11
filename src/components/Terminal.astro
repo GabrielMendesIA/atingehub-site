@@ -1,0 +1,86 @@
+---
+interface Line {
+  type?: 'comm' | 'prompt' | 'ok' | 'var' | 'plain';
+  prompt?: string;
+  text: string;
+  tail?: string;
+  tailType?: 'ok' | 'var' | 'comm';
+}
+
+interface Props {
+  lines: Line[];
+  cursor?: boolean;
+  size?: 'sm' | 'md';
+}
+
+const { lines, cursor = true, size = 'md' } = Astro.props;
+---
+
+<div class:list={['terminal', size === 'sm' ? 'terminal-sm' : '']}>
+  <div class="dots">
+    <span class="r"></span>
+    <span class="y"></span>
+    <span class="g"></span>
+  </div>
+  {lines.map((line) => (
+    <div class="line">
+      {line.prompt && <span class="prompt">{line.prompt}</span>}
+      {line.type === 'comm' && <span class="comm">{line.text}</span>}
+      {line.type === 'ok' && <span class="ok">{line.text}</span>}
+      {line.type === 'var' && <span class="var">{line.text}</span>}
+      {(line.type === undefined || line.type === 'plain') && <span>{line.text}</span>}
+      {line.tail && (
+        <span class:list={[line.tailType || 'plain']}>{` ${line.tail}`}</span>
+      )}
+    </div>
+  ))}
+  {cursor && (
+    <div class="line">
+      <span class="prompt">$</span> <span class="cursor">&nbsp;</span>
+    </div>
+  )}
+</div>
+
+<style>
+  .terminal {
+    background: rgba(0, 0, 0, 0.5);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 18px 20px;
+    font-family: var(--font-mono);
+    font-size: 13px;
+    line-height: 1.85;
+    color: var(--text-muted);
+  }
+  .terminal-sm {
+    padding: 12px 14px;
+    font-size: 10px;
+    line-height: 1.7;
+  }
+  .dots {
+    display: flex;
+    gap: 6px;
+    margin-bottom: 12px;
+  }
+  .terminal-sm .dots {
+    margin-bottom: 8px;
+  }
+  .dots span {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: #333;
+  }
+  .terminal-sm .dots span {
+    width: 7px;
+    height: 7px;
+  }
+  .dots span.r { background: #ff5f56; }
+  .dots span.y { background: #ffbd2e; }
+  .dots span.g { background: #27c93f; }
+  .line { display: block; }
+  .prompt { color: var(--claude); margin-right: 6px; }
+  .ok { color: var(--whatsapp); }
+  .var { color: var(--cerebro); }
+  .comm { color: var(--text-dim); }
+</style>

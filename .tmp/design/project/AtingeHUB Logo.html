@@ -1,0 +1,295 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8"/>
+<title>AtingeHUB — Logo</title>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500&family=Fraunces:wght@500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet"/>
+<style>
+  html,body { margin:0; padding:0; height:100%; overflow:hidden; background:#f0eee9; }
+  * { box-sizing: border-box; }
+</style>
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+</head>
+<body>
+<div id="root"></div>
+
+<script type="text/babel" src="design-canvas.jsx"></script>
+<script type="text/babel" src="logos.jsx"></script>
+<script type="text/babel" src="contexts.jsx"></script>
+
+<script type="text/babel">
+const TWEAKS = /*EDITMODE-BEGIN*/{
+  "selectedFamilyIndex": 0,
+  "selectedMarkIndex": 0
+}/*EDITMODE-END*/;
+
+// ─── Tweaks panel ─────────────────────────────────────────────
+function TweaksPanel({ state, setState, visible }) {
+  if (!visible) return null;
+  const family = FAMILIES[state.selectedFamilyIndex];
+  return (
+    <div style={{
+      position: 'fixed', right: 20, bottom: 20, zIndex: 1000,
+      background: '#0B0E14', color: '#F5F3EE',
+      padding: 18, borderRadius: 6, width: 300,
+      fontFamily: "'Space Grotesk', sans-serif",
+      boxShadow: '0 20px 60px rgba(0,0,0,0.3)',
+      border: '1px solid rgba(245,243,238,0.1)',
+    }}>
+      <div style={{ fontSize: 11, fontFamily: "'IBM Plex Mono', monospace", letterSpacing: 2, textTransform: 'uppercase', opacity: 0.5, marginBottom: 14 }}>
+        Tweaks — Contextos de uso
+      </div>
+      <div style={{ fontSize: 11, opacity: 0.6, marginBottom: 8 }}>Família</div>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 6, marginBottom: 14 }}>
+        {FAMILIES.map((f, i) => (
+          <button key={i}
+            onClick={() => setState({ selectedFamilyIndex: i, selectedMarkIndex: 0 })}
+            style={{
+              padding: '10px 6px',
+              background: state.selectedFamilyIndex === i ? f.accent : 'rgba(245,243,238,0.06)',
+              border: state.selectedFamilyIndex === i ? `1px solid ${f.accent}` : '1px solid rgba(245,243,238,0.1)',
+              borderRadius: 4, cursor: 'pointer', color: '#F5F3EE',
+              fontSize: 11, fontWeight: 600, fontFamily: "'Space Grotesk', sans-serif",
+            }}>{f.name}</button>
+        ))}
+      </div>
+      <div style={{ fontSize: 11, opacity: 0.6, marginBottom: 8 }}>Símbolo ({family.name})</div>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 6 }}>
+        {family.marks.map(({ Mark }, i) => (
+          <button key={i}
+            onClick={() => setState({ ...state, selectedMarkIndex: i })}
+            style={{
+              aspectRatio: '1',
+              background: state.selectedMarkIndex === i ? '#F5F3EE' : 'rgba(245,243,238,0.06)',
+              border: state.selectedMarkIndex === i ? '1px solid #F5F3EE' : '1px solid rgba(245,243,238,0.1)',
+              borderRadius: 4, cursor: 'pointer',
+              display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 4,
+            }}>
+            <Mark size={28} color={state.selectedMarkIndex === i ? '#0B0E14' : '#F5F3EE'} accent={family.accent}/>
+          </button>
+        ))}
+      </div>
+      <div style={{ marginTop: 10, fontSize: 10, fontFamily: "'IBM Plex Mono', monospace", opacity: 0.4, textAlign: 'center' }}>
+        {family.marks[state.selectedMarkIndex].name}
+      </div>
+    </div>
+  );
+}
+
+// ─── Family header card ──────────────────────────────────────
+function FamilyHeader({ family, index }) {
+  return (
+    <div style={{
+      width: 1160, padding: '28px 32px', marginLeft: 60,
+      background: ATINGE.ink, color: ATINGE.paper, borderRadius: 2,
+      display: 'flex', alignItems: 'center', gap: 28,
+      fontFamily: "'Space Grotesk', sans-serif",
+      borderLeft: `6px solid ${family.accent}`,
+    }}>
+      <div style={{
+        fontSize: 64, fontWeight: 700, fontFamily: family.wordmarkFamily,
+        color: family.accent, letterSpacing: -2, lineHeight: 1,
+        minWidth: 60,
+      }}>{family.key}</div>
+      <div style={{ flex: 1 }}>
+        <div style={{ fontSize: 11, fontFamily: "'IBM Plex Mono', monospace", letterSpacing: 2, textTransform: 'uppercase', opacity: 0.5, marginBottom: 4 }}>
+          Família {index + 1} de 3
+        </div>
+        <div style={{ fontSize: 28, fontWeight: 600, letterSpacing: -0.6, marginBottom: 4, fontFamily: family.wordmarkFamily }}>
+          {family.name}
+          <span style={{ marginLeft: 12, fontSize: 14, color: family.accent, fontWeight: 400, fontFamily: "'IBM Plex Mono', monospace", letterSpacing: 1 }}>· {family.subtitle}</span>
+        </div>
+        <div style={{ fontSize: 14, opacity: 0.75, lineHeight: 1.5, maxWidth: 720, textWrap: 'pretty' }}>
+          {family.description}
+        </div>
+      </div>
+      <div style={{ textAlign: 'right', minWidth: 180 }}>
+        <div style={{ fontSize: 10, fontFamily: "'IBM Plex Mono', monospace", letterSpacing: 2, textTransform: 'uppercase', opacity: 0.5, marginBottom: 8 }}>Acento</div>
+        <div style={{ width: 40, height: 40, background: family.accent, borderRadius: 3, marginLeft: 'auto', marginBottom: 6 }}/>
+        <div style={{ fontSize: 11, opacity: 0.7 }}>{family.accentName}</div>
+      </div>
+    </div>
+  );
+}
+
+// ─── A family's 4-mark grid + stacked + dark ──────────────────
+function FamilySection({ family }) {
+  return (
+    <div style={{ marginBottom: 80 }}>
+      <FamilyHeader family={family} index={FAMILIES.indexOf(family)}/>
+
+      <div style={{ height: 32 }}/>
+
+      {/* Lockup horizontal */}
+      <DCSection title="Lockup horizontal" subtitle={`Símbolo + wordmark em ${family.wordmarkFamily.split(',')[0].replace(/'/g,'')}`} gap={24}>
+        {family.marks.map(({ Mark, name }, i) => (
+          <DCArtboard key={i} label={name} width={360} height={180}>
+            <div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#fff' }}>
+              <Lockup family={family} Mark={Mark} size={52}/>
+            </div>
+          </DCArtboard>
+        ))}
+      </DCSection>
+
+      {/* Símbolo em grande + stacked + dark, side by side por marca */}
+      <DCSection title="Estudos por símbolo" subtitle="Escala grande · empilhado · inverso" gap={24}>
+        {family.marks.map(({ Mark, name }, i) => (
+          <DCArtboard key={i} label={name} width={520} height={260}>
+            <div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', background: '#fff' }}>
+              <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', borderRight: '1px dashed rgba(0,0,0,0.08)', height: '100%' }}>
+                <Mark size={110} color={ATINGE.ink} accent={family.accent}/>
+              </div>
+              <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', borderRight: '1px dashed rgba(0,0,0,0.08)', height: '100%' }}>
+                <Lockup family={family} Mark={Mark} size={44} stacked/>
+              </div>
+              <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', background: ATINGE.ink, height: '100%' }}>
+                <Lockup family={family} Mark={Mark} size={44} inkColor={ATINGE.paper} muteColor="rgba(245,243,238,0.55)" stacked/>
+              </div>
+            </div>
+          </DCArtboard>
+        ))}
+      </DCSection>
+    </div>
+  );
+}
+
+// ─── Main ─────────────────────────────────────────────────────
+function App() {
+  const [state, setState] = React.useState(TWEAKS);
+  const [tweaksVisible, setTweaksVisible] = React.useState(false);
+
+  React.useEffect(() => {
+    const onMsg = (e) => {
+      if (e.data?.type === '__activate_edit_mode') setTweaksVisible(true);
+      if (e.data?.type === '__deactivate_edit_mode') setTweaksVisible(false);
+    };
+    window.addEventListener('message', onMsg);
+    window.parent.postMessage({ type: '__edit_mode_available' }, '*');
+    return () => window.removeEventListener('message', onMsg);
+  }, []);
+
+  const updateState = (next) => {
+    setState(next);
+    window.parent.postMessage({ type: '__edit_mode_set_keys', edits: next }, '*');
+  };
+
+  const selFamily = FAMILIES[state.selectedFamilyIndex];
+  const selMark = selFamily.marks[state.selectedMarkIndex].Mark;
+
+  return (
+    <>
+      <DesignCanvas>
+        {/* ── Intro ────────────────────────────────────── */}
+        <div style={{ padding: '0 60px 56px', display: 'flex', gap: 40, alignItems: 'flex-start' }}>
+          <div style={{ maxWidth: 640 }}>
+            <div style={{ fontSize: 11, fontFamily: "'IBM Plex Mono', monospace", letterSpacing: 2, textTransform: 'uppercase', color: ATINGE.mute, marginBottom: 10 }}>
+              AtingeHUB · Exploração de identidade · rev 02
+            </div>
+            <div style={{ fontSize: 48, fontWeight: 600, letterSpacing: -1.4, color: ATINGE.ink, fontFamily: "'Space Grotesk', sans-serif", lineHeight: 1, marginBottom: 16 }}>
+              Três direções, doze símbolos.
+            </div>
+            <div style={{ fontSize: 16, color: ATINGE.mute, lineHeight: 1.55, fontFamily: "'Space Grotesk', sans-serif", textWrap: 'pretty' }}>
+              Em vez de 12 ideias soltas, organizei a exploração em <b style={{ color: ATINGE.ink }}>três famílias de personalidade</b> — cada uma com seu próprio tratamento tipográfico e cor de acento. Escolha primeiro a <b style={{ color: ATINGE.ink }}>direção</b> e depois o <b style={{ color: ATINGE.ink }}>símbolo</b> dentro dela. Abra <b style={{ color: ATINGE.ink }}>Tweaks</b> para ver qualquer combinação aplicada em cartão, app e site.
+            </div>
+          </div>
+          <div style={{
+            width: 420, padding: 24, background: '#fff', borderRadius: 2,
+            boxShadow: '0 1px 3px rgba(0,0,0,0.08), 0 4px 16px rgba(0,0,0,0.06)',
+            fontFamily: "'Space Grotesk', sans-serif",
+          }}>
+            <div style={{ fontSize: 11, fontFamily: "'IBM Plex Mono', monospace", letterSpacing: 2, textTransform: 'uppercase', color: ATINGE.mute, marginBottom: 14 }}>
+              Como ler
+            </div>
+            {FAMILIES.map((f, i) => (
+              <div key={i} style={{ display: 'flex', gap: 14, alignItems: 'center', padding: '10px 0', borderTop: i ? '1px solid rgba(0,0,0,0.06)' : 'none' }}>
+                <div style={{ width: 36, height: 36, background: ATINGE.ink, borderRadius: 3, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                  <span style={{ color: f.accent, fontWeight: 700, fontSize: 18, fontFamily: f.wordmarkFamily }}>{f.key}</span>
+                </div>
+                <div style={{ flex: 1 }}>
+                  <div style={{ fontSize: 14, fontWeight: 600, color: ATINGE.ink, letterSpacing: -0.2 }}>{f.name}</div>
+                  <div style={{ fontSize: 12, color: ATINGE.mute }}>{f.subtitle}</div>
+                </div>
+                <div style={{ width: 14, height: 14, background: f.accent, borderRadius: 2 }}/>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* ── 3 family sections ───────────────────────── */}
+        {FAMILIES.map(f => <FamilySection key={f.key} family={f}/>)}
+
+        {/* ── Contextos de uso (combinação selecionada) ── */}
+        <div style={{ padding: '0 60px 36px', marginTop: 20 }}>
+          <div style={{ fontSize: 22, fontWeight: 600, color: 'rgba(40,30,20,0.85)', letterSpacing: -0.3, marginBottom: 4, fontFamily: "'Space Grotesk', sans-serif" }}>
+            Contextos de uso — combinação selecionada
+          </div>
+          <div style={{ fontSize: 14, color: 'rgba(60,50,40,0.6)', fontFamily: "'Space Grotesk', sans-serif" }}>
+            Aplicando <b style={{ color: ATINGE.ink }}>{selFamily.name} · {selFamily.marks[state.selectedMarkIndex].name}</b> em cartão, app, avatar, site e social.
+            <span style={{ fontFamily: "'IBM Plex Mono', monospace", fontSize: 11, marginLeft: 10, color: ATINGE.mute }}>↓ troque família e símbolo no painel Tweaks</span>
+          </div>
+        </div>
+
+        <div style={{ display: 'flex', gap: 40, padding: '0 60px 80px', alignItems: 'flex-start', width: 'max-content', flexWrap: 'nowrap' }}>
+          <DCArtboard label="Cartão · claro" width={400} height={260} style={{ background: 'transparent', boxShadow: 'none' }}>
+            <div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              <BusinessCard family={selFamily} Mark={selMark}/>
+            </div>
+          </DCArtboard>
+          <DCArtboard label="Cartão · escuro" width={400} height={260} style={{ background: 'transparent', boxShadow: 'none' }}>
+            <div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              <BusinessCard family={selFamily} Mark={selMark} dark/>
+            </div>
+          </DCArtboard>
+          <DCArtboard label="Ícone · iOS" width={200} height={200} style={{ background: 'transparent', boxShadow: 'none' }}>
+            <div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              <AppIcon family={selFamily} Mark={selMark}/>
+            </div>
+          </DCArtboard>
+          <DCArtboard label="Ícone · Android" width={200} height={200} style={{ background: 'transparent', boxShadow: 'none' }}>
+            <div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              <AppIcon family={selFamily} Mark={selMark} rounded={48}/>
+            </div>
+          </DCArtboard>
+          <DCArtboard label="Avatar" width={220} height={200} style={{ background: 'transparent', boxShadow: 'none' }}>
+            <div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 20 }}>
+              <AvatarCircle family={selFamily} Mark={selMark} dark/>
+              <AvatarCircle family={selFamily} Mark={selMark} dark={false}/>
+            </div>
+          </DCArtboard>
+          <DCArtboard label="Mobile · app" width={240} height={420} style={{ background: 'transparent', boxShadow: 'none' }}>
+            <div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              <MobileScreen family={selFamily} Mark={selMark}/>
+            </div>
+          </DCArtboard>
+          <DCArtboard label="Site · header" width={620} height={200} style={{ background: 'transparent', boxShadow: 'none' }}>
+            <div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              <WebsiteHeader family={selFamily} Mark={selMark}/>
+            </div>
+          </DCArtboard>
+          <DCArtboard label="Social post" width={260} height={280} style={{ background: 'transparent', boxShadow: 'none' }}>
+            <div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              <SocialPost family={selFamily} Mark={selMark}/>
+            </div>
+          </DCArtboard>
+          <DCArtboard label="Lockup dark" width={380} height={220} style={{ background: 'transparent', boxShadow: 'none' }}>
+            <div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              <DarkLockup family={selFamily} Mark={selMark}/>
+            </div>
+          </DCArtboard>
+        </div>
+      </DesignCanvas>
+
+      <TweaksPanel state={state} setState={updateState} visible={tweaksVisible}/>
+    </>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById('root')).render(<App/>);
+</script>
+</body>
+</html>

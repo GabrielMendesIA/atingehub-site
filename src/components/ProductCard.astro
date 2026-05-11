@@ -1,67 +1,107 @@
 ---
 interface Props {
   name: string;
+  slug: string;
   slogan: string;
   summary: string;
   family: 'operacional' | 'inteligencia' | 'estrategico';
   href: string;
+  accentColor?: string;
+  badgeSrc?: string;
 }
 
-const { name, slogan, summary, family, href } = Astro.props;
+const { name, slug, slogan, summary, family, href, accentColor, badgeSrc } = Astro.props;
 
 const familyLabel = {
   operacional: 'Operacional',
   inteligencia: 'Inteligência',
   estrategico: 'Estratégico',
 }[family];
+
+const color = accentColor || `var(--${slug})`;
+const glow = `var(--${slug}-glow)`;
+const badge = badgeSrc || `/brand/badges/${slug}.svg`;
 ---
 
-<a href={href} class="product-card">
-  <p class="eyebrow">{familyLabel}</p>
+<a href={href} class="product-card glow-card" style={`--glow: ${glow}`}>
+  <div class="card-top">
+    <img src={badge} alt="" class="badge" width="56" height="56" loading="lazy" />
+    <p class="eyebrow" style={`color: ${color}`}>{familyLabel}</p>
+  </div>
+
   <h3 class="product-name">{name}</h3>
   <p class="product-slogan">{slogan}</p>
   <p class="product-summary">{summary}</p>
-  <span class="product-link">Ver detalhes →</span>
+
+  <span class="product-link">
+    <span>Ver detalhes</span>
+    <span class="arrow">→</span>
+  </span>
 </a>
 
 <style>
   .product-card {
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
-    padding: 1.75rem 1.5rem;
-    background: var(--color-card);
-    border: 1px solid var(--color-line);
-    border-radius: var(--radius-lg);
-    color: var(--color-ink);
-    transition: transform 0.15s, border-color 0.15s, box-shadow 0.15s;
+    gap: 10px;
+    padding: 28px 26px;
+    min-height: 320px;
+    color: var(--text);
+    transition: transform 0.2s, border-color 0.25s;
   }
   .product-card:hover {
     transform: translateY(-2px);
-    border-color: var(--color-ink-soft);
-    box-shadow: var(--shadow-md);
-    color: var(--color-ink);
+    border-color: var(--border-strong);
+    color: var(--text);
   }
+
+  .card-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 6px;
+  }
+  .badge {
+    width: 56px;
+    height: 56px;
+    flex-shrink: 0;
+  }
+
   .product-name {
-    font-size: 1.625rem;
-    margin-top: 0.25rem;
+    font-size: 30px;
+    line-height: 1.05;
+    margin-top: 2px;
   }
   .product-slogan {
-    color: var(--color-ink-soft);
+    color: var(--text);
     font-weight: 500;
-    font-size: 0.95rem;
+    font-size: 14.5px;
+    margin-top: 4px;
+    line-height: 1.4;
   }
   .product-summary {
-    margin-top: 0.5rem;
-    color: var(--color-mute);
-    font-size: 0.9rem;
+    color: var(--text-muted);
+    font-size: 13.5px;
     line-height: 1.6;
+    margin-top: 6px;
     flex: 1;
   }
+
   .product-link {
-    margin-top: 1rem;
-    font-size: 0.85rem;
-    font-weight: 500;
-    color: var(--color-accent-strong);
+    margin-top: 14px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--claude);
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .product-card:hover .arrow {
+    transform: translateX(4px);
+  }
+  .arrow {
+    transition: transform 0.2s;
   }
 </style>

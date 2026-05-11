@@ -1,0 +1,391 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8"/>
+<title>AtingeHUB — All Black</title>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500&family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700;9..144,800;9..144,900&family=Archivo+Black&family=Bricolage+Grotesque:wght@400;600;700;800&family=Instrument+Serif:wght@400&display=swap" rel="stylesheet"/>
+<style>
+  html,body { margin:0; padding:0; height:100%; overflow:hidden; background:#0a0a0a; }
+  * { box-sizing: border-box; }
+</style>
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script type="text/babel" src="design-canvas.jsx"></script>
+</head>
+<body>
+<div id="root"></div>
+
+<script type="text/babel">
+// ═══════════════════════════════════════════════════════════════
+// PALETA ALL-BLACK — sem acento colorido. Só preto + cinzas + paper.
+// ───────────────────────────────────────────────────────────────
+//   INK   #0a0a0a   off-black puro
+//   COAL  #1f1f1f   carvão (quase preto, separa em fundo escuro)
+//   IRON  #4a4a4a   ferro (cinza médio)
+//   ASH   #8a8a8a   cinza claro
+//   FOG   #c8c8c8   névoa
+//   PAPER #f5f3ee   off-white quente
+//
+// Conceito: monocromático sofisticado. O "atingir" vem da composição
+// (cordilheira + bandeira) e da hierarquia de cinzas, não da cor.
+// ═══════════════════════════════════════════════════════════════
+const INK   = '#0a0a0a';
+const COAL  = '#1f1f1f';
+const IRON  = '#4a4a4a';
+const ASH   = '#8a8a8a';
+const FOG   = '#c8c8c8';
+const PAPER = '#f5f3ee';
+
+// Geometria base · slope consistente
+const BASE_Y = 64;
+const M1 = { cx: 50, half: 26, h: 48 }; // A do Auge
+const M2 = { cx: 74, half: 12, h: 26 }; // 2ª cinza
+const SLOPE = M2.half / M2.h;
+
+function tri(cx, half, h, baseY = BASE_Y) {
+  const x1 = cx - half, x2 = cx + half, apexY = baseY - h;
+  return `M${x1} ${baseY} L${cx} ${apexY} L${x2} ${baseY} Z`;
+}
+function farTri(cx, h) {
+  return tri(cx, +(h * SLOPE).toFixed(2), h);
+}
+
+// ═══════════════════════════════════════════════════════════════
+// 6 ESTILOS ALL-BLACK — cada um com tratamento próprio
+// ═══════════════════════════════════════════════════════════════
+
+// S1 · Monolito — 3 montanhas em escala de preto-cinza, bandeira preta
+function MarkS1({ size = 120, dark = false }) {
+  const main = dark ? PAPER : INK;
+  const mid  = dark ? ASH   : IRON;
+  const far  = dark ? IRON  : ASH;
+  const flag = dark ? PAPER : INK;
+  const bar  = dark ? INK   : PAPER;
+  return (
+    <svg width={size} height={size} viewBox="0 0 100 80" fill="none" shapeRendering="geometricPrecision">
+      <path d={farTri(28, 22)} fill={far}/>
+      <path d={tri(M2.cx, M2.half, M2.h)} fill={mid}/>
+      <path d={tri(M1.cx, M1.half, M1.h)} fill={main}/>
+      <line x1="50" y1="16" x2="50" y2="6" stroke={flag} strokeWidth="2"/>
+      <path d={`M50 7 L58 9 L50 12 Z`} fill={flag}/>
+      <line x1="38" y1="44" x2="62" y2="44" stroke={bar} strokeWidth="3"/>
+    </svg>
+  );
+}
+
+// S2 · Outline — montanhas em traço fino, sem preenchimento (luxo joalheria)
+function MarkS2({ size = 120, dark = false }) {
+  const stroke = dark ? PAPER : INK;
+  return (
+    <svg width={size} height={size} viewBox="0 0 100 80" fill="none" shapeRendering="geometricPrecision">
+      <path d={farTri(28, 22)} stroke={dark ? IRON : FOG} strokeWidth="0.9" fill="none"/>
+      <path d={tri(M2.cx, M2.half, M2.h)} stroke={dark ? ASH : ASH} strokeWidth="1.1" fill="none"/>
+      <path d={tri(M1.cx, M1.half, M1.h)} stroke={stroke} strokeWidth="1.6" fill="none"/>
+      <line x1="50" y1="16" x2="50" y2="6" stroke={stroke} strokeWidth="1.4"/>
+      <path d={`M50 7 L58 9 L50 12 Z`} fill={stroke}/>
+      <line x1="38" y1="44" x2="62" y2="44" stroke={stroke} strokeWidth="1.6"/>
+    </svg>
+  );
+}
+
+// S3 · Negativo — A em paper sobre placa preta arredondada
+function MarkS3({ size = 120, dark = false }) {
+  const plate = dark ? PAPER : INK;
+  const figs  = dark ? INK   : PAPER;
+  const figMid = dark ? COAL : IRON;
+  const figFar = dark ? IRON : ASH;
+  return (
+    <svg width={size} height={size} viewBox="0 0 100 80" fill="none" shapeRendering="geometricPrecision">
+      <rect x="2" y="2" width="96" height="76" rx="6" fill={plate}/>
+      <path d={farTri(28, 22)} fill={figFar}/>
+      <path d={tri(M2.cx, M2.half, M2.h)} fill={figMid}/>
+      <path d={tri(M1.cx, M1.half, M1.h)} fill={figs}/>
+      <line x1="50" y1="16" x2="50" y2="6" stroke={figs} strokeWidth="2"/>
+      <path d={`M50 7 L58 9 L50 12 Z`} fill={figs}/>
+      <line x1="38" y1="44" x2="62" y2="44" stroke={plate} strokeWidth="3"/>
+    </svg>
+  );
+}
+
+// S4 · Bandeira em ouro fosco — único acento (cinza-quente sutil)
+//      mas sem cor saturada · "all black com pontuação metálica"
+function MarkS4({ size = 120, dark = false }) {
+  const main = dark ? PAPER : INK;
+  const mid  = dark ? ASH   : IRON;
+  const far  = dark ? IRON  : ASH;
+  const flag = dark ? '#e8d9b8' : '#7d6f4e'; // ouro fosco / champagne
+  const bar  = dark ? INK   : PAPER;
+  return (
+    <svg width={size} height={size} viewBox="0 0 100 80" fill="none" shapeRendering="geometricPrecision">
+      <path d={farTri(28, 22)} fill={far}/>
+      <path d={tri(M2.cx, M2.half, M2.h)} fill={mid}/>
+      <path d={tri(M1.cx, M1.half, M1.h)} fill={main}/>
+      <line x1="50" y1="16" x2="50" y2="6" stroke={flag} strokeWidth="2"/>
+      <path d={`M50 7 L58 9 L50 12 Z`} fill={flag}/>
+      <line x1="38" y1="44" x2="62" y2="44" stroke={bar} strokeWidth="3"/>
+    </svg>
+  );
+}
+
+// S5 · Stencil — A principal cheio, secundárias só com hachuras
+function MarkS5({ size = 120, dark = false }) {
+  const main = dark ? PAPER : INK;
+  const stroke = dark ? ASH : IRON;
+  const flag = main;
+  const bar = dark ? INK : PAPER;
+  // hachura para 3ª e 2ª montanha
+  return (
+    <svg width={size} height={size} viewBox="0 0 100 80" fill="none" shapeRendering="geometricPrecision">
+      <defs>
+        <pattern id="hatch1" patternUnits="userSpaceOnUse" width="3" height="3" patternTransform="rotate(45)">
+          <line x1="0" y1="0" x2="0" y2="3" stroke={stroke} strokeWidth="0.6"/>
+        </pattern>
+        <pattern id="hatch2" patternUnits="userSpaceOnUse" width="2" height="2" patternTransform="rotate(45)">
+          <line x1="0" y1="0" x2="0" y2="2" stroke={stroke} strokeWidth="0.5"/>
+        </pattern>
+      </defs>
+      <path d={farTri(28, 22)} fill="url(#hatch1)" stroke={stroke} strokeWidth="0.6"/>
+      <path d={tri(M2.cx, M2.half, M2.h)} fill="url(#hatch2)" stroke={stroke} strokeWidth="0.7"/>
+      <path d={tri(M1.cx, M1.half, M1.h)} fill={main}/>
+      <line x1="50" y1="16" x2="50" y2="6" stroke={flag} strokeWidth="2"/>
+      <path d={`M50 7 L58 9 L50 12 Z`} fill={flag}/>
+      <line x1="38" y1="44" x2="62" y2="44" stroke={bar} strokeWidth="3"/>
+    </svg>
+  );
+}
+
+// S6 · Editorial — A vazado, cordilheira em preto sólido
+function MarkS6({ size = 120, dark = false }) {
+  const stroke = dark ? PAPER : INK;
+  const filled = dark ? PAPER : INK;
+  const flag = stroke;
+  return (
+    <svg width={size} height={size} viewBox="0 0 100 80" fill="none" shapeRendering="geometricPrecision">
+      <path d={farTri(28, 22)} fill={dark ? IRON : ASH}/>
+      <path d={tri(M2.cx, M2.half, M2.h)} fill={filled}/>
+      <path d={tri(M1.cx, M1.half, M1.h)} stroke={stroke} strokeWidth="2" fill="none"/>
+      <line x1="50" y1="16" x2="50" y2="6" stroke={flag} strokeWidth="2"/>
+      <path d={`M50 7 L58 9 L50 12 Z`} fill={flag}/>
+      <line x1="38" y1="44" x2="62" y2="44" stroke={stroke} strokeWidth="2"/>
+    </svg>
+  );
+}
+
+const STYLES = [
+  { id:'S1', name:'Monolito',     M:MarkS1, note:'tons graduados de preto · sólido e direto' },
+  { id:'S2', name:'Outline',      M:MarkS2, note:'só contorno · luxo joalheria · leveza' },
+  { id:'S3', name:'Plaque',       M:MarkS3, note:'placa preta · A em negativo · cápsula premium' },
+  { id:'S4', name:'Champagne',    M:MarkS4, note:'bandeira em ouro fosco · único acento metálico' },
+  { id:'S5', name:'Stencil',      M:MarkS5, note:'hachuras secundárias · A protagonista absoluto' },
+  { id:'S6', name:'Editorial',    M:MarkS6, note:'A vazado · 2ª sólida · contraste invertido' },
+];
+
+// ═══════════════════════════════════════════════════════════════
+// TIPOGRAFIA — pesos sofisticados em monocromático
+// ═══════════════════════════════════════════════════════════════
+const TYPES = [
+  { id:'T1', name:'Fraunces 800',          family:"'Fraunces', serif",            weight:800, ls:-1.4, hubW:900,  italic:false, note:'editorial robusto'   },
+  { id:'T2', name:'Fraunces 900 italic',   family:"'Fraunces', serif",            weight:900, ls:-1.6, hubW:900,  italic:true,  note:'narrativa intensa'   },
+  { id:'T3', name:'Instrument Serif',      family:"'Instrument Serif', serif",    weight:400, ls:-1.4, hubW:400,  italic:false, note:'elegância contida'   },
+  { id:'T4', name:'Archivo Black',         family:"'Archivo Black', sans-serif",  weight:400, ls:-1.4, hubW:400,  italic:false, note:'statement direto'    },
+  { id:'T5', name:'Bricolage 800',         family:"'Bricolage Grotesque', sans-serif", weight:800, ls:-2.0, hubW:800, italic:false, note:'modernidade brand'  },
+  { id:'T6', name:'Space Grotesk 500',     family:"'Space Grotesk', sans-serif",  weight:500, ls:-0.8, hubW:700,  italic:false, note:'minimalismo técnico' },
+];
+
+function Word({ type, size, color, hubColor, hubWeight }) {
+  return (
+    <span style={{
+      fontFamily: type.family, fontWeight: type.weight,
+      fontStyle: type.italic ? 'italic' : 'normal',
+      fontSize: size, letterSpacing: type.ls,
+      color, lineHeight: 1,
+    }}>
+      Atinge<span style={{ color: hubColor || color, fontWeight: hubWeight || type.hubW }}>HUB</span>
+    </span>
+  );
+}
+
+function Tag({ color = IRON }) {
+  return (
+    <span style={{
+      fontFamily:"'IBM Plex Mono', monospace", fontSize: 9,
+      letterSpacing: 2.4, textTransform:'uppercase', color, lineHeight: 1,
+    }}>IA para o seu negócio</span>
+  );
+}
+
+function Lockup({ Mark, type, size = 56, dark = false, hubTone = 'same' }) {
+  const main = dark ? PAPER : INK;
+  const mute = dark ? ASH : IRON;
+  // hubTone: 'same' (igual ao restante), 'soft' (cinza médio), 'inv' (paper sobre dark, ink sobre light)
+  const hubColor = hubTone === 'soft' ? (dark ? FOG : IRON)
+                 : hubTone === 'inv'  ? (dark ? ASH : ASH)
+                 : main;
+  return (
+    <div style={{ display:'flex', alignItems:'center', gap: size*0.34 }}>
+      <Mark size={size*1.7} dark={dark}/>
+      <div style={{ display:'flex', flexDirection:'column', gap: 8 }}>
+        <Word type={type} size={size*0.72} color={main} hubColor={hubColor}/>
+        <Tag color={mute}/>
+      </div>
+    </div>
+  );
+}
+
+// ═══════════════════════════════════════════════════════════════
+// APP
+// ═══════════════════════════════════════════════════════════════
+function App() {
+  return (
+    <DesignCanvas>
+      {/* Intro */}
+      <div style={{ padding:'0 60px 48px' }}>
+        <div style={{ fontSize: 11, fontFamily:"'IBM Plex Mono', monospace", letterSpacing: 2, textTransform:'uppercase', color: ASH, marginBottom: 10 }}>
+          AtingeHUB · all black · sofisticação monocromática
+        </div>
+        <div style={{ fontSize: 48, fontWeight: 700, letterSpacing: -1.6, color: INK, fontFamily:"'Fraunces', serif", lineHeight: 1.02, marginBottom: 16, maxWidth: 1100 }}>
+          Mérito sem cor.
+        </div>
+        <div style={{ fontSize: 15, color: IRON, lineHeight: 1.55, fontFamily:"'Space Grotesk', sans-serif", textWrap:'pretty', maxWidth: 880 }}>
+          O atingir contado em <b style={{ color: INK }}>preto, cinza e papel</b>. Sem cor saturada. A sofisticação vem da hierarquia tonal, do peso da tipografia e do silêncio em volta da marca. 6 estilos de tratamento × 6 pesos tipográficos.
+        </div>
+      </div>
+
+      {/* SEÇÃO 1 — 6 estilos lado a lado · só símbolo · fundo claro */}
+      <DCSection title="6 estilos · símbolo isolado · fundo claro" subtitle="Cada tratamento mantém a cordilheira mas muda o tom" gap={22}>
+        {STYLES.map((s, i) => (
+          <DCArtboard key={i} label={`${s.id} · ${s.name}`} width={300} height={300}>
+            <div style={{ width:'100%', height:'100%', display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center', background:PAPER, gap: 16, padding: 18 }}>
+              <s.M size={170} dark={false}/>
+              <div style={{ fontFamily:"'IBM Plex Mono', monospace", fontSize: 8.5, color: IRON, letterSpacing: 1.2, textTransform:'uppercase', textAlign:'center', maxWidth: 250, lineHeight: 1.5 }}>
+                {s.note}
+              </div>
+            </div>
+          </DCArtboard>
+        ))}
+      </DCSection>
+
+      {/* SEÇÃO 2 — mesmos 6 estilos · fundo escuro */}
+      <DCSection title="6 estilos · símbolo · fundo escuro" subtitle="Verificação cruzada · onde o monocromático brilha" gap={22}>
+        {STYLES.map((s, i) => (
+          <DCArtboard key={i} label={`${s.id} · ${s.name}`} width={300} height={300} style={{ background: INK }}>
+            <div style={{ width:'100%', height:'100%', display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center', gap: 16, padding: 18 }}>
+              <s.M size={170} dark={true}/>
+              <div style={{ fontFamily:"'IBM Plex Mono', monospace", fontSize: 8.5, color: ASH, letterSpacing: 1.2, textTransform:'uppercase', textAlign:'center', maxWidth: 250, lineHeight: 1.5 }}>
+                {s.note}
+              </div>
+            </div>
+          </DCArtboard>
+        ))}
+      </DCSection>
+
+      {/* SEÇÃO 3 — Lockup completo · estilo S1 (Monolito) com 6 tipografias */}
+      <DCSection title="S1 Monolito · 6 tipografias" subtitle="O estilo direto · qual peso fica melhor" gap={24}>
+        {TYPES.map((t, i) => (
+          <DCArtboard key={i} label={`${t.id} · ${t.name}`} width={480} height={210}>
+            <div style={{ width:'100%', height:'100%', display:'flex', alignItems:'center', justifyContent:'center', background:PAPER, padding: 24 }}>
+              <Lockup Mark={MarkS1} type={t} size={50}/>
+            </div>
+          </DCArtboard>
+        ))}
+      </DCSection>
+
+      {/* SEÇÃO 4 — Lockup · estilo S4 (Champagne) com 6 tipografias */}
+      <DCSection title="S4 Champagne · 6 tipografias" subtitle="Único acento ouro fosco na bandeira · monocromático com sutileza" gap={24}>
+        {TYPES.map((t, i) => (
+          <DCArtboard key={i} label={`${t.id} · ${t.name}`} width={480} height={210}>
+            <div style={{ width:'100%', height:'100%', display:'flex', alignItems:'center', justifyContent:'center', background:PAPER, padding: 24 }}>
+              <Lockup Mark={MarkS4} type={t} size={50}/>
+            </div>
+          </DCArtboard>
+        ))}
+      </DCSection>
+
+      {/* SEÇÃO 5 — Lockup ALL BLACK · fundo escuro · 6 estilos × tipografia editorial */}
+      <DCSection title="Lockups em fundo escuro · S× × Fraunces 800" subtitle="A leitura final em tema escuro · all-black sobre noir" gap={24}>
+        {STYLES.map((s, i) => (
+          <DCArtboard key={i} label={`${s.id} · ${s.name}`} width={480} height={220} style={{ background: INK }}>
+            <div style={{ width:'100%', height:'100%', display:'flex', alignItems:'center', justifyContent:'center', padding: 24 }}>
+              <Lockup Mark={s.M} type={TYPES[0]} size={50} dark={true}/>
+            </div>
+          </DCArtboard>
+        ))}
+      </DCSection>
+
+      {/* SEÇÃO 6 — Cartão de visita / aplicação real · S1 e S3 lado a lado */}
+      <DCSection title="Aplicação · cartão de visita 85×55mm" subtitle="Como a marca se comporta em uma peça real" gap={28}>
+        <DCArtboard label="S1 Monolito · cartão claro" width={510} height={330}>
+          <div style={{ width:'100%', height:'100%', background:PAPER, padding: 38, display:'flex', flexDirection:'column', justifyContent:'space-between' }}>
+            <Lockup Mark={MarkS1} type={TYPES[0]} size={42}/>
+            <div style={{ display:'flex', justifyContent:'space-between', alignItems:'flex-end' }}>
+              <div style={{ fontFamily:"'Space Grotesk', sans-serif", fontSize: 11, color: INK, lineHeight: 1.5 }}>
+                <div style={{ fontWeight:600 }}>Diretor de Operações</div>
+                <div style={{ color: IRON }}>contato@atingehub.com.br</div>
+                <div style={{ color: IRON }}>+55 11 9 0000 0000</div>
+              </div>
+              <div style={{ fontFamily:"'IBM Plex Mono', monospace", fontSize: 8, letterSpacing: 1.6, textTransform:'uppercase', color: ASH }}>
+                atingehub.com.br
+              </div>
+            </div>
+          </div>
+        </DCArtboard>
+        <DCArtboard label="S3 Plaque · cartão escuro" width={510} height={330} style={{ background: INK }}>
+          <div style={{ width:'100%', height:'100%', padding: 38, display:'flex', flexDirection:'column', justifyContent:'space-between' }}>
+            <Lockup Mark={MarkS3} type={TYPES[0]} size={42} dark={true}/>
+            <div style={{ display:'flex', justifyContent:'space-between', alignItems:'flex-end' }}>
+              <div style={{ fontFamily:"'Space Grotesk', sans-serif", fontSize: 11, color: PAPER, lineHeight: 1.5 }}>
+                <div style={{ fontWeight:600 }}>Diretor de Operações</div>
+                <div style={{ color: ASH }}>contato@atingehub.com.br</div>
+                <div style={{ color: ASH }}>+55 11 9 0000 0000</div>
+              </div>
+              <div style={{ fontFamily:"'IBM Plex Mono', monospace", fontSize: 8, letterSpacing: 1.6, textTransform:'uppercase', color: IRON }}>
+                atingehub.com.br
+              </div>
+            </div>
+          </div>
+        </DCArtboard>
+        <DCArtboard label="S4 Champagne · cartão escuro" width={510} height={330} style={{ background: COAL }}>
+          <div style={{ width:'100%', height:'100%', padding: 38, display:'flex', flexDirection:'column', justifyContent:'space-between' }}>
+            <Lockup Mark={MarkS4} type={TYPES[0]} size={42} dark={true}/>
+            <div style={{ display:'flex', justifyContent:'space-between', alignItems:'flex-end' }}>
+              <div style={{ fontFamily:"'Space Grotesk', sans-serif", fontSize: 11, color: PAPER, lineHeight: 1.5 }}>
+                <div style={{ fontWeight:600, color:'#e8d9b8' }}>Diretor de Operações</div>
+                <div style={{ color: ASH }}>contato@atingehub.com.br</div>
+                <div style={{ color: ASH }}>+55 11 9 0000 0000</div>
+              </div>
+              <div style={{ fontFamily:"'IBM Plex Mono', monospace", fontSize: 8, letterSpacing: 1.6, textTransform:'uppercase', color: '#7d6f4e' }}>
+                atingehub.com.br
+              </div>
+            </div>
+          </div>
+        </DCArtboard>
+      </DCSection>
+
+      {/* Próximos passos */}
+      <div style={{ padding:'0 60px 80px' }}>
+        <div style={{
+          width: 760, padding: 28, background: PAPER, borderLeft: `3px solid ${INK}`,
+          fontFamily:"'Space Grotesk', sans-serif",
+        }}>
+          <div style={{ fontSize: 11, fontFamily:"'IBM Plex Mono', monospace", letterSpacing: 2, textTransform:'uppercase', color: IRON, marginBottom: 10 }}>
+            Próximos passos
+          </div>
+          <ul style={{ margin: 0, paddingLeft: 18, fontSize: 13, color: INK, lineHeight: 1.7 }}>
+            <li>Diga qual <b>estilo (S1–S6)</b> + <b>tipografia (T1–T6)</b> + tema (claro/escuro) preferiu</li>
+            <li>Posso ajustar contraste tonal, peso do traço e tamanho da bandeira</li>
+            <li>Depois desenhamos as aplicações (favicon, app icon, papelaria, social)</li>
+          </ul>
+        </div>
+      </div>
+    </DesignCanvas>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById('root')).render(<App/>);
+</script>
+</body>
+</html>

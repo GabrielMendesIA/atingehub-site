@@ -1,0 +1,576 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8"/>
+<title>AtingeHUB · Bandeira Laranja + HUB cromático + Mobile</title>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,700;9..144,800;9..144,900&family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@400;500&family=EB+Garamond:ital@1&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    /* Mantém paleta-mãe AtingeHUB */
+    --ink:#0A0A0A; --coal:#1F1F1F; --iron:#4A4A4A; --ash:#8A8A8A;
+    --fog:#C8C8C8; --paper:#F5F3EE;
+
+    /* Aplica vocabulário do site existente (dark mode + acento laranja Claude) */
+    --bg:#050505; --bg-soft:#0b0b0e; --bg-card:rgba(255,255,255,0.02);
+    --text:#f5f5f7; --text-muted:#a1a1aa; --text-dim:#606068;
+    --border:rgba(255,255,255,0.08); --border-strong:rgba(255,255,255,0.16);
+
+    /* Acentos disponíveis (já no site) */
+    --claude:#D97757;          /* primary orange — bandeira */
+    --claude-hover:#e89474;
+    --claude-glow:rgba(217,119,87,0.35);
+    --obsidian:#a78bfa;
+    --obsidian-deep:#7C3AED;
+    --notebooklm:#4285F4;
+    --n8n:#EA4B71;
+    --chatwoot:#1F93FF;
+    --whatsapp:#25D366;
+
+    --font-mono:'JetBrains Mono', ui-monospace, monospace;
+    --font-display:'Fraunces', serif;
+    --font-sans:'Inter','Space Grotesk', sans-serif;
+    --font-serif-italic:'EB Garamond', serif;
+  }
+  *,*::before,*::after { box-sizing:border-box; margin:0; padding:0; }
+  html { scroll-behavior:smooth; }
+  body {
+    font-family: var(--font-sans);
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.65;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+  /* Ambient grid — mesma do site existente */
+  body::before {
+    content:"";
+    position:fixed; inset:0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+    background-size: 48px 48px;
+    pointer-events:none;
+    z-index:0;
+  }
+  .container { max-width: 1240px; margin: 0 auto; padding: 0 32px; position: relative; z-index: 1; }
+
+  /* HERO */
+  header.hero { padding: 80px 0 50px; }
+  .eyebrow { font-family: var(--font-mono); font-size: 11px; color: var(--text-dim); letter-spacing: 2px; text-transform: uppercase; }
+  .eyebrow .accent { color: var(--claude); }
+  h1.title {
+    font-family: var(--font-display); font-weight: 800; letter-spacing: -0.035em;
+    font-size: clamp(40px, 5.5vw, 76px); line-height: 1; margin: 20px 0 18px;
+  }
+  h1.title em { font-family: var(--font-display); font-weight: 900; font-style: italic; color: var(--claude); }
+  .hero p {
+    max-width: 700px; color: var(--text-muted); font-size: 16px; line-height: 1.7;
+  }
+  .hero p strong { color: var(--text); font-weight: 500; }
+
+  /* SECTION */
+  section.row { padding: 70px 0 30px; border-top: 1px solid var(--border); }
+  section.row h2 {
+    font-family: var(--font-mono); font-weight: 500;
+    font-size: 22px; margin-bottom: 6px;
+    color: var(--text); letter-spacing: -0.005em;
+  }
+  section.row h2 .num { color: var(--claude); margin-right: 12px; }
+  section.row .sub {
+    font-family: var(--font-mono); font-size: 11px;
+    letter-spacing: 1.5px; text-transform: uppercase; color: var(--text-dim);
+    margin-bottom: 30px;
+  }
+  section.row .lead { color: var(--text-muted); max-width: 720px; font-size: 14.5px; line-height: 1.7; margin-bottom: 32px; }
+
+  /* GRID HELPERS */
+  .grid { display: grid; gap: 18px; }
+  .grid.c2 { grid-template-columns: repeat(2, 1fr); }
+  .grid.c3 { grid-template-columns: repeat(3, 1fr); }
+  .grid.c4 { grid-template-columns: repeat(4, 1fr); }
+  @media (max-width: 900px) { .grid.c3, .grid.c4 { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 600px) { .grid.c2, .grid.c3, .grid.c4 { grid-template-columns: 1fr; } }
+
+  /* CARD — vibe do site existente */
+  .card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    padding: 28px;
+    transition: border-color .25s, background .25s;
+    position: relative;
+    overflow: hidden;
+  }
+  .card:hover { border-color: var(--border-strong); }
+  .card .label {
+    font-family: var(--font-mono); font-size: 10px; letter-spacing: 1.5px;
+    text-transform: uppercase; color: var(--text-dim);
+    display: flex; align-items: center; gap: 10px;
+    margin-bottom: 14px;
+  }
+  .card .label .swatch { width: 10px; height: 10px; border-radius: 2px; }
+  .card .label strong { color: var(--text); font-weight: 500; letter-spacing: 1.5px; }
+  .card .mark-frame {
+    aspect-ratio: 5 / 4;
+    display: flex; align-items: center; justify-content: center;
+    margin: 10px 0 18px;
+  }
+  .card .mark-frame svg { width: 80%; height: 80%; max-width: 240px; }
+  .card .desc { font-size: 12.5px; color: var(--text-muted); line-height: 1.6; }
+  .card.light { background: var(--paper); color: var(--ink); border-color: rgba(0,0,0,0.08); }
+  .card.light .label, .card.light .desc { color: var(--iron); }
+  .card.light .label strong { color: var(--ink); }
+
+  /* WORDMARK SHOWCASE */
+  .wordmark {
+    font-family: var(--font-display); font-weight: 800; letter-spacing: -0.04em;
+    font-size: clamp(42px, 5.5vw, 64px); line-height: 1;
+    color: var(--text);
+  }
+  .wordmark .hub { font-weight: 900; }
+  .wm-card {
+    background: var(--bg-card); border: 1px solid var(--border);
+    padding: 36px 28px 22px;
+    display: flex; flex-direction: column; gap: 18px;
+    transition: border-color .25s;
+  }
+  .wm-card:hover { border-color: var(--border-strong); }
+  .wm-card.light { background: var(--paper); color: var(--ink); }
+  .wm-card.light .wordmark { color: var(--ink); }
+  .wm-card.light .label { color: var(--iron); }
+  .wm-card.light .label strong { color: var(--ink); }
+
+  /* GLOWING CARDS */
+  .glow-card {
+    background: var(--bg-card); border: 1px solid var(--border);
+    padding: 28px; position: relative; overflow: hidden;
+  }
+  .glow-card::before {
+    content:""; position:absolute; top:-40%; left:-20%;
+    width: 160%; height: 80%;
+    background: radial-gradient(ellipse at center, var(--glow,var(--claude-glow)), transparent 70%);
+    opacity: 0.5; pointer-events: none; z-index:0;
+  }
+  .glow-card > * { position: relative; z-index: 1; }
+
+  /* MOBILE FRAME */
+  .device {
+    width: 100%; max-width: 340px; margin: 0 auto;
+    aspect-ratio: 9 / 19.5;
+    background: var(--bg);
+    border: 8px solid #18181b;
+    border-radius: 36px;
+    box-shadow: 0 30px 60px -30px rgba(0,0,0,0.8), 0 0 0 1px rgba(255,255,255,0.04);
+    overflow: hidden;
+    position: relative;
+  }
+  .device::before {
+    content:""; position: absolute; top: 0; left: 50%; transform: translateX(-50%);
+    width: 100px; height: 22px; background: #050505;
+    border-bottom-left-radius: 12px; border-bottom-right-radius: 12px;
+    z-index: 10;
+  }
+  .device-screen {
+    position: absolute; inset: 0;
+    background: var(--bg);
+    background-image:
+      linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+    background-size: 24px 24px;
+    overflow: hidden;
+  }
+  .device-statusbar {
+    height: 38px; display: flex; align-items: flex-end; justify-content: space-between;
+    padding: 0 22px 6px; font-family: var(--font-mono); font-size: 11px;
+    color: var(--text);
+    position: relative; z-index: 2;
+  }
+  .device-content { padding: 18px 18px 0; position: relative; z-index: 1; }
+  .device-content .m-eyebrow { font-family: var(--font-mono); font-size: 9px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--text-dim); margin-bottom: 10px; }
+  .device-content .m-headline {
+    font-family: var(--font-display); font-weight: 800; letter-spacing: -0.025em;
+    font-size: 28px; line-height: 1.05; color: var(--text);
+    margin-bottom: 8px;
+  }
+  .device-content .m-headline em { font-family: var(--font-serif-italic); font-weight: 400; font-style: italic; color: var(--claude); }
+  .device-content .m-sub { font-size: 12px; color: var(--text-muted); line-height: 1.5; margin-bottom: 18px; }
+  .device-content .m-cta {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--claude); color: var(--ink);
+    padding: 11px 18px; border-radius: 4px;
+    font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.5px;
+    font-weight: 500;
+    box-shadow: 0 0 24px var(--claude-glow);
+  }
+
+  /* Mobile terminal mini */
+  .m-terminal {
+    background: rgba(0,0,0,0.5); border: 1px solid var(--border);
+    border-radius: 6px; padding: 12px;
+    font-family: var(--font-mono); font-size: 10px; line-height: 1.7;
+    color: var(--text-muted);
+    margin-bottom: 16px;
+  }
+  .m-terminal .dots { display: flex; gap: 5px; margin-bottom: 8px; }
+  .m-terminal .dots span { width: 7px; height: 7px; border-radius: 50%; background: #333; }
+  .m-terminal .dots span.r { background: #ff5f56; } .m-terminal .dots span.y { background: #ffbd2e; } .m-terminal .dots span.g { background: #27c93f; }
+  .m-terminal .l { display: block; }
+  .m-terminal .prompt { color: var(--claude); }
+  .m-terminal .ok { color: var(--whatsapp); }
+  .m-terminal .var { color: var(--obsidian); }
+  .m-terminal .comm { color: var(--text-dim); }
+
+  /* Mobile product chip grid */
+  .m-chips { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 16px; }
+  .m-chip {
+    border: 1px solid var(--border); padding: 10px 8px;
+    font-family: var(--font-mono); font-size: 9px;
+    color: var(--text-muted); text-align: center;
+    background: var(--bg-card); border-radius: 4px;
+    display: flex; flex-direction: column; gap: 4px;
+    transition: border-color .2s;
+  }
+  .m-chip .dot { width: 8px; height: 8px; border-radius: 50%; margin: 0 auto 2px; }
+  .m-chip strong { color: var(--text); font-weight: 500; letter-spacing: 0.5px; }
+
+  /* fold cards mobile */
+  .m-fold {
+    border: 1px solid var(--border); border-radius: 8px;
+    padding: 14px; margin-bottom: 10px;
+    position: relative; overflow: hidden;
+  }
+  .m-fold::before {
+    content:""; position: absolute; top: -50%; right: -30%;
+    width: 100%; height: 200%;
+    background: radial-gradient(ellipse, var(--fold-glow, var(--claude-glow)), transparent 65%);
+    opacity: 0.35; pointer-events: none;
+  }
+  .m-fold > * { position: relative; z-index: 1; }
+  .m-fold .fold-tag { font-family: var(--font-mono); font-size: 9px; letter-spacing: 1px; text-transform: uppercase; color: var(--fold-c, var(--claude)); margin-bottom: 4px; }
+  .m-fold .fold-title { font-family: var(--font-display); font-weight: 700; font-size: 16px; color: var(--text); margin-bottom: 4px; letter-spacing: -0.015em; }
+  .m-fold .fold-body { font-size: 11px; color: var(--text-muted); line-height: 1.5; }
+
+  /* Note */
+  .note { background: var(--bg-soft); border: 1px solid var(--border); border-left: 3px solid var(--claude); padding: 24px 28px; margin: 40px 0; }
+  .note .mono { font-family: var(--font-mono); font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: var(--claude); margin-bottom: 12px; }
+  .note h3 { font-family: var(--font-display); font-weight: 700; font-size: 22px; margin-bottom: 12px; letter-spacing: -0.02em; }
+  .note p, .note ul { color: var(--text-muted); font-size: 13.5px; line-height: 1.7; }
+  .note ul { padding-left: 18px; }
+  .note ul li { margin: 4px 0; }
+
+  footer { padding: 60px 0 80px; border-top: 1px solid var(--border); }
+  footer .mono { font-family: var(--font-mono); font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--text-dim); text-align: center; }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="container">
+    <div class="eyebrow"><span class="accent">●</span> RETOMADA · BANDEIRA LARANJA + HUB CROMÁTICO · MOBILE</div>
+    <h1 class="title">Mérito,<br><em>com pulso.</em></h1>
+    <p>A geometria fica. A bandeira agora é <strong style="color:var(--claude)">laranja Claude</strong> (#D97757) — substitui o champagne como acento permanente. E o <strong>HUB</strong> ganha sistema cromático: usa a cor do <em>contexto</em> em que aparece — Cérebro arrasta púrpura, Cadência arrasta verde, e por aí vai. Preto-puro fica para selos e selos só.</p>
+  </div>
+</header>
+
+<!-- 01 · Símbolo com bandeira laranja -->
+<section class="row">
+  <div class="container">
+    <h2><span class="num">01</span>Símbolo · bandeira laranja</h2>
+    <div class="sub">A geometria do manual + acento permanente Claude #D97757</div>
+    <p class="lead">A montanha fica idêntica (geometria paramétrica, slope 0.5417, baseline y=64). A bandeirinha plantada no cume troca o champagne pelo <strong style="color:var(--claude)">laranja Claude</strong>, ganha um glow sutil quando aparece em escala grande no mobile, e funciona como ponto-de-cor da marca toda. Sem gradiente.</p>
+
+    <div class="grid c3">
+      <!-- versão escura -->
+      <div class="card">
+        <div class="label"><span class="swatch" style="background:var(--claude)"></span><strong>S1 · Bandeira Laranja</strong>· fundo escuro · primário</div>
+        <div class="mark-frame">
+          <svg viewBox="0 0 100 80">
+            <path d="M16 64L28 42L40 64Z" fill="#4A4A4A"/>
+            <path d="M60 64L74 38L88 64Z" fill="#8A8A8A"/>
+            <path d="M24 64L50 16L76 64Z" fill="#F5F3EE"/>
+            <path d="M50 16L50 6" stroke="#D97757" stroke-width="2"/>
+            <path d="M50 7L58 9L50 12Z" fill="#D97757"/>
+            <path d="M38 44L62 44" stroke="#0A0A0A" stroke-width="3"/>
+          </svg>
+        </div>
+        <div class="desc">Versão hero · use em fundos #050505 e #0A0A0A. A bandeira é o único ponto de cor — funciona como pulso visual.</div>
+      </div>
+      <!-- versão clara -->
+      <div class="card light">
+        <div class="label"><span class="swatch" style="background:#D97757"></span><strong>S1 · Bandeira Laranja</strong>· fundo claro</div>
+        <div class="mark-frame">
+          <svg viewBox="0 0 100 80">
+            <path d="M16 64L28 42L40 64Z" fill="#8A8A8A"/>
+            <path d="M60 64L74 38L88 64Z" fill="#4A4A4A"/>
+            <path d="M24 64L50 16L76 64Z" fill="#0A0A0A"/>
+            <path d="M50 16L50 6" stroke="#D97757" stroke-width="2"/>
+            <path d="M50 7L58 9L50 12Z" fill="#D97757"/>
+            <path d="M38 44L62 44" stroke="#F5F3EE" stroke-width="3"/>
+          </svg>
+        </div>
+        <div class="desc">Versão papel · #F5F3EE. Mesma bandeira laranja, agora contrastando com a montanha preta.</div>
+      </div>
+      <!-- versão glow / hero -->
+      <div class="glow-card" style="--glow: var(--claude-glow)">
+        <div class="label" style="position:relative;z-index:2"><span class="swatch" style="background:var(--claude)"></span><strong>S1 · com glow</strong>· hero · landing</div>
+        <div class="mark-frame">
+          <svg viewBox="0 0 100 80" style="filter: drop-shadow(0 0 18px rgba(217,119,87,0.5));">
+            <path d="M16 64L28 42L40 64Z" fill="#4A4A4A"/>
+            <path d="M60 64L74 38L88 64Z" fill="#8A8A8A"/>
+            <path d="M24 64L50 16L76 64Z" fill="#F5F3EE"/>
+            <path d="M50 16L50 6" stroke="#D97757" stroke-width="2"/>
+            <path d="M50 7L58 9L50 12Z" fill="#D97757"/>
+            <path d="M38 44L62 44" stroke="#0A0A0A" stroke-width="3"/>
+          </svg>
+        </div>
+        <div class="desc">Hero do site · drop-shadow laranja sutil dá pulso ao símbolo (idêntico ao tratamento do brand-mark no site atual).</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 02 · Wordmark HUB cromático -->
+<section class="row">
+  <div class="container">
+    <h2><span class="num">02</span>Wordmark cromático · HUB ganha contexto</h2>
+    <div class="sub">"Atinge" sempre neutro · "HUB" pega a cor da seção / ferramenta</div>
+    <p class="lead">Sistema simples: a palavra <strong>Atinge</strong> fica sempre em <strong>tinta ou papel</strong> (neutra). A palavra <strong>HUB</strong> recebe a cor do sub-produto ou seção em que aparece. Assim a marca <em>migra de cor sem sair de casa</em> — usa só as cores que já existem no sistema dos 8 sub-produtos.</p>
+
+    <div class="grid c3">
+      <div class="wm-card"><div class="label"><span class="swatch" style="background:var(--claude)"></span><strong>HUB · Claude</strong>laranja · primário · hero</div><span class="wordmark">Atinge<span class="hub" style="color:#D97757">HUB</span></span></div>
+      <div class="wm-card"><div class="label"><span class="swatch" style="background:var(--obsidian-deep)"></span><strong>HUB · Obsidian</strong>púrpura · seção cérebro</div><span class="wordmark">Atinge<span class="hub" style="color:#a78bfa">HUB</span></span></div>
+      <div class="wm-card"><div class="label"><span class="swatch" style="background:var(--n8n)"></span><strong>HUB · n8n</strong>magenta · seção engrenagens</div><span class="wordmark">Atinge<span class="hub" style="color:#EA4B71">HUB</span></span></div>
+      <div class="wm-card"><div class="label"><span class="swatch" style="background:var(--chatwoot)"></span><strong>HUB · Chatwoot</strong>azul · seção balcão</div><span class="wordmark">Atinge<span class="hub" style="color:#1F93FF">HUB</span></span></div>
+      <div class="wm-card"><div class="label"><span class="swatch" style="background:var(--whatsapp)"></span><strong>HUB · WhatsApp</strong>verde · seção cadência</div><span class="wordmark">Atinge<span class="hub" style="color:#25D366">HUB</span></span></div>
+      <div class="wm-card"><div class="label"><span class="swatch" style="background:#4285F4"></span><strong>HUB · NotebookLM</strong>azul Google · seção pesquisa</div><span class="wordmark">Atinge<span class="hub" style="color:#4285F4">HUB</span></span></div>
+    </div>
+
+    <div class="grid c3" style="margin-top:18px">
+      <div class="wm-card light"><div class="label"><span class="swatch" style="background:#D97757"></span><strong>HUB · Claude</strong>fundo papel</div><span class="wordmark">Atinge<span class="hub" style="color:#D97757">HUB</span></span></div>
+      <div class="wm-card light"><div class="label"><span class="swatch" style="background:#7C3AED"></span><strong>HUB · Obsidian</strong>fundo papel</div><span class="wordmark">Atinge<span class="hub" style="color:#7C3AED">HUB</span></span></div>
+      <div class="wm-card light"><div class="label"><span class="swatch" style="background:#0A0A0A"></span><strong>HUB · Tinta</strong>papelaria oficial</div><span class="wordmark">Atinge<span class="hub" style="color:#0A0A0A">HUB</span></span></div>
+    </div>
+
+    <div class="note">
+      <div class="mono">Regra de aplicação</div>
+      <h3>Quando usar cada variação do HUB</h3>
+      <ul>
+        <li><strong style="color:var(--text)">HUB · Claude (laranja)</strong> — versão <em>default</em>. Hero, header, footer, peças onde a marca aparece sozinha sem âncora de seção.</li>
+        <li><strong style="color:var(--text)">HUB · contextual</strong> — quando o wordmark aparece dentro de uma seção dedicada a um sub-produto (ex: dentro da fold "Obsidian", o HUB no header daquela fold pega púrpura).</li>
+        <li><strong style="color:var(--text)">HUB · Tinta / Papel</strong> — papelaria oficial (cartão, envelope, contrato), assinatura de e-mail formal. Volta ao monocromático quando o contexto pede formalidade.</li>
+        <li><strong style="color:var(--text)">"Atinge"</strong> — nunca colorido. Sempre #F5F3EE (dark) ou #0A0A0A (light).</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- 03 · Aplicações mobile -->
+<section class="row">
+  <div class="container">
+    <h2><span class="num">03</span>Aplicações mobile · 3 telas</h2>
+    <div class="sub">Vocabulário do site existente · grid 48px + acento laranja + terminal + folds com glow</div>
+    <p class="lead">Aplicação direta dos efeitos do <code style="font-family:var(--font-mono);font-size:12px;background:rgba(255,255,255,0.05);padding:1px 6px;border-radius:3px;">styles.css</code> que você está usando: <strong>fundo #050505</strong>, <strong>grid sutil 48px</strong>, <strong>cards com border 1px</strong> em <code style="font-family:var(--font-mono);font-size:12px;background:rgba(255,255,255,0.05);padding:1px 6px;border-radius:3px;">rgba(255,255,255,0.08)</code>, terminal hero, folds com glow radial. Tipografia: Fraunces nos heros, mono nos eyebrows, Inter no corpo.</p>
+
+    <div class="grid c3">
+
+      <!-- Mobile A · Hero com terminal -->
+      <div>
+        <div class="device">
+          <div class="device-screen">
+            <div class="device-statusbar"><span>9:41</span><span>● ● ●</span></div>
+            <div class="device-content">
+              <div class="m-eyebrow" style="display:flex;align-items:center;gap:6px;">
+                <svg width="22" height="18" viewBox="0 0 100 80" style="filter:drop-shadow(0 0 6px rgba(217,119,87,0.6));">
+                  <path d="M16 64L28 42L40 64Z" fill="#4A4A4A"/>
+                  <path d="M60 64L74 38L88 64Z" fill="#8A8A8A"/>
+                  <path d="M24 64L50 16L76 64Z" fill="#F5F3EE"/>
+                  <path d="M50 16L50 6" stroke="#D97757" stroke-width="3"/>
+                  <path d="M50 7L58 9L50 12Z" fill="#D97757"/>
+                </svg>
+                <span style="font-family:var(--font-display);font-weight:800;font-size:14px;letter-spacing:-0.02em;color:var(--text);">Atinge<span style="font-weight:900;color:var(--claude)">HUB</span></span>
+              </div>
+              <div class="m-terminal">
+                <div class="dots"><span class="r"></span><span class="y"></span><span class="g"></span></div>
+                <span class="l"><span class="prompt">$</span> atingehub --deploy</span>
+                <span class="l"><span class="comm">→ carregando</span> <span class="var">[obsidian, claude...]</span></span>
+                <span class="l"><span class="comm">→ conectando</span> whatsapp <span class="ok">✓</span></span>
+                <span class="l"><span class="ok">✓ sistema rodando 24h</span></span>
+              </div>
+              <div class="m-headline">Uma IA <em>rodando</em> no seu negócio.</div>
+              <div class="m-sub">Não um chatbot. Um sistema.</div>
+              <div class="m-cta">$ iniciar conversa →</div>
+            </div>
+          </div>
+        </div>
+        <div class="label" style="margin-top:14px;font-family:var(--font-mono);font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--text-dim);text-align:center;">A · Hero mobile · terminal compacto</div>
+      </div>
+
+      <!-- Mobile B · Wheel/Sub-produtos -->
+      <div>
+        <div class="device">
+          <div class="device-screen">
+            <div class="device-statusbar"><span>9:41</span><span>● ● ●</span></div>
+            <div class="device-content">
+              <div class="m-eyebrow"><span style="color:var(--claude)">02 ·</span> 8 ferramentas do sistema</div>
+              <div class="m-headline" style="font-size:22px;">Toolkit <em>integrado</em>, não vendido em pedaço.</div>
+              <div class="m-sub" style="margin-bottom:14px;">Cada uma é um módulo · você não precisa de todas no dia 1.</div>
+              <div class="m-chips">
+                <div class="m-chip"><span class="dot" style="background:#D97757"></span><strong>Claude</strong>bancada</div>
+                <div class="m-chip"><span class="dot" style="background:#a78bfa"></span><strong>Obsidian</strong>cérebro</div>
+                <div class="m-chip"><span class="dot" style="background:#4285F4"></span><strong>NotebookLM</strong>pesquisa</div>
+                <div class="m-chip"><span class="dot" style="background:#EA4B71"></span><strong>n8n</strong>fluxos</div>
+                <div class="m-chip"><span class="dot" style="background:#1F93FF"></span><strong>Chatwoot</strong>balcão</div>
+                <div class="m-chip"><span class="dot" style="background:#25D366"></span><strong>WhatsApp</strong>cadência</div>
+                <div class="m-chip"><span class="dot" style="background:#D4A574"></span><strong>Voz</strong>tom</div>
+                <div class="m-chip"><span class="dot" style="background:#1E3A8A"></span><strong>Bússola</strong>direção</div>
+                <div class="m-chip" style="border-color:var(--claude);color:var(--claude);"><strong style="color:var(--claude);">+ HUB</strong>orquestra</div>
+              </div>
+              <div class="m-cta" style="font-size:10px;padding:9px 14px;">ver mapa completo →</div>
+            </div>
+          </div>
+        </div>
+        <div class="label" style="margin-top:14px;font-family:var(--font-mono);font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--text-dim);text-align:center;">B · Grid de sub-produtos · chips</div>
+      </div>
+
+      <!-- Mobile C · Fold com glow -->
+      <div>
+        <div class="device">
+          <div class="device-screen">
+            <div class="device-statusbar"><span>9:41</span><span>● ● ●</span></div>
+            <div class="device-content">
+              <div class="m-eyebrow"><span style="color:var(--claude)">04 ·</span> folds do sistema</div>
+              <div class="m-headline" style="font-size:20px;">Cada fold tem sua <em>luz</em>.</div>
+
+              <div class="m-fold" style="--fold-glow:rgba(217,119,87,0.4); --fold-c:#D97757;margin-top:14px;">
+                <div class="fold-tag">claude · bancada</div>
+                <div class="fold-title">A oficina técnica<span style="color:#D97757;">.</span></div>
+                <div class="fold-body">Scripts e automações sob medida — feitos com você na mesa, não pra você.</div>
+              </div>
+              <div class="m-fold" style="--fold-glow:rgba(167,139,250,0.4); --fold-c:#a78bfa;">
+                <div class="fold-tag">obsidian · cérebro</div>
+                <div class="fold-title">Memória da operação<span style="color:#a78bfa;">.</span></div>
+                <div class="fold-body">Base de conhecimento conectada — tudo que sua empresa sabe, vinculado.</div>
+              </div>
+              <div class="m-fold" style="--fold-glow:rgba(234,75,113,0.35); --fold-c:#EA4B71;">
+                <div class="fold-tag">n8n · engrenagens</div>
+                <div class="fold-title">Os fluxos invisíveis<span style="color:#EA4B71;">.</span></div>
+                <div class="fold-body">Automações ligando o que você já usa — Chatwoot, WhatsApp, planilhas.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="label" style="margin-top:14px;font-family:var(--font-mono);font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--text-dim);text-align:center;">C · Folds empilhados · glow radial</div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- 04 · Efeitos sistemáticos -->
+<section class="row">
+  <div class="container">
+    <h2><span class="num">04</span>Efeitos do sistema · biblioteca</h2>
+    <div class="sub">5 padrões reutilizáveis · todos sem gradiente · all CSS</div>
+    <p class="lead">Cinco tratamentos que você pode chamar nas peças mobile e desktop. Todos respeitam a regra-mãe: <strong>sem gradiente, sem sombra colorida fora do laranja-Claude</strong>. O glow é <code style="font-family:var(--font-mono);font-size:12px;background:rgba(255,255,255,0.05);padding:1px 6px;border-radius:3px;">drop-shadow</code> ou <code style="font-family:var(--font-mono);font-size:12px;background:rgba(255,255,255,0.05);padding:1px 6px;border-radius:3px;">radial-gradient</code> de cor única para transparente — não conta como "gradiente colorido", é halo.</p>
+
+    <div class="grid c2">
+      <div class="card">
+        <div class="label"><strong>01 · Grid ambiente</strong>fundo do site inteiro</div>
+        <div style="height:120px;position:relative;border:1px solid var(--border);background-image:linear-gradient(rgba(255,255,255,0.04) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.04) 1px,transparent 1px);background-size:32px 32px;margin-bottom:14px;"></div>
+        <div class="desc">linear-gradient duplo a 1px com opacidade 0.025 · tamanho 48px · fixed. Custa zero e dá densidade visual sem precisar de imagem.</div>
+      </div>
+      <div class="card">
+        <div class="label"><strong>02 · Halo de bandeira</strong>aplicado ao símbolo no hero</div>
+        <div style="height:120px;display:flex;align-items:center;justify-content:center;border:1px solid var(--border);margin-bottom:14px;">
+          <svg width="70" height="56" viewBox="0 0 100 80" style="filter:drop-shadow(0 0 18px rgba(217,119,87,0.7));">
+            <path d="M16 64L28 42L40 64Z" fill="#4A4A4A"/>
+            <path d="M60 64L74 38L88 64Z" fill="#8A8A8A"/>
+            <path d="M24 64L50 16L76 64Z" fill="#F5F3EE"/>
+            <path d="M50 16L50 6" stroke="#D97757" stroke-width="2"/>
+            <path d="M50 7L58 9L50 12Z" fill="#D97757"/>
+          </svg>
+        </div>
+        <div class="desc"><code style="font-family:var(--font-mono);font-size:11px;">filter: drop-shadow(0 0 18px var(--claude-glow))</code>. Pulso visual sem cor invadir o resto.</div>
+      </div>
+      <div class="card">
+        <div class="label"><strong>03 · Card com aura</strong>fold de sub-produto</div>
+        <div class="glow-card" style="--glow: rgba(167,139,250,0.4); height:120px; padding:18px; border:1px solid var(--border);">
+          <div style="position:relative;z-index:2;">
+            <div style="font-family:var(--font-mono);font-size:9px;color:#a78bfa;letter-spacing:1.5px;text-transform:uppercase;">obsidian · cérebro</div>
+            <div style="font-family:var(--font-display);font-weight:700;font-size:16px;margin-top:4px;">Memória da operação.</div>
+          </div>
+        </div>
+        <div class="desc">radial-gradient da cor do sub-produto no canto top-left, opacidade 0.35–0.5. Reposiciona conforme leitura.</div>
+      </div>
+      <div class="card">
+        <div class="label"><strong>04 · Chip de ferramenta</strong>grid de 3 colunas mobile</div>
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-bottom:14px;">
+          <div class="m-chip" style="font-size:9px;"><span class="dot" style="background:#D97757"></span><strong>Claude</strong></div>
+          <div class="m-chip" style="font-size:9px;"><span class="dot" style="background:#a78bfa"></span><strong>Obsidian</strong></div>
+          <div class="m-chip" style="font-size:9px;"><span class="dot" style="background:#EA4B71"></span><strong>n8n</strong></div>
+        </div>
+        <div class="desc">Border 1px translúcido + dot da cor da ferramenta + label mono. Reutilizável em desktop como pill ou em mobile como grid.</div>
+      </div>
+      <div class="card" style="grid-column: span 2;">
+        <div class="label"><strong>05 · Terminal hero</strong>cabeça do hero mobile e desktop</div>
+        <div class="m-terminal" style="font-size:11px;">
+          <div class="dots"><span class="r"></span><span class="y"></span><span class="g"></span></div>
+          <span class="l"><span class="comm">// implementação acompanhada</span></span>
+          <span class="l"><span class="prompt">$</span> atingehub <span style="color:var(--claude)">--deploy</span> ia-no-seu-negocio</span>
+          <span class="l"><span class="comm">→ carregando ferramentas</span> <span class="var">[obsidian, claude-code, notebooklm, n8n, chatwoot]</span></span>
+          <span class="l"><span class="comm">→ conectando</span> whatsapp <span class="ok">✓</span> &nbsp; crm <span class="ok">✓</span> &nbsp; segundo cérebro <span class="ok">✓</span></span>
+          <span class="l"><span class="ok">✓ sistema rodando 24h · multi-agentes · +50 habilidades</span></span>
+          <span class="l"><span class="prompt">$</span> <span style="border-right:6px solid var(--claude);animation:blink 1s steps(2) infinite;">&nbsp;</span></span>
+        </div>
+        <div class="desc">Já existe no site atual. No mobile, encolhe para 5 linhas curtas e mantém o cursor piscando como ponto de tensão visual.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 05 · Notas + próximos -->
+<section class="row">
+  <div class="container">
+    <h2><span class="num">05</span>Próximos passos · o que ainda precisa decisão</h2>
+    <div class="sub">Pontos abertos antes de finalizar pacote v1.1</div>
+
+    <div class="note">
+      <div class="mono">Abertas pra você</div>
+      <h3>Confirmar ou ajustar</h3>
+      <ul>
+        <li>O <strong style="color:var(--text)">laranja Claude #D97757</strong> substitui <em>permanentemente</em> o champagne, ou ele convive (champagne fica para contratos cerimoniais)?</li>
+        <li><strong style="color:var(--text)">Wordmark — qual versão fica oficial?</strong> O manual v1.0 usa <code style="font-family:var(--font-mono);font-size:11px;background:rgba(255,255,255,0.05);padding:1px 6px;border-radius:3px;">AtingeHUB</code> em Fraunces 800/900 (formal). A landing já no ar usa <code style="font-family:var(--font-mono);font-size:11px;background:rgba(255,255,255,0.05);padding:1px 6px;border-radius:3px;">AtingeHub</code> em Inter (mixed case, Hub não HUB). Convivem ou unifica?</li>
+        <li>O <strong style="color:var(--text)">HUB cromático</strong> deveria entrar na <em>landing atual</em> também (no header e no fim de cada fold, pegando a cor do fold) ou fica só na identidade institucional?</li>
+        <li>Para o <strong style="color:var(--text)">favicon e app-icon</strong>, manter a bandeira laranja ou voltar ao monocromático (já que é minúsculo e a cor some)?</li>
+        <li>Quer que eu refaça o <strong style="color:var(--text)">pacote v1.0 inteiro</strong> trocando champagne→laranja em todos os 52 assets, ou mantém os dois e escolhe caso a caso?</li>
+      </ul>
+    </div>
+
+    <div class="note" style="border-left-color: var(--obsidian);">
+      <div class="mono" style="color:var(--obsidian);">Observação técnica</div>
+      <h3>Sobre os efeitos do site live (referência chaseai.io + sua landing)</h3>
+      <p>Conferi seu <code style="font-family:var(--font-mono);font-size:11px;background:rgba(255,255,255,0.05);padding:1px 6px;border-radius:3px;">landing/index.html</code> + <code style="font-family:var(--font-mono);font-size:11px;background:rgba(255,255,255,0.05);padding:1px 6px;border-radius:3px;">script.js</code>. Os efeitos mobile aqui já refletem o vocabulário real: grid 48px, terminal hero, folds com glow radial, scrollspy lateral, infinity wheel. <strong>O que falta migrar pra mobile no site live</strong>, na minha leitura:</p>
+      <ul style="margin-top:10px;">
+        <li><strong style="color:var(--text)">Brand-mark</strong> — a landing usa arcs+dot (provisório). Trocar pela montanha + bandeira laranja como SVG inline no <code style="font-family:var(--font-mono);font-size:11px;">.brand-mark</code> dá identidade real ao header.</li>
+        <li><strong style="color:var(--text)">Wheel infinito</strong> — no mobile, hoje a SVG 700×340 escala mal. Sugestão: collapse pra <em>lista vertical de chips</em> em &lt;640px (como o exemplo B acima), mantendo as 5 cores das ferramentas.</li>
+        <li><strong style="color:var(--text)">Folds com glow</strong> — já tem cor por fold (var <code style="font-family:var(--font-mono);font-size:11px;">--fold-accent</code>), mas o glow radial não tá ativo no mobile. Adicionar <code style="font-family:var(--font-mono);font-size:11px;">::before</code> radial atrás do título dá pulso mesmo sem JS.</li>
+        <li><strong style="color:var(--text)">Scrollspy lateral</strong> — no mobile vira horizontal sticky no topo. Usar a cor de cada seção como dot ativo (em vez de só laranja) reforça o sistema cromático.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <div class="mono">AtingeHUB · exploração v1.1 · bandeira laranja + HUB cromático · 2026-05-11</div>
+  </div>
+</footer>
+
+<style>
+  @keyframes blink { 50% { opacity: 0; } }
+</style>
+
+</body>
+</html>

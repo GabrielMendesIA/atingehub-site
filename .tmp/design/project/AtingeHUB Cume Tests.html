@@ -1,0 +1,282 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8"/>
+<title>AtingeHUB — Testes Cume</title>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500&family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700;9..144,800;9..144,900&family=Archivo+Black&family=Bricolage+Grotesque:wght@400;600;700;800&display=swap" rel="stylesheet"/>
+<style>
+  html,body { margin:0; padding:0; height:100%; overflow:hidden; background:#f0eee9; }
+  * { box-sizing: border-box; }
+</style>
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script type="text/babel" src="design-canvas.jsx"></script>
+</head>
+<body>
+<div id="root"></div>
+
+<script type="text/babel">
+const INK = '#0B0E14';
+const PAPER = '#F5F3EE';
+const MUTE = 'oklch(0.55 0 0)';
+const ACCENT = '#D97757';
+
+// ═══════════════════════════════════════════════════════════════
+// Cume mark — agora com sombra-pirâmide-degraus atrás
+// shadowMode:
+//   'none'      — só o cume (referência)
+//   'solid'     — uma pirâmide cinza atrás, deslocada
+//   'steps'     — pirâmide degraus (escadinha) atrás
+//   'steps-2x'  — duas pirâmides degraus atrás (mais profundidade)
+//   'twin'      — duas pirâmides cheias atrás, lados opostos
+// ═══════════════════════════════════════════════════════════════
+
+function CumeMark({ size = 120, color = INK, accent = ACCENT, shadowMode = 'steps', shadowColor = '#C4BDB0', flagColor }) {
+  const flagC = flagColor || accent;
+  const stepGray = shadowColor;
+  const stepGrayLight = 'oklch(0.85 0.005 80)';
+
+  // ── pirâmide-degraus (escadinha) — bricks horizontais ascendentes
+  // construída a partir de bricks; pirâmide atrás do cume principal
+  const StepsPyramid = ({ x = 50, color = stepGray, opacity = 1, scale = 1 }) => {
+    // 5 níveis, escadinha — origin: base 64, apex aprox 20
+    // larguras: 32, 26, 20, 14, 8
+    const rows = [
+      { y: 60, w: 36, h: 4 },
+      { y: 52, w: 28, h: 4 },
+      { y: 44, w: 22, h: 4 },
+      { y: 36, w: 16, h: 4 },
+      { y: 28, w: 10, h: 4 },
+      { y: 20, w: 6, h: 4 },
+    ];
+    return (
+      <g opacity={opacity} transform={`translate(${x},0) scale(${scale})`}>
+        {rows.map((r, i) => (
+          <rect key={i} x={-r.w/2} y={r.y} width={r.w} height={r.h} fill={color}/>
+        ))}
+      </g>
+    );
+  };
+
+  // ── pirâmide sólida (triangle)
+  const SolidPyramid = ({ x = 50, color = stepGray, opacity = 1, w = 40, peakY = 24, baseY = 64 }) => (
+    <path d={`M${x - w/2} ${baseY} L${x} ${peakY} L${x + w/2} ${baseY} Z`} fill={color} opacity={opacity}/>
+  );
+
+  return (
+    <svg width={size} height={size} viewBox="0 0 100 80" fill="none">
+      {/* SOMBRAS / PIRÂMIDES ATRÁS */}
+      {shadowMode === 'solid' && (
+        <SolidPyramid x={64} color={stepGray} opacity={0.55} w={42} peakY={32} baseY={64}/>
+      )}
+      {shadowMode === 'steps' && (
+        <StepsPyramid x={66} color={stepGray} opacity={0.7}/>
+      )}
+      {shadowMode === 'steps-2x' && (
+        <>
+          <StepsPyramid x={72} color={stepGrayLight} opacity={0.55} scale={0.85}/>
+          <StepsPyramid x={62} color={stepGray} opacity={0.85} scale={0.95}/>
+        </>
+      )}
+      {shadowMode === 'twin' && (
+        <>
+          <SolidPyramid x={26} color={stepGray} opacity={0.45} w={36} peakY={36} baseY={64}/>
+          <SolidPyramid x={70} color={stepGray} opacity={0.6} w={42} peakY={28} baseY={64}/>
+        </>
+      )}
+
+      {/* CUME PRINCIPAL — o A montanha */}
+      <path d="M24 64 L50 16 L76 64 Z" fill={color}/>
+
+      {/* bandeira */}
+      <line x1="50" y1="16" x2="50" y2="6" stroke={flagC} strokeWidth="2"/>
+      <path d="M50 7 L58 9 L50 12 Z" fill={flagC}/>
+
+      {/* barra do A em paper */}
+      <path d="M38 44 L62 44" stroke={PAPER} strokeWidth="3"/>
+    </svg>
+  );
+}
+
+// ═══════════════════════════════════════════════════════════════
+// 6 tipografias — agora com pesos mais GROSSOS
+// ═══════════════════════════════════════════════════════════════
+const TYPES = [
+  { id:'W1', name:'Space Grotesk 700',  family:"'Space Grotesk', sans-serif",  weight:700, ls:-1.2, accentWeight:700, note:'Sans grosso · contemporâneo' },
+  { id:'W2', name:'Fraunces 800',       family:"'Fraunces', serif",            weight:800, ls:-1.4, accentWeight:900, note:'Serif robusto · editorial pesado' },
+  { id:'W3', name:'Fraunces 900 italic', family:"'Fraunces', serif",           weight:900, ls:-1.6, accentWeight:900, italic:true, note:'Display extremo · narrativa' },
+  { id:'W4', name:'Archivo Black',      family:"'Archivo Black', sans-serif",  weight:400, ls:-1.4, accentWeight:400, note:'Statement · força bruta' },
+  { id:'W5', name:'Bricolage 800',      family:"'Bricolage Grotesque', sans-serif", weight:800, ls:-2.0, accentWeight:800, note:'Brand display · memorável' },
+  { id:'W6', name:'Space Grotesk 600',  family:"'Space Grotesk', sans-serif",  weight:600, ls:-1.0, accentWeight:700, note:'Mais contido (referência)' },
+];
+
+const SHADOWS = [
+  { mode: 'none',     name: 'Sem sombra',            note:'referência · cume puro' },
+  { mode: 'solid',    name: 'Pirâmide sólida',       note:'uma pirâmide cinza atrás' },
+  { mode: 'steps',    name: 'Escadinha (degraus)',   note:'pirâmide em degraus atrás' },
+  { mode: 'steps-2x', name: 'Escadinha · 2 camadas', note:'duas pirâmides em degraus' },
+  { mode: 'twin',     name: 'Pirâmides gêmeas',      note:'duas pirâmides cheias' },
+];
+
+// ═══════════════════════════════════════════════════════════════
+// Lockup
+// ═══════════════════════════════════════════════════════════════
+function Lockup({ type, size = 56, shadowMode = 'steps', accent = ACCENT, color = INK }) {
+  const word = (
+    <span style={{
+      fontFamily: type.family, fontWeight: type.weight,
+      fontStyle: type.italic ? 'italic' : 'normal',
+      fontSize: size * 0.72, letterSpacing: type.ls,
+      color, lineHeight: 1,
+    }}>
+      Atinge<span style={{ color: accent, fontWeight: type.accentWeight }}>HUB</span>
+    </span>
+  );
+  return (
+    <div style={{ display:'flex', alignItems:'center', gap: size*0.34 }}>
+      <CumeMark size={size*1.6} color={color} accent={accent} shadowMode={shadowMode}/>
+      <div style={{ display:'flex', flexDirection:'column', gap: 7 }}>
+        {word}
+        <span style={{
+          fontFamily:"'IBM Plex Mono', monospace", fontSize: 9,
+          letterSpacing: 2.4, textTransform:'uppercase',
+          color: MUTE, lineHeight: 1,
+        }}>IA para o seu negócio</span>
+      </div>
+    </div>
+  );
+}
+
+// ═══════════════════════════════════════════════════════════════
+// APP
+// ═══════════════════════════════════════════════════════════════
+function App() {
+  return (
+    <DesignCanvas>
+      {/* Intro */}
+      <div style={{ padding:'0 60px 48px' }}>
+        <div style={{ fontSize: 11, fontFamily:"'IBM Plex Mono', monospace", letterSpacing: 2, textTransform:'uppercase', color: MUTE, marginBottom: 10 }}>
+          AtingeHUB · Testes Cume · pesos grossos + sombra-pirâmide
+        </div>
+        <div style={{ fontSize: 44, fontWeight: 700, letterSpacing: -1.4, color: INK, fontFamily:"'Space Grotesk', sans-serif", lineHeight: 1.05, marginBottom: 16, maxWidth: 1000 }}>
+          Cume com mais peso e profundidade.
+        </div>
+        <div style={{ fontSize: 15, color: MUTE, lineHeight: 1.55, fontFamily:"'Space Grotesk', sans-serif", textWrap:'pretty', maxWidth: 820 }}>
+          Dois eixos de teste: <b style={{ color: INK }}>peso da tipografia</b> (mais grosso) e <b style={{ color: INK }}>pirâmide-sombra atrás</b> (escadinha cinza, e variações). Compare lado a lado.
+        </div>
+      </div>
+
+      {/* SEÇÃO 1 — só o símbolo · 5 modos de sombra */}
+      <DCSection
+        title="Símbolo · 5 modos de sombra"
+        subtitle="Foco isolado no mark, sem wordmark"
+        gap={22}
+      >
+        {SHADOWS.map((s, i) => (
+          <DCArtboard key={i} label={`${i+1} · ${s.name}`} width={260} height={260}>
+            <div style={{ width:'100%', height:'100%', display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center', background:'#fff', gap: 14, padding: 16 }}>
+              <CumeMark size={150} shadowMode={s.mode}/>
+              <div style={{ fontFamily:"'IBM Plex Mono', monospace", fontSize: 8.5, color: MUTE, letterSpacing: 1.2, textTransform:'uppercase', textAlign:'center', maxWidth: 220, lineHeight: 1.5 }}>
+                {s.note}
+              </div>
+            </div>
+          </DCArtboard>
+        ))}
+      </DCSection>
+
+      {/* SEÇÃO 2 — escadinha (steps) com 6 pesos de tipografia */}
+      <DCSection
+        title="Sombra escadinha · 6 pesos de tipografia"
+        subtitle="O modo que você pediu · combinado com cada peso de fonte"
+        gap={24}
+      >
+        {TYPES.map((t, i) => (
+          <DCArtboard key={i} label={`${t.id} · ${t.name}`} width={460} height={210}>
+            <div style={{ width:'100%', height:'100%', display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center', background:'#fff', gap: 10, padding: 22 }}>
+              <Lockup type={t} size={52} shadowMode="steps"/>
+              <div style={{ fontFamily:"'IBM Plex Mono', monospace", fontSize: 8, color: MUTE, letterSpacing: 1.2, textTransform:'uppercase', textAlign:'center' }}>
+                {t.note}
+              </div>
+            </div>
+          </DCArtboard>
+        ))}
+      </DCSection>
+
+      {/* SEÇÃO 3 — escadinha 2x com 6 pesos */}
+      <DCSection
+        title="Sombra escadinha · 2 camadas"
+        subtitle="Mais profundidade · duas pirâmides em degraus atrás"
+        gap={24}
+      >
+        {TYPES.map((t, i) => (
+          <DCArtboard key={i} label={`${t.id} · ${t.name}`} width={460} height={210}>
+            <div style={{ width:'100%', height:'100%', display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center', background:'#fff', gap: 10, padding: 22 }}>
+              <Lockup type={t} size={52} shadowMode="steps-2x"/>
+              <div style={{ fontFamily:"'IBM Plex Mono', monospace", fontSize: 8, color: MUTE, letterSpacing: 1.2, textTransform:'uppercase', textAlign:'center' }}>
+                {t.note}
+              </div>
+            </div>
+          </DCArtboard>
+        ))}
+      </DCSection>
+
+      {/* SEÇÃO 4 — comparativo direto · top 3 pesos × 5 sombras */}
+      <DCSection
+        title="Matriz · 3 pesos × 5 sombras"
+        subtitle="Compare o efeito da pirâmide-sombra em cada peso"
+        gap={20}
+      >
+        {[TYPES[1], TYPES[3], TYPES[4]].map(t =>
+          SHADOWS.map((s, j) => (
+            <DCArtboard key={`${t.id}-${j}`} label={`${t.name} · ${s.name}`} width={400} height={170}>
+              <div style={{ width:'100%', height:'100%', display:'flex', alignItems:'center', justifyContent:'center', background:'#fff', padding: 18 }}>
+                <Lockup type={t} size={44} shadowMode={s.mode}/>
+              </div>
+            </DCArtboard>
+          ))
+        )}
+      </DCSection>
+
+      {/* SEÇÃO 5 — fundo escuro */}
+      <DCSection
+        title="Fundo escuro · sombra escadinha"
+        subtitle="Sombra em cinza-escuro sobre INK"
+        gap={22}
+      >
+        {TYPES.slice(0, 4).map((t, i) => (
+          <DCArtboard key={i} label={`${t.id} · ${t.name}`} width={460} height={210} style={{ background: INK }}>
+            <div style={{ width:'100%', height:'100%', display:'flex', alignItems:'center', justifyContent:'center', padding: 22 }}>
+              <Lockup type={t} size={52} shadowMode="steps" color={PAPER} accent={ACCENT}/>
+            </div>
+          </DCArtboard>
+        ))}
+      </DCSection>
+
+      {/* Próximos passos */}
+      <div style={{ padding:'0 60px 80px' }}>
+        <div style={{
+          width: 720, padding: 28, background: '#fff', borderLeft: `3px solid ${ACCENT}`,
+          fontFamily:"'Space Grotesk', sans-serif", boxShadow:'0 1px 3px rgba(0,0,0,0.08)',
+        }}>
+          <div style={{ fontSize: 11, fontFamily:"'IBM Plex Mono', monospace", letterSpacing: 2, textTransform:'uppercase', color: MUTE, marginBottom: 10 }}>
+            Próximos passos
+          </div>
+          <ul style={{ margin: 0, paddingLeft: 18, fontSize: 13, color: INK, lineHeight: 1.7 }}>
+            <li>Diga qual <b>peso</b> (W1–W6) e qual <b>modo de sombra</b> (1–5) você gostou</li>
+            <li>Posso ajustar tom de cinza, deslocamento e proporção da escadinha</li>
+            <li>Depois aplico a paleta final e construímos as variações de tamanho</li>
+          </ul>
+        </div>
+      </div>
+    </DesignCanvas>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById('root')).render(<App/>);
+</script>
+</body>
+</html>

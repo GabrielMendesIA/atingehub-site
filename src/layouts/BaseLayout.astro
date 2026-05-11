@@ -12,15 +12,17 @@ interface Props {
   type?: 'website' | 'article';
   noindex?: boolean;
   jsonLd?: object | object[];
+  productContext?: string;
 }
 
 const props = Astro.props;
+const { productContext, ...seoProps } = props;
 ---
 
 <!doctype html>
-<html lang="pt-BR">
+<html lang="pt-BR" data-product={productContext}>
   <head>
-    <SEO {...props} />
+    <SEO {...seoProps} />
   </head>
   <body>
     <Header />

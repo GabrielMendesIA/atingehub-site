@@ -1,17 +1,19 @@
 ---
 import { site, whatsappLink } from '../config/site';
+import LogoMark from './LogoMark.astro';
+import Wordmark from './Wordmark.astro';
 
 const year = new Date().getFullYear();
 
 const portfolio = [
-  { label: 'Vitrine', href: '/portfolio/vitrine' },
-  { label: 'Cérebro', href: '/portfolio/cerebro' },
-  { label: 'Bancada', href: '/portfolio/bancada' },
-  { label: 'Engrenagens', href: '/portfolio/engrenagens' },
-  { label: 'Cadência', href: '/portfolio/cadencia' },
-  { label: 'Balcão', href: '/portfolio/balcao' },
-  { label: 'Voz', href: '/portfolio/voz' },
-  { label: 'Bússola', href: '/portfolio/bussola' },
+  { label: 'Vitrine', href: '/portfolio/vitrine', color: 'var(--vitrine)' },
+  { label: 'Cérebro', href: '/portfolio/cerebro', color: 'var(--cerebro)' },
+  { label: 'Bancada', href: '/portfolio/bancada', color: 'var(--bancada)' },
+  { label: 'Engrenagens', href: '/portfolio/engrenagens', color: 'var(--engrenagens)' },
+  { label: 'Cadência', href: '/portfolio/cadencia', color: 'var(--cadencia)' },
+  { label: 'Balcão', href: '/portfolio/balcao', color: 'var(--balcao)' },
+  { label: 'Voz', href: '/portfolio/voz', color: 'var(--voz)' },
+  { label: 'Bússola', href: '/portfolio/bussola', color: 'var(--bussola)' },
 ];
 
 const empresa = [
@@ -25,36 +27,39 @@ const empresa = [
 ---
 
 <footer class="site-footer">
-  <div class="container-page py-16 grid gap-12 md:grid-cols-[1.5fr_1fr_1fr_1fr]">
-    <div>
-      <a href="/" class="brand-row">
-        <span class="brand-mark">A</span>
-        <span class="brand-name">{site.name}</span>
+  <div class="container-page footer-grid">
+    <div class="footer-brand">
+      <a href="/" class="brand-row" aria-label="AtingeHUB — Home">
+        <LogoMark size={28} />
+        <Wordmark size="md" />
       </a>
-      <p class="mt-5 text-sm leading-relaxed text-[var(--color-ink-soft)] max-w-sm">
-        {site.manifesto}
-      </p>
-      <div class="mt-6 flex gap-3">
-        <a href={whatsappLink()} target="_blank" rel="noopener" class="btn btn-whatsapp text-sm">
-          WhatsApp
+      <p class="footer-manifesto">{site.manifesto}</p>
+      <div class="footer-ctas">
+        <a href={whatsappLink()} target="_blank" rel="noopener" class="btn btn-primary">
+          $ conversar
         </a>
-        <a href={site.social.instagram} target="_blank" rel="noopener" class="btn btn-ghost text-sm">
-          Instagram
+        <a href={site.social.instagram} target="_blank" rel="noopener" class="btn btn-ghost">
+          @{site.contact.instagram}
         </a>
       </div>
     </div>
 
     <div>
-      <h4 class="footer-heading">Portfólio</h4>
+      <p class="footer-heading">Portfólio</p>
       <ul class="footer-list">
         {portfolio.map((item) => (
-          <li><a href={item.href}>{item.label}</a></li>
+          <li>
+            <a href={item.href} class="footer-product">
+              <span class="dot" style={`background: ${item.color}`}></span>
+              {item.label}
+            </a>
+          </li>
         ))}
       </ul>
     </div>
 
     <div>
-      <h4 class="footer-heading">Empresa</h4>
+      <p class="footer-heading">Empresa</p>
       <ul class="footer-list">
         {empresa.map((item) => (
           <li><a href={item.href}>{item.label}</a></li>
@@ -63,7 +68,7 @@ const empresa = [
     </div>
 
     <div>
-      <h4 class="footer-heading">Devs & parceiros</h4>
+      <p class="footer-heading">Devs & parceiros</p>
       <ul class="footer-list">
         <li><a href="https://stack.atingehub.com.br" target="_blank" rel="noopener">AtingeHub Stack</a></li>
         <li><a href={site.social.github} target="_blank" rel="noopener">GitHub</a></li>
@@ -71,58 +76,120 @@ const empresa = [
     </div>
   </div>
 
-  <div class="container-page py-6 flex flex-col md:flex-row items-start md:items-center justify-between gap-3 border-t border-[var(--color-line)] text-xs text-[var(--color-mute)]">
-    <span>© {year} {site.name}. {site.contact.address}. Atendimento na região de {site.contact.region.slice(0, 4).join(', ')}.</span>
-    <a href={`mailto:${site.legal.dpoEmail}`}>{site.legal.dpoEmail}</a>
+  <div class="container-page footer-meta">
+    <span class="mono">© {year} AtingeHUB · {site.contact.address} · Atende {site.contact.region.slice(0, 4).join(' · ')}</span>
+    <a href={`mailto:${site.legal.dpoEmail}`} class="mono">{site.legal.dpoEmail}</a>
   </div>
 </footer>
 
 <style>
   .site-footer {
-    background: var(--color-card);
-    border-top: 1px solid var(--color-line);
+    background: var(--bg-soft);
+    border-top: 1px solid var(--border);
     margin-top: var(--space-32);
+    padding-top: var(--space-16);
+    padding-bottom: var(--space-8);
+  }
+
+  .footer-grid {
+    display: grid;
+    gap: 48px;
+  }
+  @media (min-width: 768px) {
+    .footer-grid {
+      grid-template-columns: 1.5fr 1fr 1fr 1fr;
+      gap: 64px;
+    }
+  }
+
+  .footer-brand {
+    max-width: 380px;
   }
 
   .brand-row {
     display: inline-flex;
     align-items: center;
-    gap: 0.625rem;
-    font-family: var(--font-display);
-    font-size: 1.25rem;
-    font-weight: 500;
-    color: var(--color-ink);
+    gap: 12px;
+    color: var(--text);
   }
-  .brand-mark {
-    width: 2rem; height: 2rem;
-    border-radius: var(--radius-full);
-    background: var(--color-ink);
-    color: var(--color-paper);
-    display: grid; place-items: center;
-    font-family: var(--font-display);
-    font-weight: 600;
-    font-size: 1.125rem;
-    font-style: italic;
+  .brand-row:hover {
+    color: var(--text);
+  }
+
+  .footer-manifesto {
+    margin-top: 18px;
+    color: var(--text-muted);
+    font-size: 14px;
+    line-height: 1.7;
+  }
+
+  .footer-ctas {
+    margin-top: 22px;
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
   }
 
   .footer-heading {
-    font-family: var(--font-body);
-    font-size: 0.75rem;
-    font-weight: 600;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 500;
     text-transform: uppercase;
-    letter-spacing: 0.12em;
-    color: var(--color-mute);
-    margin-bottom: 1rem;
+    letter-spacing: 1.5px;
+    color: var(--text-dim);
+    margin-bottom: 18px;
   }
 
   .footer-list {
     display: flex;
     flex-direction: column;
-    gap: 0.625rem;
-    font-size: 0.95rem;
+    gap: 12px;
+    list-style: none;
   }
   .footer-list a {
-    color: var(--color-ink-soft);
+    color: var(--text-muted);
+    font-size: 14px;
+    transition: color 0.15s;
   }
-  .footer-list a:hover { color: var(--color-ink); }
+  .footer-list a:hover {
+    color: var(--text);
+  }
+  .footer-product {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .footer-product .dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .footer-meta {
+    margin-top: var(--space-16);
+    padding-top: 24px;
+    border-top: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: flex-start;
+  }
+  @media (min-width: 768px) {
+    .footer-meta {
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+    }
+  }
+  .footer-meta .mono {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--text-dim);
+  }
+  .footer-meta a.mono:hover {
+    color: var(--text);
+  }
 </style>

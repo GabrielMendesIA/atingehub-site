@@ -1,5 +1,6 @@
 ---
 import { whatsappLink } from '../config/site';
+import LogoMark from './LogoMark.astro';
 
 interface Props {
   eyebrow?: string;
@@ -7,6 +8,7 @@ interface Props {
   subtitle?: string;
   primaryCta?: { label: string; href: string; external?: boolean };
   secondaryCta?: { label: string; href: string };
+  withLogoMark?: boolean;
 }
 
 const {
@@ -14,19 +16,29 @@ const {
   title,
   subtitle,
   primaryCta = {
-    label: 'Falar no WhatsApp',
+    label: '$ iniciar conversa',
     href: whatsappLink(),
     external: true,
   },
   secondaryCta,
+  withLogoMark = false,
 } = Astro.props;
 ---
 
 <section class="hero">
   <div class="container-page">
-    {eyebrow && <p class="eyebrow">{eyebrow}</p>}
+    {withLogoMark && (
+      <div class="hero-mark">
+        <LogoMark size={56} glow />
+      </div>
+    )}
+    {eyebrow && (
+      <p class="eyebrow">
+        <span class="accent">●</span> {eyebrow}
+      </p>
+    )}
     <h1 class="hero-title" set:html={title} />
-    {subtitle && <p class="hero-subtitle">{subtitle}</p>}
+    {subtitle && <p class="hero-subtitle" set:html={subtitle} />}
     <div class="hero-ctas">
       <a
         href={primaryCta.href}
@@ -47,27 +59,40 @@ const {
 
 <style>
   .hero {
-    padding: var(--space-24) 0 var(--space-16);
+    padding: 110px 0 70px;
   }
+  @media (max-width: 768px) {
+    .hero {
+      padding: 70px 0 50px;
+    }
+  }
+
+  .hero-mark {
+    margin-bottom: 24px;
+  }
+
   .hero-title {
-    margin-top: 0.75rem;
-    max-width: 52rem;
+    margin-top: 20px;
+    max-width: 920px;
+    font-size: clamp(40px, 5.5vw, 76px);
   }
-  .hero-title :global(em) {
-    font-style: italic;
-    color: var(--color-accent-strong);
-  }
+
   .hero-subtitle {
-    margin-top: 1.25rem;
-    font-size: 1.125rem;
-    color: var(--color-ink-soft);
-    max-width: 42rem;
-    line-height: 1.6;
+    margin-top: 22px;
+    color: var(--text-muted);
+    font-size: 17px;
+    line-height: 1.7;
+    max-width: 660px;
   }
+  .hero-subtitle :global(strong) {
+    color: var(--text);
+    font-weight: 500;
+  }
+
   .hero-ctas {
-    margin-top: 2rem;
+    margin-top: 36px;
     display: flex;
     flex-wrap: wrap;
-    gap: 0.75rem;
+    gap: 12px;
   }
 </style>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 310 180" width="310" height="180" fill="none" shape-rendering="geometricPrecision">
+  <title>Lockup empilhado · fundo escuro</title>
+<defs>
+    
+  </defs>
+  <g transform="translate(110,0)">
+    <path d="M16 64L28 42L40 64Z" fill="#4A4A4A"></path>
+    <path d="M60 64L74 38L88 64Z" fill="#8A8A8A"></path>
+    <path d="M24 64L50 16L76 64Z" fill="#F5F3EE"></path>
+    <path d="M50 16L50 6" stroke="#F5F3EE" stroke-width="2"></path>
+    <path d="M50 7L58 9L50 12Z" fill="#F5F3EE"></path>
+    <path d="M38 44L62 44" stroke="#0A0A0A" stroke-width="3"></path>
+  </g>
+  <g transform="translate(0,90)">
+    <text x="60" y="48" class="fr800" font-size="46" fill="#F5F3EE" text-anchor="start">Atinge<tspan class="fr900" fill="#F5F3EE">HUB</tspan></text>
+    <text x="155" y="72" class="mono" font-size="8" fill="#8A8A8A" text-anchor="middle">IA para o seu negócio</text>
+  </g>
+</svg>

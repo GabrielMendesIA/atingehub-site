@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 220" width="340" height="220">
+  <title>AtingeHUB · Cartão de visita S3 · frente · 85×55mm</title>
+  <defs>
+    
+  </defs>
+  <rect width="340" height="220" fill="#0A0A0A"></rect>
+  <g transform="translate(28,28) scale(0.62)">
+    <rect x="2" y="2" width="96" height="76" rx="6" fill="#F5F3EE"></rect>
+      <path d="M16 64L28 42L40 64Z" fill="#8A8A8A"></path>
+      <path d="M60 64L74 38L88 64Z" fill="#4A4A4A"></path>
+      <path d="M24 64L50 16L76 64Z" fill="#0A0A0A"></path>
+      <path d="M50 16L50 6" stroke="#0A0A0A" stroke-width="2"></path>
+      <path d="M50 7L58 9L50 12Z" fill="#0A0A0A"></path>
+      <path d="M38 44L62 44" stroke="#F5F3EE" stroke-width="3"></path>
+  </g>
+  <g transform="translate(95,40)">
+    <text class="fr800" font-size="26" fill="#F5F3EE" y="22">Atinge<tspan class="fr900" fill="#F5F3EE">HUB</tspan></text>
+    <text class="mono" font-size="6.5" fill="#8A8A8A" y="38">IA para o seu negócio</text>
+  </g>
+  <g transform="translate(28,128)">
+    <text class="sans" font-weight="600" font-size="12" fill="#F5F3EE" y="0">Gabriel Mendes</text>
+    <text class="sans" font-size="9" fill="#8A8A8A" y="16">Fundador · co-criação de sistemas IA</text>
+  </g>
+  <g transform="translate(28,180)">
+    <text class="sans" font-size="9" fill="#F5F3EE" y="0">mendesofc1@gmail.com</text>
+    <text class="sans" font-size="9" fill="#8A8A8A" y="14">+55 15 9 9999 9999</text>
+  </g>
+  <text class="mono" font-size="6" fill="#8A8A8A" x="312" y="200" text-anchor="end">atingehub.com.br</text>
+</svg>

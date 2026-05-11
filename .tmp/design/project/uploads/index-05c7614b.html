@@ -1,0 +1,1007 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AtingeHub — Mentoria e implementação de IA acompanhada</title>
+    <meta name="description" content="Uma IA rodando no seu negócio. Obsidian, Claude Code, NotebookLM, n8n e Chatwoot integrados — implementação acompanhada em paralelo ao uso.">
+    <meta property="og:title" content="AtingeHub — IA implementada no seu negócio">
+    <meta property="og:description" content="Você não peca por não saber. Peca por não ter tempo de implementar. Acompanho a execução em paralelo ao uso.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Scrollspy -->
+    <nav class="scrollspy" aria-label="Navegação por seções">
+        <div class="scrollspy-dot" data-target="hero"><span class="scrollspy-label">início</span></div>
+        <div class="scrollspy-dot" data-target="quem"><span class="scrollspy-label">você</span></div>
+        <div class="scrollspy-dot" data-target="wheel"><span class="scrollspy-label">360°</span></div>
+        <div class="scrollspy-dot" data-target="fold-claude"><span class="scrollspy-label">claude</span></div>
+        <div class="scrollspy-dot" data-target="fold-arsenal"><span class="scrollspy-label">arsenal</span></div>
+        <div class="scrollspy-dot" data-target="fold-obsidian"><span class="scrollspy-label">obsidian</span></div>
+        <div class="scrollspy-dot" data-target="fold-notebooklm"><span class="scrollspy-label">notebooklm</span></div>
+        <div class="scrollspy-dot" data-target="fold-n8n"><span class="scrollspy-label">n8n</span></div>
+        <div class="scrollspy-dot" data-target="fold-chatwoot"><span class="scrollspy-label">chatwoot</span></div>
+        <div class="scrollspy-dot" data-target="modules"><span class="scrollspy-label">módulos</span></div>
+        <div class="scrollspy-dot" data-target="combos"><span class="scrollspy-label">combos</span></div>
+        <div class="scrollspy-dot" data-target="how"><span class="scrollspy-label">como</span></div>
+        <div class="scrollspy-dot" data-target="faq-section"><span class="scrollspy-label">FAQ</span></div>
+    </nav>
+
+    <div class="container">
+
+        <!-- BRAND HEADER -->
+        <header class="brand-bar" aria-label="AtingeHub">
+            <a class="brand-lockup" href="#hero" aria-label="AtingeHub — página inicial">
+                <svg class="brand-mark" viewBox="0 0 40 40" aria-hidden="true">
+                    <path d="M8 28 A 12 12 0 0 1 32 28" stroke="currentColor" stroke-width="1.4" fill="none" stroke-linecap="round"/>
+                    <path d="M32 12 A 12 12 0 0 1 8 12" stroke="currentColor" stroke-width="1.4" fill="none" stroke-linecap="round"/>
+                    <circle cx="20" cy="20" r="2" fill="var(--accent)"/>
+                </svg>
+                <span class="brand-word">Atinge<span class="brand-word-accent">Hub</span></span>
+            </a>
+        </header>
+
+        <!-- HERO -->
+        <section id="hero">
+            <div class="hero-terminal">
+                <div class="term-bar">
+                    <div class="term-dots">
+                        <span class="term-dot r"></span>
+                        <span class="term-dot y"></span>
+                        <span class="term-dot g"></span>
+                    </div>
+                    <span class="term-title">atingehub@operacao · ~/seu-negocio</span>
+                </div>
+                <div class="term-body">
+                    <div class="term-line d1"><span class="term-prompt">$</span> atingehub <span class="term-str">--deploy</span> ia-no-seu-negocio <span class="term-comment">// implementação acompanhada + mentoria</span></div>
+                    <div class="term-line d2"><span class="term-comment">→ carregando ferramentas</span> <span class="term-var">[obsidian, claude-code, notebooklm, n8n, chatwoot]</span></div>
+                    <div class="term-line d3"><span class="term-comment">→ conectando</span> whatsapp <span class="term-ok">✓</span>  crm <span class="term-ok">✓</span>  segundo cérebro <span class="term-ok">✓</span>  planilhas <span class="term-ok">✓</span>  agenda <span class="term-ok">✓</span>  marketing <span class="term-ok">✓</span></div>
+                    <div class="term-line d4"><span class="term-comment">→ calibrando agentes com o vocabulário do seu negócio...</span></div>
+                    <div class="term-line d5"><span class="term-ok">✓ sistema rodando 24h · multi-agentes · +50 habilidades desbloqueadas</span></div>
+                    <div class="term-line d6"><span class="term-prompt">$</span> <span class="term-cursor"></span></div>
+                </div>
+            </div>
+
+            <h1 class="hero-headline">
+                Uma <span class="accent">IA rodando no seu negócio</span>.<br>
+                Não um chatbot. Um sistema.
+            </h1>
+            <p class="hero-sub">
+                Obsidian + Claude Code + NotebookLM + n8n + Chatwoot — integrados, calibrados e entregues pela AtingeHub.<br>
+                Você não para a empresa pra "estudar tecnologia". A AtingeHub acompanha a implementação em paralelo ao uso.
+            </p>
+            <div class="hero-cta-row">
+                <a href="#cta" class="btn btn-primary">$ iniciar conversa →</a>
+                <a href="#wheel" class="btn btn-ghost">ver o sistema completo</a>
+            </div>
+            <p class="hero-meta">2 meses · 360° integrado · implementação modular · sem lock-in</p>
+        </section>
+
+        <!-- QUEM TE ACOMPANHA NA JORNADA -->
+        <section id="quem">
+            <div class="section-header">
+                <span class="highlight">02</span>
+                <span class="subtitle">quem te acompanha na jornada</span>
+            </div>
+            <p class="statement reveal-on-scroll" style="margin-top:1.4rem;">
+                <span class="stmt-prompt">&gt;</span> <strong>AtingeHub é o sistema. Gabriel é quem você já conhecia</strong> — de volta ao varejo com a stack certa pras dores que ele também viveu nos últimos 5 anos.
+            </p>
+            <div class="diff-layout">
+                <div class="diff-photo reveal-on-scroll">
+                    <div class="diff-photo-frame">
+                        <img src="assets/me/gabriel.jpg" alt="Gabriel Mendes — fundador da AtingeHub" loading="lazy">
+                    </div>
+                    <span class="diff-photo-cap">// <strong>uma janela pro mundo real</strong> — quem você conhecia operando hoje no que há de mais completo no mercado</span>
+                </div>
+                <div class="diff-block reveal-on-scroll">
+                    <h3>// você já o conhecia</h3>
+                    <p>Cinco anos vendendo <strong>maquininha de cartão e crediário</strong> pra empresários de Sorocaba. Gabriel é aquele que aparecia na sua loja, resolvia a crise da máquina, sentava pra explicar a taxa. A AtingeHub <strong>não está começando do zero</strong> — está continuando uma relação que já existe.</p>
+
+                    <h3>// perfil sistêmico desde antes da pivotagem</h3>
+                    <p>Antes mesmo de pivotar pra IA, Gabriel já era o profissional que <strong>olhava o sistema todo</strong> mesmo trabalhando com um produto. Generalista que se aprofunda em cada detalhe, estrategista que entende a operação real do empresário — ofício formado em campo, não em sala de aula.</p>
+
+                    <h3>// uma janela pro mundo real</h3>
+                    <p>Os mesmos cinco anos que serviam à venda da maquininha foram usados pra estudar o que vinha do outro lado: agentes de IA, vault de conhecimento, automação visual, CRM multicanal. <strong>Não foi atrás de feira nem de palco</strong> — foi onde se constrói o que está chegando aqui agora.</p>
+
+                    <h3>// pivot do ofício, base mantida</h3>
+                    <p>A pivotagem do produto financeiro pra IA aplicada manteve <strong>o que já fazia diferença</strong>: conhecer dor de empresário de varejo de verdade, falar a língua de quem fatura entre R$ 30k e R$ 300k por mês, entender o que é viável instalar numa loja com 3 funcionários. As skills novas servem pra resolver as dores que sempre estiveram ali.</p>
+
+                    <h3>// trouxe o melhor da stack que existe hoje</h3>
+                    <p>Claude Code, Obsidian, NotebookLM, n8n, Chatwoot — não são invenções da AtingeHub. São <strong>o que há de mais robusto e aberto no mercado</strong>, integrado num conjunto que o cliente pode usar sem depender da AtingeHub depois. O sistema fica no servidor do cliente; a AtingeHub fica na curadoria, calibração e evolução.</p>
+
+                    <h3>// atendimento, relação forte, resultado rápido</h3>
+                    <p>O que sempre definiu Gabriel como vendedor é o que define a entrega da AtingeHub agora: <strong>atender quando precisa</strong>, manter relação forte pelo tempo todo, produzir resultado rápido e engajado. Cliente e AtingeHub são <strong>co-arquitetos</strong> das soluções — cada solução nasce de um problema concreto da empresa, não de catálogo.</p>
+                </div>
+            </div>
+            <div class="section-cta reveal-on-scroll">
+                <a href="https://wa.me/5515998554455?text=Vi%20a%20se%C3%A7%C3%A3o%20%22Quem%20te%20acompanha%20na%20jornada%22%20e%20quero%20marcar%20uma%20conversa" class="fold-cta" target="_blank" rel="noopener">→ Marcar conversa de dimensionamento</a>
+            </div>
+        </section>
+
+        <!-- 360 WHEEL -->
+        <section id="wheel">
+            <div class="wheel-wrap">
+                <div class="wheel-eyebrow">// o sistema integrado</div>
+                <h2 class="wheel-title">Cinco ferramentas conversando entre si cobrem o ciclo inteiro: atrair, captar, relacionar, converter e gerenciar.</h2>
+                <div class="wheel-meta"><span class="wheel-360">360°</span> · integrado · ~2 meses</div>
+
+                <div class="wheel-svg-wrap">
+                    <svg class="wheel-svg" viewBox="0 0 700 340" aria-hidden="true">
+                        <defs>
+                            <!-- Infinity stroke gradient — 5 tool colors in sequence -->
+                            <linearGradient id="w-inf" x1="0" y1="0" x2="1" y2="0">
+                                <stop offset="0%" stop-color="#D97757"/>
+                                <stop offset="25%" stop-color="#a78bfa"/>
+                                <stop offset="50%" stop-color="#EA4B71"/>
+                                <stop offset="75%" stop-color="#4285F4"/>
+                                <stop offset="100%" stop-color="#1F93FF"/>
+                            </linearGradient>
+                            <!-- Obsidian gem gradient -->
+                            <linearGradient id="w-ob" x1="0" y1="0" x2="1" y2="1">
+                                <stop offset="0" stop-color="#c4b5fd"/>
+                                <stop offset="1" stop-color="#7c3aed"/>
+                            </linearGradient>
+                        </defs>
+
+                        <!-- Soft halo: wide gradient stroke behind main path -->
+                        <path class="w-halo" d="M 350 170 C 350 50, 150 50, 150 170 C 150 290, 350 290, 350 170 C 350 50, 550 50, 550 170 C 550 290, 350 290, 350 170"
+                              stroke="url(#w-inf)" stroke-width="28" fill="none" opacity=".10" stroke-linecap="round"/>
+
+                        <!-- Main infinity path with color-graded stroke -->
+                        <path class="w-inf-path" d="M 350 170 C 350 50, 150 50, 150 170 C 150 290, 350 290, 350 170 C 350 50, 550 50, 550 170 C 550 290, 350 290, 350 170"
+                              stroke="url(#w-inf)" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+
+                        <!-- Flowing dots along the infinity (animated via CSS) -->
+                        <path class="w-flow" d="M 350 170 C 350 50, 150 50, 150 170 C 150 290, 350 290, 350 170 C 350 50, 550 50, 550 170 C 550 290, 350 290, 350 170"
+                              stroke="url(#w-inf)" stroke-width="5" fill="none" stroke-linecap="round"
+                              stroke-dasharray="2 22" opacity=".9"/>
+
+                        <!-- Verb labels — floating quadrants like Sprinthub -->
+                        <text class="w-verb" x="150" y="14" text-anchor="middle">atrair</text>
+                        <text class="w-verb" x="150" y="334" text-anchor="middle">captar</text>
+                        <text class="w-verb" x="350" y="14" text-anchor="middle">relacionar / nutrir</text>
+                        <text class="w-verb" x="550" y="14" text-anchor="middle">converter</text>
+                        <text class="w-verb" x="550" y="334" text-anchor="middle">gerenciar</text>
+
+                        <!-- Obsidian · top of left lobe (relacionar / atrair conhecimento) -->
+                        <g class="wheel-tool" data-tool="obsidian" transform="translate(220, 76)">
+                            <circle r="52" fill="#110a1c" stroke="#a78bfa" stroke-width="1.8"/>
+                            <image href="assets/logos/obsidian.cropped.png" x="-38" y="-38" width="76" height="76" preserveAspectRatio="xMidYMid meet"/>
+                        </g>
+
+                        <!-- Claude Code · center crossing (cérebro/motor de agentes) -->
+                        <g class="wheel-tool" data-tool="claude" transform="translate(350, 170)">
+                            <circle r="56" fill="#150d08" stroke="#D97757" stroke-width="2.2"/>
+                            <image href="assets/logos/claude-icon.cropped.png" x="-44" y="-36" width="88" height="72" preserveAspectRatio="xMidYMid meet"/>
+                        </g>
+
+                        <!-- n8n · bottom of left lobe (captar · motor de automação) -->
+                        <g class="wheel-tool" data-tool="n8n" transform="translate(220, 264)">
+                            <circle r="52" fill="#1a0a10" stroke="#EA4B71" stroke-width="1.8"/>
+                            <image href="assets/logos/n8n-icon.cropped.png" x="-40" y="-22" width="80" height="44" preserveAspectRatio="xMidYMid meet"/>
+                        </g>
+
+                        <!-- NotebookLM · top of right lobe (nutrir conhecimento) -->
+                        <g class="wheel-tool" data-tool="notebooklm" transform="translate(480, 76)">
+                            <circle r="52" fill="#081020" stroke="#4285F4" stroke-width="1.8"/>
+                            <image href="assets/logos/notebooklm-icon.cropped.png" x="-40" y="-24" width="80" height="48" preserveAspectRatio="xMidYMid meet"/>
+                        </g>
+
+                        <!-- Chatwoot · bottom of right lobe (gerenciar conversas) -->
+                        <g class="wheel-tool" data-tool="chatwoot" transform="translate(480, 264)">
+                            <circle r="52" fill="#08101f" stroke="#1F93FF" stroke-width="1.8"/>
+                            <image href="assets/logos/chatwoot-icon.cropped.png" x="-38" y="-38" width="76" height="76" preserveAspectRatio="xMidYMid meet"/>
+                        </g>
+                    </svg>
+                </div>
+            </div>
+        </section>
+
+        <!-- PROBLEMA -->
+        <section id="problema">
+            <div class="section-header">
+                <span class="highlight">01</span>
+                <span class="subtitle">o problema</span>
+            </div>
+            <div class="statement reveal-on-scroll">
+                <p><span class="stmt-prompt">$</span> <strong>Dono de empresa não peca por não saber o que é IA.</strong></p>
+                <p><span class="stmt-prompt">$</span> Peca por não ter 4 horas numa semana pra sentar e implementar.</p>
+                <p><span class="stmt-prompt">#</span> <em>Resultado:</em> o curso ficou na metade. O chatbot instalou, não calibrou, virou problema. A planilha continua sendo o CRM. O WhatsApp pessoal do dono continua sendo o suporte.</p>
+                <p><span class="stmt-prompt">#</span> Enquanto isso: venda cai sem aviso, mensagem sem resposta vira cliente do concorrente, funcionário atende diferente cada turno, e o dono continua sendo o gargalo de tudo.</p>
+                <p><span class="stmt-prompt">&gt;</span> <strong>Isso não é falta de ferramenta. É falta de alguém do lado destravando.</strong></p>
+            </div>
+        </section>
+
+        <!-- EIXO -->
+        <section id="eixo">
+            <div class="section-header">
+                <span class="highlight">03</span>
+                <span class="subtitle">o eixo</span>
+            </div>
+            <div class="statement reveal-on-scroll">
+                <p><span class="stmt-prompt">&gt;</span> A AtingeHub acompanha a execução <em>em paralelo ao uso</em> — sem você parar o negócio pra "estudar IA".</p>
+                <p><span class="stmt-prompt">&gt;</span> <strong>1 hora por semana.</strong> Tarefa pequena entre calls. Em 4 a 6 semanas, o primeiro módulo está rodando no seu negócio. Não em demo. No real.</p>
+                <p><span class="stmt-prompt">&gt;</span> Módulo entregue, depoimento seu. Se quiser avançar pro próximo, a gente volta à reunião de dimensionamento com o aprendizado do que já rodou.</p>
+            </div>
+        </section>
+
+        <!-- FOLD 01 — CLAUDE CODE -->
+        <section id="fold-claude" class="fold fold--claude">
+            <div class="fold-inner">
+                <div class="fold-meta">
+                    <span class="fold-num">01 / 05</span>
+                    <span class="fold-sep">·</span>
+                    <span class="fold-tool-tag">ferramenta · motor de agentes</span>
+                </div>
+                <div class="fold-header">
+                    <img class="fold-logo fold-logo--claude" src="assets/logos/claudecode-wordmark.cropped.png" alt="Claude Code">
+                    <h2 class="fold-title">Claude Code · <span class="tool-name">um funcionário de IA que conhece a sua empresa</span></h2>
+                </div>
+                <p class="fold-lead">
+                    A diferença entre <em>IA genérica</em> e <em>IA do seu negócio</em> está no contexto.
+                    Num <strong>documento simples (o "manual da empresa")</strong> você ensina o agente sobre a sua operação: vocabulário, regras, limites, tom de voz. A partir daí ele vira <strong>vários agentes especializados</strong> — um pra marketing, um pra atendimento, um pra gestão — cada um com acesso às ferramentas do seu dia a dia.
+                </p>
+
+                <div class="fold-viz">
+                    <div class="agents-board" id="agents-board">
+                        <div class="agent-card" data-delay="0">
+                            <div class="agent-name"><span class="dot"></span> agent:atendimento <span class="agent-role">· responde WhatsApp</span></div>
+                            <div class="agent-tools">
+                                <span class="agent-tool" data-tool="whatsapp"><span class="tool-dot"></span>whatsapp</span>
+                                <span class="agent-tool" data-tool="crm"><span class="tool-dot"></span>crm</span>
+                                <span class="agent-tool" data-tool="catalogo"><span class="tool-dot"></span>catálogo</span>
+                            </div>
+                        </div>
+                        <div class="agent-card" data-delay="1">
+                            <div class="agent-name"><span class="dot"></span> agent:marketing <span class="agent-role">· cria campanha</span></div>
+                            <div class="agent-tools">
+                                <span class="agent-tool" data-tool="insta"><span class="tool-dot"></span>instagram</span>
+                                <span class="agent-tool" data-tool="copy"><span class="tool-dot"></span>copy</span>
+                                <span class="agent-tool" data-tool="landing"><span class="tool-dot"></span>landing</span>
+                            </div>
+                        </div>
+                        <div class="agent-card" data-delay="2">
+                            <div class="agent-name"><span class="dot"></span> agent:gestao <span class="agent-role">· relatório diário</span></div>
+                            <div class="agent-tools">
+                                <span class="agent-tool" data-tool="sheets"><span class="tool-dot"></span>planilhas</span>
+                                <span class="agent-tool" data-tool="chatwoot"><span class="tool-dot"></span>chatwoot</span>
+                                <span class="agent-tool" data-tool="resumo"><span class="tool-dot"></span>resumo diário</span>
+                            </div>
+                        </div>
+                        <div class="agent-card" data-delay="3">
+                            <div class="agent-name"><span class="dot"></span> agent:conteudo <span class="agent-role">· pauta semanal</span></div>
+                            <div class="agent-tools">
+                                <span class="agent-tool" data-tool="obsidian"><span class="tool-dot"></span>obsidian</span>
+                                <span class="agent-tool" data-tool="notebook"><span class="tool-dot"></span>notebooklm</span>
+                                <span class="agent-tool" data-tool="agenda"><span class="tool-dot"></span>agenda editorial</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <ul class="fold-deliverables">
+                    <li>Manual da empresa pronto: vocabulário, regras, limites e tom de voz do seu negócio</li>
+                    <li>Rotina automatizada da sua operação (responder WhatsApp padrão, gerar descrição de produto, etc.)</li>
+                    <li>Vários agentes especializados — marketing, gestão, conteúdo, pré-venda — cada um com a função dele</li>
+                    <li>Agente conectado ao seu segundo cérebro (Obsidian e/ou NotebookLM)</li>
+                    <li>Travas de segurança: a IA não expõe dado sigiloso e não executa ação destrutiva sem autorização</li>
+                </ul>
+                <div class="fold-footer">
+                    <span class="fold-footer-left">→ entrega o <strong>Módulo M3 · Agentes</strong></span>
+                    <span class="fold-footer-right">escopo e prazo dimensionados na reunião</span>
+                </div>
+                <a href="https://wa.me/5515998554455?text=Vi%20a%20se%C3%A7%C3%A3o%20do%20Claude%20Code%20e%20quero%20entender%20como%20aplicar%20agentes%20no%20meu%20neg%C3%B3cio" class="fold-cta" target="_blank" rel="noopener">→ Quero agentes assim no meu negócio</a>
+            </div>
+        </section>
+
+        <!-- FOLD 01.5 — ARSENAL DE SKILLS -->
+        <section id="fold-arsenal" class="fold fold--arsenal">
+            <div class="fold-inner">
+                <div class="fold-meta">
+                    <span class="fold-num">01 · extra</span>
+                    <span class="fold-sep">·</span>
+                    <span class="fold-tool-tag">arsenal · skills dos agentes</span>
+                </div>
+                <div class="fold-header">
+                    <h2 class="fold-title"><span class="tool-name">+50 habilidades</span> desbloqueadas — seu agente escolhe o kit.</h2>
+                </div>
+                <p class="fold-lead">
+                    Cada agente do seu negócio vem com um <strong>conjunto especializado de habilidades</strong>. Estas são as skills já prontas do <strong>arsenal Atinge</strong> — testadas, versionadas, prontas pra entrar em produção. <strong>Os módulos que você contrata (M1–M7) ditam quais agentes entram em campo primeiro</strong> e, portanto, quais skills são priorizadas. Arsenal novo entra sem custo adicional.
+                </p>
+
+                <div class="fold-viz">
+                    <div class="arsenal-grid">
+                        <!-- agente 1 · marketing & conteúdo -->
+                        <div class="arsenal-agent arsenal-agent--marketing">
+                            <div class="arsenal-head">
+                                <div class="arsenal-name"><span class="dot"></span> agent:marketing-conteúdo</div>
+                                <span class="arsenal-count">12 skills</span>
+                            </div>
+                            <div class="arsenal-role">cria campanhas, copy, redes sociais e pesquisa de mercado</div>
+                            <div class="arsenal-skills">
+                                <span class="arsenal-skill">copywriting</span>
+                                <span class="arsenal-skill">content-strategy</span>
+                                <span class="arsenal-skill">marketing-ideas</span>
+                                <span class="arsenal-skill">marketing-psychology</span>
+                                <span class="arsenal-skill">social-content</span>
+                                <span class="arsenal-skill">instagram</span>
+                                <span class="arsenal-skill">customer-research</span>
+                                <span class="arsenal-skill">competitor-alternatives</span>
+                                <span class="arsenal-skill">ai-image-generation</span>
+                                <span class="arsenal-skill">ai-video-generation</span>
+                                <span class="arsenal-skill">nano-banana-2</span>
+                                <span class="arsenal-skill">yt-search</span>
+                            </div>
+                        </div>
+
+                        <!-- agente 2 · segundo cérebro -->
+                        <div class="arsenal-agent arsenal-agent--brain">
+                            <div class="arsenal-head">
+                                <div class="arsenal-name"><span class="dot"></span> agent:segundo-cérebro</div>
+                                <span class="arsenal-count">11 skills</span>
+                            </div>
+                            <div class="arsenal-role">organiza conhecimento, documenta processos e alimenta o contexto da IA</div>
+                            <div class="arsenal-skills">
+                                <span class="arsenal-skill">obsidian-bases</span>
+                                <span class="arsenal-skill">obsidian-cli</span>
+                                <span class="arsenal-skill">obsidian-markdown</span>
+                                <span class="arsenal-skill">vault-sync-architecture</span>
+                                <span class="arsenal-skill">json-canvas</span>
+                                <span class="arsenal-skill">notebooklm</span>
+                                <span class="arsenal-skill">notebooklm-vault</span>
+                                <span class="arsenal-skill">defuddle</span>
+                                <span class="arsenal-skill">quote-flow</span>
+                                <span class="arsenal-skill">brainstorming</span>
+                                <span class="arsenal-skill">find-skills</span>
+                            </div>
+                        </div>
+
+                        <!-- agente 3 · automação -->
+                        <div class="arsenal-agent arsenal-agent--automation">
+                            <div class="arsenal-head">
+                                <div class="arsenal-name"><span class="dot"></span> agent:automação</div>
+                                <span class="arsenal-count">10 skills</span>
+                            </div>
+                            <div class="arsenal-role">integra sistemas, orquestra workflows e conecta ferramentas que não conversam</div>
+                            <div class="arsenal-skills">
+                                <span class="arsenal-skill">n8n-workflow-patterns</span>
+                                <span class="arsenal-skill">n8n-node-configuration</span>
+                                <span class="arsenal-skill">n8n-expression-syntax</span>
+                                <span class="arsenal-skill">n8n-code-javascript</span>
+                                <span class="arsenal-skill">n8n-code-python</span>
+                                <span class="arsenal-skill">n8n-validation-expert</span>
+                                <span class="arsenal-skill">n8n-mcp-tools-expert</span>
+                                <span class="arsenal-skill">n8n-scope</span>
+                                <span class="arsenal-skill">mcp-builder</span>
+                                <span class="arsenal-skill">mcp-integration</span>
+                            </div>
+                        </div>
+
+                        <!-- agente 4 · engenharia -->
+                        <div class="arsenal-agent arsenal-agent--engineering">
+                            <div class="arsenal-head">
+                                <div class="arsenal-name"><span class="dot"></span> agent:engenharia</div>
+                                <span class="arsenal-count">11 skills</span>
+                            </div>
+                            <div class="arsenal-role">constrói novos agentes, skills próprias do seu negócio e a infra que sustenta tudo</div>
+                            <div class="arsenal-skills">
+                                <span class="arsenal-skill">agent-development</span>
+                                <span class="arsenal-skill">agent-browser</span>
+                                <span class="arsenal-skill">skill-creator</span>
+                                <span class="arsenal-skill">skill-development</span>
+                                <span class="arsenal-skill">claude-automation-recommender</span>
+                                <span class="arsenal-skill">claude-md-improver</span>
+                                <span class="arsenal-skill">adapter-pattern</span>
+                                <span class="arsenal-skill">idempotency</span>
+                                <span class="arsenal-skill">rbac-guards</span>
+                                <span class="arsenal-skill">audit-trail</span>
+                                <span class="arsenal-skill">db-conventions</span>
+                            </div>
+                        </div>
+
+                        <!-- agente 5 · produto & web -->
+                        <div class="arsenal-agent arsenal-agent--product">
+                            <div class="arsenal-head">
+                                <div class="arsenal-name"><span class="dot"></span> agent:produto-web</div>
+                                <span class="arsenal-count">5 skills</span>
+                            </div>
+                            <div class="arsenal-role">landing, app, pagamento e dados — a parte visível pro cliente final</div>
+                            <div class="arsenal-skills">
+                                <span class="arsenal-skill">frontend-design</span>
+                                <span class="arsenal-skill">web-design-guidelines</span>
+                                <span class="arsenal-skill">vercel-react-best-practices</span>
+                                <span class="arsenal-skill">supabase-postgres-best-practices</span>
+                                <span class="arsenal-skill">stripe-best-practices</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="fold-footer">
+                    <span class="fold-footer-left">→ o arsenal entra em campo conforme <strong>os módulos M1–M7</strong> do seu plano</span>
+                    <span class="fold-footer-right">skill nova = sem custo extra · versionado no seu repositório</span>
+                </div>
+                <a href="https://wa.me/5515998554455?text=Vi%20o%20arsenal%20de%20skills%20e%20quero%20saber%20como%20aplicar%20no%20meu%20neg%C3%B3cio" class="fold-cta" target="_blank" rel="noopener">→ Quero esse arsenal funcionando aqui</a>
+            </div>
+        </section>
+
+        <!-- FOLD 02 — OBSIDIAN -->
+        <section id="fold-obsidian" class="fold fold--obsidian">
+            <div class="fold-inner">
+                <div class="fold-meta">
+                    <span class="fold-num">02 / 05</span>
+                    <span class="fold-sep">·</span>
+                    <span class="fold-tool-tag">ferramenta · segundo cérebro</span>
+                </div>
+                <div class="fold-header">
+                    <img class="fold-logo fold-logo--obsidian" src="assets/logos/obsidian.cropped.png" alt="Obsidian">
+                    <h2 class="fold-title">Obsidian · <span class="tool-name">o segundo cérebro de você e do seu time</span></h2>
+                </div>
+                <p class="fold-lead">
+                    Antes de ser do negócio, o segundo cérebro é <em>seu</em>. É onde <strong>você e seus colaboradores</strong> guardam aprendizados, anotações de call, decisões, provas de fornecedor, roteiros de atendimento, ideias de campanha — tudo linkado por contexto, não por pasta. Cada pessoa tem o seu vault, mas o conhecimento compartilhado alimenta o negócio inteiro.
+                </p>
+                <p class="fold-lead">
+                    <strong>O pulo do gato:</strong> esse vault é o combustível da sua IA. Quanto mais contexto o orquestrador e os subagentes têm sobre como você trabalha, como fala com cliente, quais são as suas regras não-escritas — mais <em>personalizada</em> fica a resposta. A IA genérica responde "manda um e-mail profissional". A IA com o seu vault responde "manda no tom que você usa com o fornecedor X, citando o acordo de 90 dias que vocês fecharam em março".
+                </p>
+
+                <div class="fold-viz">
+                    <div class="graph-wrap" id="graph-wrap">
+                        <div class="graph-chrome">
+                            <span class="graph-chrome-title">visualização em gráfico</span>
+                            <span class="graph-chrome-meta">vault · 612 notas · 1.840 links</span>
+                        </div>
+                        <svg class="graph-svg" id="graph-svg" viewBox="0 0 900 540" aria-hidden="true" preserveAspectRatio="xMidYMid meet">
+                            <g id="graph-stage">
+                                <g id="graph-edges"></g>
+                                <g id="graph-nodes"></g>
+                            </g>
+                        </svg>
+                        <div class="graph-label">// sua biblioteca ganhando conexões · arraste a página pra ver ela respirar</div>
+                    </div>
+                </div>
+
+                <ul class="fold-deliverables">
+                    <li>Vault pessoal do dono e 1–3 colaboradores — cada um com contexto próprio, conhecimento compartilhado via links</li>
+                    <li>Estrutura pronta por projetos, áreas, pessoas, recursos e arquivo — método PARA adaptado pro seu negócio</li>
+                    <li>Templates de nota — reunião, decisão, SOP, aprendizado de cliente — com etiquetas, data e links já padronizados</li>
+                    <li>30+ notas produzidas por você e o time — isso vira o <em>material de treino</em> da IA orquestradora</li>
+                    <li>Vault conectado ao agente: tudo que você escrever vira contexto pra resposta dele — quanto mais você usa, mais sua IA se parece com você</li>
+                    <li>Pelo menos 1 lista automática rodando (tarefas abertas, notas da semana, decisões pendentes)</li>
+                </ul>
+                <div class="fold-footer">
+                    <span class="fold-footer-left">→ entrega o <strong>Módulo M2 · Segundo cérebro</strong></span>
+                    <span class="fold-footer-right">escopo e prazo dimensionados na reunião</span>
+                </div>
+                <a href="https://wa.me/5515998554455?text=Vi%20a%20se%C3%A7%C3%A3o%20do%20Obsidian%20e%20quero%20montar%20o%20segundo%20c%C3%A9rebro%20do%20meu%20neg%C3%B3cio" class="fold-cta" target="_blank" rel="noopener">→ Quero meu segundo cérebro</a>
+            </div>
+        </section>
+
+        <!-- FOLD 03 — NOTEBOOKLM -->
+        <section id="fold-notebooklm" class="fold fold--notebooklm">
+            <div class="fold-inner">
+                <div class="fold-meta">
+                    <span class="fold-num">03 / 05</span>
+                    <span class="fold-sep">·</span>
+                    <span class="fold-tool-tag">ferramenta · síntese e consulta</span>
+                </div>
+                <div class="fold-header">
+                    <img class="fold-logo fold-logo--nlm" src="assets/logos/notebooklm-wordmark.cropped.png" alt="NotebookLM">
+                    <h2 class="fold-title">NotebookLM · <span class="tool-name">estude, agregue conteúdo aos seus projetos e ensine sua IA</span></h2>
+                </div>
+                <p class="fold-lead">
+                    O Obsidian guarda. O <strong>NotebookLM responde</strong>. Você joga as notas do seu negócio, os contratos, os e-mails de fornecedor e as instruções operacionais num caderno temático — e pergunta em linguagem natural. A resposta vem com <em>citação da fonte</em>, não com informação genérica da internet.
+                </p>
+
+                <div class="fold-viz">
+                    <div class="nlm-chat">
+                        <div class="nlm-q">
+                            <span class="nlm-icon">?</span>
+                            <span>Quais foram os 3 motivos mais frequentes de devolução da empresa nos últimos 90 dias?</span>
+                        </div>
+                        <div class="nlm-a">
+                            <span id="nlm-typewriter" class="nlm-typewriter"></span>
+                        </div>
+                        <div class="nlm-sources">
+                            <span class="nlm-source">devolucoes-q1.md</span>
+                            <span class="nlm-source">whatsapp-atendimento.md</span>
+                            <span class="nlm-source">fornecedores/notas-fiscais.md</span>
+                        </div>
+                    </div>
+                </div>
+
+                <ul class="fold-deliverables">
+                    <li>3+ cadernos temáticos (operações, marketing, financeiro)</li>
+                    <li>Áudio-resumo de cada caderno — primeira entrega "mágica" pro dono</li>
+                    <li>Rotina semanal de alimentação automática dos cadernos (notas novas entram no caderno certo)</li>
+                    <li>Você aprende a perguntar e a conferir a fonte de cada resposta</li>
+                </ul>
+                <div class="fold-footer">
+                    <span class="fold-footer-left">→ compõe o <strong>Módulo M2</strong> junto com Obsidian</span>
+                    <span class="fold-footer-right">parte do M2 · sem custo adicional de ferramenta até 3 cadernos</span>
+                </div>
+                <a href="https://wa.me/5515998554455?text=Vi%20a%20se%C3%A7%C3%A3o%20do%20NotebookLM%20e%20quero%20montar%20os%20cadernos%20do%20meu%20neg%C3%B3cio" class="fold-cta" target="_blank" rel="noopener">→ Quero meus cadernos com áudio</a>
+            </div>
+        </section>
+
+        <!-- FOLD 04 — N8N -->
+        <section id="fold-n8n" class="fold fold--n8n">
+            <div class="fold-inner">
+                <div class="fold-meta">
+                    <span class="fold-num">04 / 05</span>
+                    <span class="fold-sep">·</span>
+                    <span class="fold-tool-tag">ferramenta · automação que responde no WhatsApp</span>
+                </div>
+                <div class="fold-header">
+                    <img class="fold-logo fold-logo--n8n" src="assets/logos/n8n-wordmark.cropped.png" alt="n8n">
+                    <h2 class="fold-title">n8n · <span class="tool-name">a cola que faz seus sistemas conversarem entre si</span></h2>
+                </div>
+                <p class="fold-lead">
+                    Todo negócio tem ferramentas que <em>deveriam</em> conversar e não conversam: a planilha que não fala com o CRM, o ERP que não avisa o financeiro, o formulário do site que vira e-mail perdido. O n8n é a <strong>cola visual de baixo custo</strong> que liga uma coisa na outra — planilhas, ERPs, e-mail, agenda, APIs internas, WhatsApp, qualquer sistema que tenha jeito de puxar ou empurrar dado.
+                </p>
+                <p class="fold-lead">
+                    E mais: é o <em>motor</em> pra criar <strong>soluções novas sem virar projeto de TI</strong>. Precisa avisar o financeiro toda vez que a venda passa de X? n8n. Quer puxar o estoque do fornecedor e atualizar seu catálogo? n8n. Quer que o agente de IA responda também no Telegram e no Instagram? n8n. Tudo rodando <strong>no seu próprio servidor</strong>, sem depender de plataforma que pode subir preço ou fechar conta.
+                </p>
+
+                <div class="fold-viz">
+                    <div class="n8n-canvas" id="n8n-canvas">
+                        <div class="n8n-chrome">
+                            <span class="n8n-chrome-title">atendimento-loja · workflow</span>
+                            <span class="n8n-chrome-status"><span class="n8n-chrome-dot"></span> active</span>
+                        </div>
+                        <svg class="n8n-wires" id="n8n-wires" viewBox="0 0 960 460" preserveAspectRatio="none" aria-hidden="true"></svg>
+                        <div class="n8n-stage" id="n8n-stage">
+                            <!-- Main flow row -->
+                            <div class="n8n-row n8n-row--main">
+                                <div class="n8n-node" data-step="0" data-port-out="p0-out">
+                                    <span class="n8n-node-badge">trigger</span>
+                                    <div class="n8n-node-head">
+                                        <span class="n8n-node-ico">⚡</span>
+                                        <div class="n8n-node-name">Mensagem WhatsApp</div>
+                                    </div>
+                                    <div class="n8n-node-desc">evolution-api</div>
+                                </div>
+                                <div class="n8n-node" data-step="1" data-port-in="p1-in" data-port-out="p1-out">
+                                    <span class="n8n-node-badge">logic</span>
+                                    <div class="n8n-node-head">
+                                        <span class="n8n-node-ico">⧗</span>
+                                        <div class="n8n-node-name">Buffer 6s</div>
+                                    </div>
+                                    <div class="n8n-node-desc">aguarda última msg</div>
+                                </div>
+                                <div class="n8n-node" data-step="2" data-port-in="p2-in" data-port-out="p2-out">
+                                    <span class="n8n-node-badge">edit</span>
+                                    <div class="n8n-node-head">
+                                        <span class="n8n-node-ico">✎</span>
+                                        <div class="n8n-node-name">Edit Fields</div>
+                                    </div>
+                                    <div class="n8n-node-desc">normaliza payload</div>
+                                </div>
+                                <div class="n8n-node n8n-node--agent" data-step="3" data-port-in="p3-in" data-port-out="p3-out" data-port-bottom="p3-bottom">
+                                    <span class="n8n-node-badge agent">ai agent</span>
+                                    <div class="n8n-node-head">
+                                        <span class="n8n-node-ico">◎</span>
+                                        <div class="n8n-node-name">Agente de Atendimento</div>
+                                    </div>
+                                    <div class="n8n-node-desc">claude + contexto do vault</div>
+                                </div>
+                                <div class="n8n-node" data-step="4" data-port-in="p4-in" data-port-out="p4-out">
+                                    <span class="n8n-node-badge">edit</span>
+                                    <div class="n8n-node-head">
+                                        <span class="n8n-node-ico">✂</span>
+                                        <div class="n8n-node-name">Formato saída</div>
+                                    </div>
+                                    <div class="n8n-node-desc">split por tipo</div>
+                                </div>
+                                <div class="n8n-node n8n-node--whatsapp" data-step="5" data-port-in="p5-in">
+                                    <span class="n8n-node-badge whatsapp">output</span>
+                                    <div class="n8n-node-head">
+                                        <span class="n8n-node-ico">💬</span>
+                                        <div class="n8n-node-name">Enviar WhatsApp</div>
+                                    </div>
+                                    <div class="n8n-node-desc">evolution-api</div>
+                                </div>
+                            </div>
+                            <!-- Tool row — sub-nodes under the agent -->
+                            <div class="n8n-row n8n-row--tools">
+                                <div class="n8n-tool" data-tool-step="0" data-port-top="t0-top">
+                                    <span class="n8n-tool-ico" style="color:#10b981">🧠</span>
+                                    <span class="n8n-tool-label">Model · claude</span>
+                                </div>
+                                <div class="n8n-tool" data-tool-step="1" data-port-top="t1-top">
+                                    <span class="n8n-tool-ico" style="color:#ef4444">💾</span>
+                                    <span class="n8n-tool-label">Memory · postgres</span>
+                                </div>
+                                <div class="n8n-tool" data-tool-step="2" data-port-top="t2-top">
+                                    <span class="n8n-tool-ico" style="color:#22c55e">📦</span>
+                                    <span class="n8n-tool-label">Tool · Produtos</span>
+                                </div>
+                                <div class="n8n-tool" data-tool-step="3" data-port-top="t3-top">
+                                    <span class="n8n-tool-ico" style="color:#22c55e">👥</span>
+                                    <span class="n8n-tool-label">Tool · Clientes</span>
+                                </div>
+                                <div class="n8n-tool" data-tool-step="4" data-port-top="t4-top">
+                                    <span class="n8n-tool-ico" style="color:#a78bfa">⌘</span>
+                                    <span class="n8n-tool-label">Tool · Calculadora</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="n8n-reply" id="n8n-reply">
+                            <div class="n8n-reply-meta"><span class="wa-dot"></span> WhatsApp · Empresa · agora</div>
+                            <div class="n8n-reply-text">Oi, Ana! Temos o tênis na 38, sim. R$ 299 à vista ou 3x sem juros. Quer que eu separe no balcão pra você passar depois das 18h?</div>
+                            <span class="n8n-reply-time">20:43 ✓✓</span>
+                        </div>
+                    </div>
+                </div>
+
+                <ul class="fold-deliverables">
+                    <li>3 automações prontas rodando — escolhidas no diagnóstico, não no cardápio (ex: planilha ↔ CRM, alerta de venda, pipeline de lead, relatório diário, sync de estoque, etc.)</li>
+                    <li>Integrações entre os sistemas que o seu negócio já usa — sem trocar ferramenta, só fazer elas falarem</li>
+                    <li>Sistema instalado no seu próprio servidor (ou num servidor recomendado que fica no seu nome)</li>
+                    <li>Senhas, credenciais e acessos organizados, testados e documentados — você fica dono</li>
+                    <li>Opcional: agente conectado ao motor de automação pra você pedir nova automação em português</li>
+                </ul>
+                <div class="fold-footer">
+                    <span class="fold-footer-left">→ entrega o <strong>Módulo M4 · Automações</strong></span>
+                    <span class="fold-footer-right">escopo e prazo dimensionados na reunião</span>
+                </div>
+                <a href="https://wa.me/5515998554455?text=Vi%20a%20se%C3%A7%C3%A3o%20do%20n8n%20e%20quero%20montar%20automa%C3%A7%C3%B5es%20no%20meu%20neg%C3%B3cio" class="fold-cta" target="_blank" rel="noopener">→ Quero essas automações</a>
+            </div>
+        </section>
+
+        <!-- FOLD 05 — CHATWOOT -->
+        <section id="fold-chatwoot" class="fold fold--chatwoot">
+            <div class="fold-inner">
+                <div class="fold-meta">
+                    <span class="fold-num">05 / 05</span>
+                    <span class="fold-sep">·</span>
+                    <span class="fold-tool-tag">ferramenta · CRM multicanal</span>
+                </div>
+                <div class="fold-header">
+                    <img class="fold-logo fold-logo--chatwoot" src="assets/logos/chatwoot-wordmark.cropped.png" alt="Chatwoot">
+                    <h2 class="fold-title">Chatwoot · <span class="tool-name">suporte e vendas num painel só — com você vendo o time em tempo real</span></h2>
+                </div>
+                <p class="fold-lead">
+                    Seja <strong>suporte</strong> ou <strong>vendas</strong> — os dois usos mais comuns — o dono do negócio passa a ter <em>visão do time inteiro em tempo real</em>. Você vê quem está atendendo o quê, pode <strong>reatribuir conversa pro colaborador certo</strong> num clique, entrar no atendimento junto quando o caso for delicado, ou passar do humano pra IA (e vice-versa) sem o cliente perceber o handoff.
+                </p>
+                <p class="fold-lead">
+                    Multicanal de verdade: <strong>WhatsApp, Instagram DM, Facebook Messenger, e-mail, chat do site, chat do seu app</strong> — tudo numa caixa só. O cliente manda onde prefere; vocês respondem no mesmo lugar, com histórico unificado. E o <strong>chat do site/app</strong> vira FAQ em tempo real com a IA rodando: ela responde o simples sozinha, o time entra quando precisa.
+                </p>
+
+                <div class="fold-viz">
+                    <div class="cw-stage">
+                        <div class="cw-phone" aria-hidden="true">
+                            <div class="cw-phone-frame">
+                                <div class="cw-phone-notch"></div>
+                                <div class="cw-status-bar">
+                                    <span class="cw-status-time">16:02</span>
+                                    <span class="cw-status-icons">
+                                        <span>●●●</span>
+                                        <span>📶</span>
+                                        <span>🔋</span>
+                                    </span>
+                                </div>
+                                <div class="cw-app">
+                                    <div class="cw-app-header">
+                                        <span class="cw-app-logo">●</span>
+                                        <span class="cw-app-title">Projeto CRM</span>
+                                        <span class="cw-app-actions"><span>⇅</span><span>⋮</span></span>
+                                    </div>
+                                    <div class="cw-app-search">
+                                        <div class="cw-search-box"><span>🔍</span> Pesquisar...</div>
+                                        <span class="cw-pencil">✎</span>
+                                    </div>
+                                    <div class="cw-app-tabs">
+                                        <span class="cw-tab">Ativas <b>2546</b></span>
+                                        <span class="cw-tab">Todos <b>4031</b></span>
+                                    </div>
+                                    <!-- Conversation list (dimmed, behind drawer) -->
+                                    <div class="cw-app-list">
+                                        <div class="cw-app-conv">
+                                            <span class="cw-app-emoji">🔥</span>
+                                            <div>
+                                                <div class="cw-app-conv-top">Já estamos aceitan…<span>5mo · 2mo</span></div>
+                                            </div>
+                                        </div>
+                                        <div class="cw-app-conv">
+                                            <div>
+                                                <div class="cw-app-conv-top">voltou com tudo e seu…<span>5mo · 2mo</span></div>
+                                            </div>
+                                        </div>
+                                        <div class="cw-app-conv">
+                                            <div>
+                                                <div class="cw-app-conv-top">ta<span>5mo · 2mo</span></div>
+                                            </div>
+                                        </div>
+                                        <div class="cw-app-conv">
+                                            <div>
+                                                <div class="cw-app-conv-top">orivali<span>5mo · 2mo</span></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- Side drawer — matches user's real app -->
+                                    <div class="cw-drawer">
+                                        <div class="cw-drawer-item"><span>📥</span> Caixa de Entrada</div>
+                                        <div class="cw-drawer-item expanded"><span>💬</span> Conversas <span class="cw-chev">˄</span></div>
+                                        <div class="cw-drawer-sub active">Todas as conversas</div>
+                                        <div class="cw-drawer-sub">Menções</div>
+                                        <div class="cw-drawer-sub">Não atendidas</div>
+                                        <div class="cw-drawer-item"><span>👥</span> Times</div>
+                                        <div class="cw-drawer-sub">vendas fábrica</div>
+                                        <div class="cw-drawer-item"><span>⎙</span> Canais</div>
+                                        <div class="cw-drawer-sub channel"><span>{ }</span> Fale com especi...</div>
+                                        <div class="cw-drawer-sub channel"><span>{ }</span> Gabriel</div>
+                                        <div class="cw-drawer-sub channel"><span>⎘</span> Landing Page</div>
+                                        <div class="cw-drawer-sub channel"><span>{ }</span> Loja</div>
+                                        <div class="cw-drawer-item"><span>🎯</span> Capitão</div>
+                                        <div class="cw-drawer-item"><span>👤</span> Contatos</div>
+                                        <div class="cw-drawer-user">
+                                            <span class="cw-drawer-avatar">GM</span>
+                                            <div>
+                                                <div class="cw-drawer-name">Gabriel Mendes</div>
+                                                <div class="cw-drawer-email">● mendesofc1@gmail.com</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="cw-phone-home"></div>
+                            </div>
+                        </div>
+                        <!-- Desktop companion panel — visible on web, hidden on mobile -->
+                        <div class="cw-panel">
+                            <div class="cw-panel-head">
+                                <div class="cw-panel-title">atendimento · visão do dono</div>
+                                <div class="cw-panel-sub">em tempo real · 1 dono + time + IA no mesmo painel</div>
+                            </div>
+                            <div class="cw-panel-channels">
+                                <div class="cw-channel"><span class="cw-ch-dot" style="background:#25D366"></span> WhatsApp <b>·</b> 4 ativas</div>
+                                <div class="cw-channel"><span class="cw-ch-dot" style="background:#E1306C"></span> Instagram DM <b>·</b> 2 ativas</div>
+                                <div class="cw-channel"><span class="cw-ch-dot" style="background:#1877F2"></span> Messenger <b>·</b> 1 ativa</div>
+                                <div class="cw-channel"><span class="cw-ch-dot" style="background:#EA4335"></span> E-mail <b>·</b> 6 abertas</div>
+                                <div class="cw-channel"><span class="cw-ch-dot" style="background:#1F93FF"></span> Chat do site <b>·</b> 3 ativas</div>
+                            </div>
+                            <div class="cw-panel-thread">
+                                <div class="cw-msg in">Oi, tem tênis branco na 38? <span class="cw-msg-time">20:41</span></div>
+                                <div class="cw-msg out">
+                                    <span class="cw-ai-tag">// ia · atendendo</span>
+                                    Oi, Ana! Temos a 38, R$ 299 à vista. Quer que eu separe pra você passar depois das 18h?
+                                    <span class="cw-msg-time">20:43</span>
+                                </div>
+                                <div class="cw-handoff">
+                                    <span class="cw-handoff-dot"></span>
+                                    Gabriel entrou na conversa <span class="cw-handoff-meta">· IA pausada · 20:44</span>
+                                </div>
+                                <div class="cw-msg out human">
+                                    <span class="cw-ai-tag">// gabriel · dono</span>
+                                    Ana, separado! Se precisar troco por outro modelo sem burocracia 😉
+                                    <span class="cw-msg-time">20:44</span>
+                                </div>
+                            </div>
+                            <div class="cw-panel-footer">
+                                <span>reatribuir</span><span>·</span><span>transferir pra humano</span><span>·</span><span>voltar pra IA</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <ul class="fold-deliverables">
+                    <li>Chatwoot instalado no endereço da sua empresa (ex: atendimento.suaempresa.com.br)</li>
+                    <li>Canais integrados conforme o seu uso: WhatsApp, Instagram DM, Messenger, e-mail, chat do site, chat do app</li>
+                    <li>Dois perfis possíveis no mesmo painel: <strong>suporte</strong> (SLA, tickets, resolução) e <strong>vendas</strong> (funil, etiquetas de oportunidade, follow-up)</li>
+                    <li>Visão do dono em tempo real — quem atende o quê, reatribuir e entrar em conversa com um clique</li>
+                    <li>Time de 1–3 pessoas com conta, permissão e treinamento · expansível sem virar projeto novo</li>
+                    <li>Regra clara de quando a IA passa a conversa pro humano — e quando volta pra IA — documentada</li>
+                </ul>
+                <div class="fold-footer">
+                    <span class="fold-footer-left">→ entrega o <strong>Módulo M5 · CRM</strong></span>
+                    <span class="fold-footer-right">escopo e prazo dimensionados na reunião</span>
+                </div>
+                <a href="https://wa.me/5515998554455?text=Vi%20a%20se%C3%A7%C3%A3o%20do%20Chatwoot%20e%20quero%20unificar%20o%20atendimento%20do%20meu%20neg%C3%B3cio" class="fold-cta" target="_blank" rel="noopener">→ Quero meu atendimento unificado</a>
+            </div>
+        </section>
+
+        <!-- MÓDULOS -->
+        <section id="modules">
+            <div class="section-header">
+                <span class="highlight">04</span>
+                <span class="subtitle">módulos</span>
+            </div>
+            <p class="statement reveal-on-scroll">
+                <span class="stmt-prompt">&gt;</span> Cada módulo resolve uma dor concreta da operação. A <strong>ordem de implementação e o investimento saem da reunião de dimensionamento</strong> — a gente analisa sua empresa, o ponto de partida e o ritmo que faz sentido pra você, e desenha o caminho com entregas palpáveis. Abaixo, os módulos em <strong>níveis de profundidade</strong>: começa pelo que dá resultado visível rápido e vai aprofundando até virar sistema operacional.
+            </p>
+            <div class="mod-grid">
+                <div class="mod-card reveal-on-scroll">
+                    <span class="mod-tag">M1 · landing</span>
+                    <h3 class="mod-title">Página de vendas com checkout</h3>
+                    <p class="mod-desc"><strong>O que fazemos:</strong> uma página focada em uma campanha específica — produto, serviço ou evento — com checkout integrado (Stripe ou Mercado Pago). <strong>Problema que resolve:</strong> você precisa vender na internet sem depender de marketplace nem do WhatsApp artesanal, e quer uma página séria pra rodar tráfego ou mandar pra base.</p>
+                </div>
+                <div class="mod-card reveal-on-scroll">
+                    <span class="mod-tag">M4 · automações</span>
+                    <h3 class="mod-title">n8n — automação de base, prospecção e atendimento</h3>
+                    <p class="mod-desc"><strong>O que implementamos:</strong> levantamento e enriquecimento de base de clientes, prospecção ativa, disparos de mensagem, remarketing pós-venda, e integração com os sistemas que você já usa (ERP, CRM, planilha, e-commerce). Tudo no seu servidor, tudo auditável. <strong>Problema que resolve:</strong> lead perdido por falta de follow-up, mensagem em massa feita na unha, cadastro incompleto, e sistema desconectado que obriga digitar a mesma coisa em três lugares.</p>
+                </div>
+                <div class="mod-card reveal-on-scroll">
+                    <span class="mod-tag">M5 · crm</span>
+                    <h3 class="mod-title">Chatwoot — WhatsApp, Instagram e Messenger numa caixa só</h3>
+                    <p class="mod-desc"><strong>O que implementamos:</strong> todas as conversas do negócio num painel único, histórico por cliente, atribuição de atendente, e regra clara de quando o humano entra. Você fica dono dos dados. <strong>Problema que resolve:</strong> mensagem perdida, vendedor que leva o celular embora quando sai da empresa, atendimento sem memória e cliente tendo que explicar tudo de novo a cada contato.</p>
+                </div>
+                <div class="mod-card reveal-on-scroll">
+                    <span class="mod-tag">M6 · ia no whatsapp</span>
+                    <h3 class="mod-title">Agente de IA calibrado pro seu negócio</h3>
+                    <p class="mod-desc"><strong>O que implementamos:</strong> um agente que responde com o tom da sua empresa, conhece o cardápio/catálogo/serviços, e passa pro humano quando precisa. Calibração contínua (obrigatória) — IA não é software de prateleira, precisa ajustar com o uso real. <strong>Problema que resolve:</strong> mensagem sem resposta fora do horário, funcionário aprendendo do zero toda vez, e atendimento que varia de turno pra turno.</p>
+                </div>
+                <div class="mod-card reveal-on-scroll">
+                    <span class="mod-tag">M3 · agentes</span>
+                    <h3 class="mod-title">Claude Code + agentes internos especializados</h3>
+                    <p class="mod-desc"><strong>O que implementamos:</strong> agentes que conhecem a operação e executam rotinas internas — redigir, analisar dados, preparar relatórios, automatizar tarefas repetitivas do dono e do time. É um "funcionário de IA" focado no que acontece fora do atendimento ao cliente. <strong>Problema que resolve:</strong> o empresário é gargalo de tudo, relatório não sai, e tarefa recorrente consome horas por semana que não voltam.</p>
+                </div>
+                <div class="mod-card reveal-on-scroll">
+                    <span class="mod-tag">M2 · segundo cérebro</span>
+                    <h3 class="mod-title">Obsidian + NotebookLM — conhecimento da empresa organizado</h3>
+                    <p class="mod-desc"><strong>O que implementamos:</strong> o conhecimento do seu negócio guardado, estruturado e consultável em português — procedimentos, cardápio, manuais, histórico de decisões, aprendizados. <strong>Problema que resolve:</strong> conhecimento que só mora na cabeça do dono, funcionário novo aprendendo do zero, decisão importante que se perdeu porque ninguém registrou. É o nível mais profundo porque alimenta todos os outros módulos.</p>
+                </div>
+                <div class="mod-card reveal-on-scroll">
+                    <span class="mod-tag">M7 · estratégico</span>
+                    <h3 class="mod-title">Melhoria cíclica e crescimento da IA na empresa</h3>
+                    <p class="mod-desc"><strong>O que entregamos:</strong> ritual mensal onde a IA conhece cada vez mais o negócio, as automações melhoram com o uso, novas soluções entram no ritmo que a empresa absorve, e a inteligência de negócio cresce com o aprendizado contínuo. <strong>Problema que resolve:</strong> ferramenta entregue não é problema resolvido pra sempre — aqui é onde a IA para de ser projeto e vira sistema operacional da empresa.</p>
+                </div>
+            </div>
+            <p class="mod-note reveal-on-scroll">
+                <span class="stmt-prompt">&gt;</span> <strong>Prazo e investimento de cada módulo saem do diagnóstico.</strong> Cada empresa tem ponto de partida, ritmo e prioridade diferentes — por isso o dimensionamento é feito em reunião, depois da gente entender a operação. O foco aqui é deixar claro <strong>o que a gente implementa e qual problema resolve</strong>, não fechar preço no site.
+            </p>
+            <div class="section-cta reveal-on-scroll">
+                <a href="https://wa.me/5515998554455?text=Vi%20os%20m%C3%B3dulos%20da%20landing%20e%20quero%20marcar%20a%20reuni%C3%A3o%20de%20dimensionamento" class="fold-cta" target="_blank" rel="noopener">→ Marcar reunião de dimensionamento</a>
+            </div>
+        </section>
+
+        <!-- COMBOS -->
+        <section id="combos">
+            <div class="section-header">
+                <span class="highlight">05</span>
+                <span class="subtitle">combos</span>
+            </div>
+            <p class="statement reveal-on-scroll">
+                <span class="stmt-prompt">&gt;</span> Módulo solto resolve um pedaço. <strong>Módulo combinado resolve um processo.</strong> A lógica abaixo mostra como a junção entre camadas multiplica o resultado — cada peça alimenta a próxima, e a IA aprende com o todo. As combinações abaixo são referências; <strong>a desenhada pra sua empresa sai da reunião de identificação de oportunidade</strong>.
+            </p>
+            <div class="combo-table reveal-on-scroll">
+                <div class="combo-row head">
+                    <span>combinação</span>
+                    <span>módulos</span>
+                    <span>ganho de performance</span>
+                </div>
+                <div class="combo-row">
+                    <span class="combo-name">Presença digital</span>
+                    <span class="combo-mods">M1 + M2</span>
+                    <span class="combo-gain">Site captura leads e os joga direto num cérebro organizado da empresa. Equipe nova aprende rápido com base consultável em português, e nenhuma informação se perde entre quem entra e quem sai.</span>
+                </div>
+                <div class="combo-row">
+                    <span class="combo-name">Conversão WhatsApp</span>
+                    <span class="combo-mods">M1 + M4 + M5</span>
+                    <span class="combo-gain">Lead entra pela página, é enriquecido e segmentado na automação, e cai no painel único com histórico completo. Circuito de captura→atendimento fechado — zero contato perdido na passagem entre ferramentas.</span>
+                </div>
+                <div class="combo-row">
+                    <span class="combo-name">Atendimento completo</span>
+                    <span class="combo-mods">M4 + M5 + M6</span>
+                    <span class="combo-gain">IA atende o volume simples 24/7, o humano entra no mesmo painel quando precisa, e a automação dispara remarketing seguindo o cliente pós-venda. Atendimento que não dorme, não esquece, e não depende da memória de quem está no plantão.</span>
+                </div>
+                <div class="combo-row">
+                    <span class="combo-name">IA operacional</span>
+                    <span class="combo-mods">M3 + M4 + M6</span>
+                    <span class="combo-gain">Agentes internos preparam o que a IA de atendimento precisa saber, automações executam as tarefas repetitivas, e o dono sai do gargalo. Performance sobe na operação interna e na relação com o cliente ao mesmo tempo.</span>
+                </div>
+                <div class="combo-row">
+                    <span class="combo-name">Sistema integrado 360°</span>
+                    <span class="combo-mods">M1 + M2 + M3 + M4 + M5 + M6</span>
+                    <span class="combo-gain">Cada módulo alimenta o próximo: conhecimento do negócio vira contexto dos agentes, que refinam as automações, que populam o CRM, que entrega ao cliente via IA, tudo publicado num canal próprio. O ganho não é soma — é multiplicação, porque a IA aprende com o todo.</span>
+                </div>
+            </div>
+            <div class="combo-note reveal-on-scroll">
+                <strong>Sem pacote engessado.</strong> As combinações acima são referências de como os módulos conversam entre si — a composição certa pra sua empresa (quais módulos, em qual ordem, com qual profundidade) é desenhada na reunião, depois do diagnóstico da operação, dor principal e ritmo que faz sentido pra você.
+            </div>
+            <div class="section-cta reveal-on-scroll">
+                <a href="https://wa.me/5515998554455?text=Vi%20as%20combina%C3%A7%C3%B5es%20e%20quero%20desenhar%20a%20certa%20pro%20meu%20neg%C3%B3cio" class="fold-cta" target="_blank" rel="noopener">→ Desenhar a combinação certa pro meu negócio</a>
+            </div>
+        </section>
+
+        <!-- COMO FUNCIONA -->
+        <section id="how">
+            <div class="section-header">
+                <span class="highlight">06</span>
+                <span class="subtitle">como funciona</span>
+            </div>
+            <div class="steps">
+                <div class="step reveal-on-scroll">
+                    <div class="step-num">01</div>
+                    <div class="step-title">Conversa de 20 min</div>
+                    <div class="step-desc">Você me manda mensagem no WhatsApp contando qual é a dor principal da empresa hoje. Sem pitch, sem formulário.</div>
+                </div>
+                <div class="step reveal-on-scroll">
+                    <div class="step-num">02</div>
+                    <div class="step-title">Diagnóstico 1h</div>
+                    <div class="step-desc">Mapa do negócio, onde está o gargalo, qual módulo resolve primeiro. Demo ao vivo do Açaí Algomais se fizer sentido.</div>
+                </div>
+                <div class="step reveal-on-scroll">
+                    <div class="step-num">03</div>
+                    <div class="step-title">Implementação</div>
+                    <div class="step-desc">1 call por semana, tarefa entre calls, entregável no prazo. 2 a 6 semanas por módulo. Você aprende fazendo.</div>
+                </div>
+                <div class="step reveal-on-scroll">
+                    <div class="step-num">04</div>
+                    <div class="step-title">Depoimento + upsell</div>
+                    <div class="step-desc">Módulo entregue, depoimento seu. Se quiser avançar pro próximo, a gente volta pra reunião de dimensionamento considerando o que já está rodando e o próximo ganho possível.</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQ -->
+        <section id="faq-section" class="faq-section reveal-on-scroll">
+            <div class="section-header">
+                <span class="highlight">FAQ</span>
+                <span class="subtitle">objeções comuns</span>
+            </div>
+            <div class="faq-terminal">
+                <div class="faq-term-header">
+                    <div class="faq-term-dots">
+                        <span class="faq-term-dot" style="background:#ff5f57"></span>
+                        <span class="faq-term-dot" style="background:#febc2e"></span>
+                        <span class="faq-term-dot" style="background:#28c840"></span>
+                    </div>
+                    <span class="faq-term-title">faq — clique uma pergunta ou digite abaixo</span>
+                </div>
+                <div class="faq-questions">
+                    <button class="faq-q-btn" data-q="0">Não tenho tempo</button>
+                    <button class="faq-q-btn" data-q="1">Já tentei chatbot e não funcionou</button>
+                    <button class="faq-q-btn" data-q="2">Tá caro</button>
+                    <button class="faq-q-btn" data-q="3">E se eu parar no meio?</button>
+                    <button class="faq-q-btn" data-q="4">Vou ficar dependente de você?</button>
+                    <button class="faq-q-btn" data-q="5">Meu cliente não aceita máquina</button>
+                </div>
+                <div class="faq-output" id="faq-output">
+                    <p class="faq-welcome">$ selecione uma pergunta acima ou digite a sua...</p>
+                </div>
+                <div class="faq-input-row">
+                    <span class="faq-prompt">$</span>
+                    <input type="text" class="faq-input" id="faq-input" placeholder="digite sua pergunta...">
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA FINAL -->
+        <section id="cta">
+            <div class="cta-box reveal-on-scroll">
+                <h2 class="cta-headline">Qual é a dor principal da sua empresa hoje?</h2>
+                <p class="cta-sub">Manda isso no WhatsApp da AtingeHub. Em 20 minutos de conversa fica claro se faz sentido avançar — e se fizer, por onde começar. Sem compromisso. Sem pitch. Sem formulário.</p>
+                <a href="https://wa.me/5515998554455?text=Queria%20conversar%20sobre%20IA%20pro%20meu%20neg%C3%B3cio" class="btn btn-primary">$ falar no WhatsApp →</a>
+            </div>
+        </section>
+
+        <!-- FOOTER -->
+        <footer class="footer-section">
+            <div class="footer-column">
+                <strong>AtingeHub</strong>
+                <p>Implementação acompanhada de IA + mentoria<br>Sorocaba · SP</p>
+                <a href="https://wa.me/5515998554455" class="footer-link">WhatsApp</a>
+            </div>
+            <div class="footer-column">
+                <strong>ferramentas</strong>
+                <a href="https://obsidian.md" class="footer-link" target="_blank" rel="noopener">Obsidian</a>
+                <a href="https://claude.ai/code" class="footer-link" target="_blank" rel="noopener">Claude Code</a>
+                <a href="https://notebooklm.google.com" class="footer-link" target="_blank" rel="noopener">NotebookLM</a>
+                <a href="https://n8n.io" class="footer-link" target="_blank" rel="noopener">n8n</a>
+                <a href="https://chatwoot.com" class="footer-link" target="_blank" rel="noopener">Chatwoot</a>
+            </div>
+            <div class="footer-column">
+                <strong>legal</strong>
+                <a href="#" class="footer-link">Política de Privacidade</a>
+                <a href="#" class="footer-link">Termos</a>
+                <p>© 2026 AtingeHub · operação em Sorocaba · SP</p>
+            </div>
+        </footer>
+        <p class="footer-tagline">// relação humana primeiro · IA como extensão, nunca substituto</p>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

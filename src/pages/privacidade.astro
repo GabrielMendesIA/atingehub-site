@@ -2,17 +2,16 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { site } from '../config/site';
 
-const ultimaAtualizacao = '2026-05-04';
+const ultimaAtualizacao = '2026-05-11';
 ---
 
 <BaseLayout
   title="Privacidade"
   description={`Política de privacidade e tratamento de dados da ${site.name}.`}
-  noindex={false}
 >
   <div class="container-page legal-page">
-    <p class="eyebrow">Política de privacidade</p>
-    <h1>Como a AtingeHub trata seus dados</h1>
+    <p class="eyebrow"><span class="accent">●</span> Política de privacidade</p>
+    <h1 class="legal-title">Como a AtingeHUB <em>trata seus dados.</em></h1>
     <p class="meta">Última atualização: {ultimaAtualizacao}</p>
 
     <section>
@@ -44,7 +43,7 @@ const ultimaAtualizacao = '2026-05-04';
     <section>
       <h2>4. Stack aberta e self-hosted</h2>
       <p>
-        Princípio não-negociável da AtingeHub: <strong>você fica dono dos dados e da infraestrutura</strong>. Toda solução implementada roda em servidores e contas controladas pelo cliente. Não armazenamos dados operacionais de clientes em sistemas da AtingeHub — eles vivem no Chatwoot, n8n, Obsidian, Supabase e VPS do próprio cliente.
+        Princípio não-negociável da AtingeHUB: <strong>você fica dono dos dados e da infraestrutura</strong>. Toda solução implementada roda em servidores e contas controladas pelo cliente. Não armazenamos dados operacionais de clientes em sistemas da AtingeHUB — eles vivem no Chatwoot, n8n, Obsidian, Supabase e VPS do próprio cliente.
       </p>
     </section>
 
@@ -73,51 +72,60 @@ const ultimaAtualizacao = '2026-05-04';
 
 <style>
   .legal-page {
-    padding: var(--space-16) 0 var(--space-24);
-    max-width: 48rem;
+    padding: 80px 0 var(--space-24);
+    max-width: 800px;
   }
 
-  .legal-page h1 {
-    margin-top: 0.5rem;
-    font-size: clamp(1.875rem, 4vw, 2.5rem);
+  .legal-title {
+    margin-top: 18px;
+    font-size: clamp(36px, 4.5vw, 56px);
+    line-height: 1.05;
   }
 
   .meta {
-    margin-top: 0.5rem;
-    color: var(--color-mute);
-    font-size: 0.875rem;
+    margin-top: 14px;
+    color: var(--text-dim);
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 0.5px;
   }
 
   section {
-    margin-top: 2.5rem;
+    margin-top: 48px;
   }
 
   section h2 {
-    font-size: 1.375rem;
-    margin-bottom: 0.875rem;
+    font-family: var(--font-mono);
+    font-weight: 500;
+    font-size: 16px;
+    letter-spacing: -0.005em;
+    margin-bottom: 18px;
+    color: var(--text);
   }
 
   section p,
   section ul {
-    color: var(--color-ink-soft);
-    line-height: 1.7;
+    color: var(--text-muted);
+    line-height: 1.75;
+    font-size: 15px;
   }
 
   section p + p,
   section p + ul,
   section ul + p {
-    margin-top: 1rem;
+    margin-top: 14px;
   }
 
   section ul {
     list-style: disc;
-    padding-left: 1.25rem;
+    padding-left: 22px;
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
+    gap: 8px;
   }
 
   section strong {
-    color: var(--color-ink);
+    color: var(--text);
+    font-weight: 500;
   }
 </style>

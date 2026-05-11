@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 80" width="200" height="160" fill="none" shape-rendering="geometricPrecision">
+<title>AtingeHUB · S1 Monolito · fundo escuro</title>
+
+  <path d="M16 64L28 42L40 64Z" fill="#4A4A4A"></path>
+  <path d="M60 64L74 38L88 64Z" fill="#8A8A8A"></path>
+  <path d="M24 64L50 16L76 64Z" fill="#F5F3EE"></path>
+  <path d="M50 16L50 6" stroke="#F5F3EE" stroke-width="2" stroke-linecap="butt"></path>
+  <path d="M50 7L58 9L50 12Z" fill="#F5F3EE"></path>
+  <path d="M38 44L62 44" stroke="#0A0A0A" stroke-width="3" stroke-linecap="butt"></path>
+</svg>

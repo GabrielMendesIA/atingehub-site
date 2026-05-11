@@ -1,0 +1,455 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8"/>
+<title>AtingeHUB — Explorações do A</title>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500&family=JetBrains+Mono:wght@400;500;600&family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Archivo+Black&family=Bricolage+Grotesque:wght@400;600;700&family=Instrument+Serif:wght@400&family=DM+Serif+Display&display=swap" rel="stylesheet"/>
+<style>
+  html,body { margin:0; padding:0; height:100%; overflow:hidden; background:#f0eee9; }
+  * { box-sizing: border-box; }
+</style>
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script type="text/babel" src="design-canvas.jsx"></script>
+</head>
+<body>
+<div id="root"></div>
+
+<script type="text/babel">
+const INK = '#0B0E14';
+const PAPER = '#F5F3EE';
+const MUTE = 'oklch(0.55 0 0)';
+const ACCENT = '#D97757'; // laranja Claude (default; pode trocar depois)
+
+// ═══════════════════════════════════════════════════════════════
+// CONCEITO: "Atingir" — alvo, mira, seta, marco, ascensão, impacto
+// O "A" é o veículo. Cada variação amarra A ao significado.
+// ═══════════════════════════════════════════════════════════════
+
+// ── 01 · Alvo (target) — A como crosshair sobre alvo
+function A01({ size = 80, color = INK, accent = ACCENT }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 80 80" fill="none">
+      <circle cx="40" cy="40" r="30" stroke={color} strokeWidth="1.5"/>
+      <circle cx="40" cy="40" r="20" stroke={color} strokeWidth="1.5"/>
+      <circle cx="40" cy="40" r="10" stroke={color} strokeWidth="1.5"/>
+      {/* A inscrito */}
+      <path d="M30 52 L40 28 L50 52 M33.5 44 L46.5 44" stroke={color} strokeWidth="3" strokeLinecap="square" strokeLinejoin="miter" fill="none"/>
+      <circle cx="40" cy="40" r="3" fill={accent}/>
+    </svg>
+  );
+}
+
+// ── 02 · Seta-A — vértice como ponta de flecha
+function A02({ size = 80, color = INK, accent = ACCENT }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 80 80" fill="none">
+      {/* A com ápice estendido para cima como seta */}
+      <path d="M40 8 L40 18 M34 18 L40 8 L46 18" stroke={accent} strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" fill="none"/>
+      <path d="M20 68 L40 18 L60 68" stroke={color} strokeWidth="4" strokeLinejoin="miter" fill="none"/>
+      <line x1="28" y1="50" x2="52" y2="50" stroke={color} strokeWidth="4"/>
+    </svg>
+  );
+}
+
+// ── 03 · Cume / pico — A como montanha + bandeira
+function A03({ size = 80, color = INK, accent = ACCENT }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 80 80" fill="none">
+      <path d="M14 64 L40 16 L66 64 Z" fill={color}/>
+      {/* segunda montanha menor */}
+      <path d="M50 64 L62 38 L74 64 Z" fill={color} opacity="0.35"/>
+      {/* bandeira no cume */}
+      <line x1="40" y1="16" x2="40" y2="6" stroke={accent} strokeWidth="2"/>
+      <path d="M40 7 L48 9 L40 12 Z" fill={accent}/>
+      {/* barra do A */}
+      <path d="M28 44 L52 44" stroke={PAPER} strokeWidth="3"/>
+    </svg>
+  );
+}
+
+// ── 04 · Mira reticle — A entre crosshairs
+function A04({ size = 80, color = INK, accent = ACCENT }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 80 80" fill="none">
+      <line x1="40" y1="4" x2="40" y2="14" stroke={color} strokeWidth="1.5"/>
+      <line x1="40" y1="66" x2="40" y2="76" stroke={color} strokeWidth="1.5"/>
+      <line x1="4" y1="40" x2="14" y2="40" stroke={color} strokeWidth="1.5"/>
+      <line x1="66" y1="40" x2="76" y2="40" stroke={color} strokeWidth="1.5"/>
+      <circle cx="40" cy="40" r="22" stroke={color} strokeWidth="1"/>
+      <path d="M28 54 L40 22 L52 54 M33 44 L47 44" stroke={color} strokeWidth="3" strokeLinecap="square" fill="none"/>
+      <circle cx="40" cy="22" r="2.5" fill={accent}/>
+    </svg>
+  );
+}
+
+// ── 05 · A com flecha através (impacto)
+function A05({ size = 80, color = INK, accent = ACCENT }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 80 80" fill="none">
+      <path d="M16 64 L40 16 L64 64" stroke={color} strokeWidth="4" strokeLinejoin="miter" fill="none"/>
+      {/* flecha horizontal cortando a barra */}
+      <line x1="14" y1="46" x2="68" y2="46" stroke={accent} strokeWidth="2.5"/>
+      <path d="M62 41 L70 46 L62 51" stroke={accent} strokeWidth="2.5" fill="none" strokeLinejoin="miter" strokeLinecap="square"/>
+    </svg>
+  );
+}
+
+// ── 06 · A com seta ascendente saindo do ápice
+function A06({ size = 80, color = INK, accent = ACCENT }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 80 80" fill="none">
+      {/* A clássico, peso forte */}
+      <path d="M14 68 L40 22 L66 68" stroke={color} strokeWidth="5" strokeLinejoin="miter" fill="none"/>
+      <line x1="26" y1="52" x2="54" y2="52" stroke={color} strokeWidth="5"/>
+      {/* seta do ápice subindo, em accent */}
+      <line x1="40" y1="22" x2="40" y2="6" stroke={accent} strokeWidth="3"/>
+      <path d="M34 12 L40 6 L46 12" stroke={accent} strokeWidth="3" fill="none" strokeLinejoin="miter" strokeLinecap="square"/>
+    </svg>
+  );
+}
+
+// ── 07 · A escalonado — degraus de progressão
+function A07({ size = 80, color = INK, accent = ACCENT }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 80 80" fill="none">
+      {/* steps formando um A — barras horizontais ascendentes */}
+      <rect x="10" y="62" width="60" height="6" fill={color}/>
+      <rect x="16" y="50" width="48" height="6" fill={color}/>
+      <rect x="22" y="38" width="36" height="6" fill={color} opacity="0.85"/>
+      <rect x="28" y="26" width="24" height="6" fill={color} opacity="0.7"/>
+      <rect x="35" y="14" width="10" height="6" fill={accent}/>
+    </svg>
+  );
+}
+
+// ── 08 · A bandeira / pin — marco atingido (location pin com A)
+function A08({ size = 80, color = INK, accent = ACCENT }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 80 80" fill="none">
+      {/* pin shape */}
+      <path d="M40 10 C 22 10 14 24 14 36 C 14 52 40 70 40 70 C 40 70 66 52 66 36 C 66 24 58 10 40 10 Z" fill={color}/>
+      {/* A inscrito branco */}
+      <path d="M30 48 L40 24 L50 48 M33.5 40 L46.5 40" stroke={PAPER} strokeWidth="2.5" strokeLinejoin="miter" strokeLinecap="square" fill="none"/>
+      <circle cx="40" cy="24" r="2" fill={accent}/>
+    </svg>
+  );
+}
+
+// ── 09 · A em chevron duplo — aceleração
+function A09({ size = 80, color = INK, accent = ACCENT }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 80 80" fill="none">
+      <path d="M20 60 L40 32 L60 60" stroke={color} strokeWidth="5" strokeLinejoin="miter" fill="none" strokeLinecap="round"/>
+      <path d="M20 44 L40 16 L60 44" stroke={accent} strokeWidth="3" strokeLinejoin="miter" fill="none" strokeLinecap="round"/>
+    </svg>
+  );
+}
+
+// ── 10 · A circuito — caminho que chega ao ápice
+function A10({ size = 80, color = INK, accent = ACCENT }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 80 80" fill="none">
+      {/* path com nós ao longo do A */}
+      <path d="M14 66 L40 18 L66 66" stroke={color} strokeWidth="2" fill="none" strokeLinejoin="miter"/>
+      <line x1="26" y1="46" x2="54" y2="46" stroke={color} strokeWidth="2"/>
+      <circle cx="14" cy="66" r="3.5" fill={color}/>
+      <circle cx="66" cy="66" r="3.5" fill={color}/>
+      <circle cx="26" cy="46" r="3" fill={color}/>
+      <circle cx="54" cy="46" r="3" fill={color}/>
+      <circle cx="40" cy="18" r="5" fill={accent}/>
+    </svg>
+  );
+}
+
+// ── 11 · A radial — raios saindo do ápice
+function A11({ size = 80, color = INK, accent = ACCENT }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 80 80" fill="none">
+      {/* raios sutis */}
+      {[-30, -15, 0, 15, 30].map((deg, i) => (
+        <line key={i} x1="40" y1="20" x2={40 + Math.sin(deg*Math.PI/180)*16} y2={20 - Math.cos(deg*Math.PI/180)*16} stroke={accent} strokeWidth="1.2" opacity="0.6"/>
+      ))}
+      <path d="M16 66 L40 20 L64 66" stroke={color} strokeWidth="4" strokeLinejoin="miter" fill="none"/>
+      <line x1="26" y1="48" x2="54" y2="48" stroke={color} strokeWidth="4"/>
+      <circle cx="40" cy="20" r="3" fill={accent}/>
+    </svg>
+  );
+}
+
+// ── 12 · A barra-progresso — barra horizontal preenchida
+function A12({ size = 80, color = INK, accent = ACCENT }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 80 80" fill="none">
+      <path d="M14 66 L40 18 L66 66" stroke={color} strokeWidth="4" strokeLinejoin="miter" fill="none"/>
+      {/* barra como progress: 80% accent, 20% leve */}
+      <rect x="26" y="44" width="22" height="6" fill={accent}/>
+      <rect x="48" y="44" width="6" height="6" fill={color} opacity="0.2"/>
+    </svg>
+  );
+}
+
+const MARKS = [
+  { id:'01', M:A01, name:'Alvo', sem:'Foco · pontaria · centrar no objetivo' },
+  { id:'02', M:A02, name:'Seta-A', sem:'Direção · ápice como ponta de flecha' },
+  { id:'03', M:A03, name:'Cume', sem:'Montanha + bandeira · marco conquistado' },
+  { id:'04', M:A04, name:'Mira', sem:'Reticle · precisão estratégica' },
+  { id:'05', M:A05, name:'Impacto', sem:'Flecha atravessa o A · ação que chega' },
+  { id:'06', M:A06, name:'Ascensão', sem:'A robusto + seta crescente' },
+  { id:'07', M:A07, name:'Degraus', sem:'Progressão escalonada até o topo' },
+  { id:'08', M:A08, name:'Marco', sem:'Pin de localização · meta atingida' },
+  { id:'09', M:A09, name:'Aceleração', sem:'Chevron duplo · momentum' },
+  { id:'10', M:A10, name:'Caminho', sem:'Nós conectados pelo trajeto até o cume' },
+  { id:'11', M:A11, name:'Radiação', sem:'Raios do ápice · alcance' },
+  { id:'12', M:A12, name:'Progresso', sem:'Barra de progresso · resultado mensurável' },
+];
+
+// ═══════════════════════════════════════════════════════════════
+// 6 TIPOGRAFIAS — pareadas com tratamentos distintos
+// ═══════════════════════════════════════════════════════════════
+const TYPES = [
+  {
+    id:'T1', name:'Sans neutro',
+    family:"'Space Grotesk', sans-serif", weight:500, ls:-0.4, accentWeight:600,
+    note:'Legível, contemporâneo. Default seguro.',
+  },
+  {
+    id:'T2', name:'Serif editorial',
+    family:"'Fraunces', serif", weight:600, ls:-0.8, accentWeight:700,
+    note:'Sofisticação, narrativa premium.',
+  },
+  {
+    id:'T3', name:'Display serif',
+    family:"'DM Serif Display', serif", weight:400, ls:-0.6, accentWeight:400,
+    note:'Editorial alto contraste, autoral.',
+  },
+  {
+    id:'T4', name:'Mono técnico',
+    family:"'JetBrains Mono', monospace", weight:600, ls:-0.5, accentWeight:700,
+    note:'Engenharia, plataforma, precisão.',
+  },
+  {
+    id:'T5', name:'Black bold',
+    family:"'Archivo Black', sans-serif", weight:400, ls:-1.2, accentWeight:400,
+    note:'Statement direto, força, ousadia.',
+  },
+  {
+    id:'T6', name:'Bricolage display',
+    family:"'Bricolage Grotesque', sans-serif", weight:700, ls:-1.5, accentWeight:700,
+    note:'Moderno, brand-y, memorável.',
+  },
+];
+
+// ═══════════════════════════════════════════════════════════════
+// LOCKUP
+// ═══════════════════════════════════════════════════════════════
+function Lockup({ Mark, type, size = 56, inkColor = INK, accent = ACCENT, muteColor = MUTE, showTagline = true, stacked = false }) {
+  const word = (
+    <span style={{
+      fontFamily: type.family, fontWeight: type.weight,
+      fontSize: size * 0.7, letterSpacing: type.ls,
+      color: inkColor, lineHeight: 1,
+    }}>
+      Atinge<span style={{ color: accent, fontWeight: type.accentWeight }}>HUB</span>
+    </span>
+  );
+  const tag = showTagline && (
+    <span style={{
+      fontFamily: "'IBM Plex Mono', monospace", fontSize: 9,
+      letterSpacing: 2.4, textTransform:'uppercase',
+      color: muteColor, lineHeight: 1,
+    }}>IA para o seu negócio</span>
+  );
+  if (stacked) {
+    return (
+      <div style={{ display:'flex', flexDirection:'column', alignItems:'center', gap: 14 }}>
+        <Mark size={size} color={inkColor} accent={accent}/>
+        <div style={{ textAlign:'center' }}>
+          {word}
+          {tag && <div style={{ marginTop: 8 }}>{tag}</div>}
+        </div>
+      </div>
+    );
+  }
+  return (
+    <div style={{ display:'flex', alignItems:'center', gap: size*0.32 }}>
+      <Mark size={size} color={inkColor} accent={accent}/>
+      <div style={{ display:'flex', flexDirection:'column', gap: 6 }}>{word}{tag}</div>
+    </div>
+  );
+}
+
+// ═══════════════════════════════════════════════════════════════
+// APP
+// ═══════════════════════════════════════════════════════════════
+function App() {
+  // pareamento sugerido: cada símbolo combina melhor com 1 tipografia
+  const PAIRS = [
+    { mIdx: 0, tIdx: 3 }, // Alvo + Mono
+    { mIdx: 1, tIdx: 0 }, // Seta + Sans
+    { mIdx: 2, tIdx: 1 }, // Cume + Serif Fraunces
+    { mIdx: 3, tIdx: 3 }, // Mira + Mono
+    { mIdx: 4, tIdx: 4 }, // Impacto + Black
+    { mIdx: 5, tIdx: 5 }, // Ascensão + Bricolage
+    { mIdx: 6, tIdx: 0 }, // Degraus + Sans
+    { mIdx: 7, tIdx: 1 }, // Marco + Serif
+    { mIdx: 8, tIdx: 4 }, // Aceleração + Black
+    { mIdx: 9, tIdx: 5 }, // Caminho + Bricolage
+    { mIdx:10, tIdx: 2 }, // Radiação + DM Serif Display
+    { mIdx:11, tIdx: 0 }, // Progresso + Sans
+  ];
+
+  return (
+    <DesignCanvas>
+      {/* Intro */}
+      <div style={{ padding:'0 60px 56px' }}>
+        <div style={{ fontSize: 11, fontFamily:"'IBM Plex Mono', monospace", letterSpacing: 2, textTransform:'uppercase', color: MUTE, marginBottom: 10 }}>
+          AtingeHUB · Explorações do A · rev 04
+        </div>
+        <div style={{ fontSize: 48, fontWeight: 600, letterSpacing: -1.4, color: INK, fontFamily:"'Space Grotesk', sans-serif", lineHeight: 1, marginBottom: 16, maxWidth: 1000 }}>
+          O <i style={{ fontFamily:"'Fraunces', serif", fontWeight: 600 }}>A</i> que atinge.
+        </div>
+        <div style={{ fontSize: 16, color: MUTE, lineHeight: 1.55, fontFamily:"'Space Grotesk', sans-serif", textWrap:'pretty', maxWidth: 820 }}>
+          12 explorações onde o "A" carrega significado de <b style={{ color: INK }}>atingir</b> — alvo, seta, cume, mira, impacto, ascensão, degraus, marco, aceleração, caminho, radiação, progresso. Cada símbolo pareado com uma tipografia distinta para mostrar o tom resultante. Acento em laranja Claude por padrão (a paleta vamos decidir depois).
+        </div>
+      </div>
+
+      {/* Conceito semântico — strip */}
+      <div style={{ padding:'0 60px 36px' }}>
+        <div style={{
+          background: '#fff', padding: 24, borderLeft: `3px solid ${ACCENT}`,
+          fontFamily:"'Space Grotesk', sans-serif", maxWidth: 1100,
+          boxShadow:'0 1px 3px rgba(0,0,0,0.08)',
+        }}>
+          <div style={{ fontSize: 11, fontFamily:"'IBM Plex Mono', monospace", letterSpacing: 2, textTransform:'uppercase', color: MUTE, marginBottom: 10 }}>
+            Semântica em jogo
+          </div>
+          <div style={{ display:'grid', gridTemplateColumns:'repeat(4, 1fr)', gap: 16, fontSize: 13, color: INK, lineHeight: 1.5 }}>
+            <div><b>Atingir</b> meta · objetivo claro</div>
+            <div><b>Mirar</b> · foco estratégico</div>
+            <div><b>Impactar</b> · resultado tangível</div>
+            <div><b>Ascender</b> · subir, crescer</div>
+            <div><b>Marco</b> · referência conquistada</div>
+            <div><b>Trajetória</b> · caminho até o topo</div>
+            <div><b>Auge</b> · ápice (eco do nome anterior)</div>
+            <div><b>Hub</b> · centro que conecta</div>
+          </div>
+        </div>
+      </div>
+
+      {/* SEÇÃO 1 — Os 12 símbolos lado a lado em escala grande */}
+      <DCSection
+        title="12 explorações do A"
+        subtitle="Símbolo grande · cada um com uma metáfora de atingir"
+        gap={20}
+      >
+        {MARKS.map((m, i) => (
+          <DCArtboard key={i} label={`${m.id} · ${m.name}`} width={240} height={240}>
+            <div style={{ width:'100%', height:'100%', display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center', background:'#fff', gap: 14, padding: 16 }}>
+              <m.M size={120}/>
+              <div style={{ fontFamily:"'IBM Plex Mono', monospace", fontSize: 8.5, color: MUTE, letterSpacing: 1.2, textTransform:'uppercase', textAlign:'center', maxWidth: 200, lineHeight: 1.5 }}>
+                {m.sem}
+              </div>
+            </div>
+          </DCArtboard>
+        ))}
+      </DCSection>
+
+      {/* SEÇÃO 2 — Lockups completos pareados (símbolo + tipografia sugerida) */}
+      <DCSection
+        title="Pareamentos · símbolo + tipografia"
+        subtitle="Cada exploração combinada com uma tipografia que reforça seu tom"
+        gap={24}
+      >
+        {PAIRS.map((p, i) => {
+          const m = MARKS[p.mIdx];
+          const t = TYPES[p.tIdx];
+          return (
+            <DCArtboard key={i} label={`${m.id} ${m.name} · ${t.name}`} width={420} height={220}>
+              <div style={{ width:'100%', height:'100%', display:'flex', alignItems:'center', justifyContent:'center', background:'#fff' }}>
+                <Lockup Mark={m.M} type={t} size={56}/>
+              </div>
+            </DCArtboard>
+          );
+        })}
+      </DCSection>
+
+      {/* SEÇÃO 3 — Mesmo símbolo (Cume) em 6 tipografias diferentes */}
+      <DCSection
+        title="Mesmo símbolo · 6 tipografias"
+        subtitle="Estudo de tom — A03 Cume com cada uma das 6 tipografias"
+        gap={24}
+      >
+        {TYPES.map((t, i) => (
+          <DCArtboard key={i} label={`${t.id} · ${t.name}`} width={420} height={200}>
+            <div style={{ width:'100%', height:'100%', display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center', background:'#fff', gap: 8, padding: 20 }}>
+              <Lockup Mark={A03} type={t} size={50} showTagline={false}/>
+              <div style={{ fontFamily:"'IBM Plex Mono', monospace", fontSize: 8, color: MUTE, letterSpacing: 1.2, textTransform:'uppercase', textAlign:'center' }}>
+                {t.note}
+              </div>
+            </div>
+          </DCArtboard>
+        ))}
+      </DCSection>
+
+      {/* SEÇÃO 4 — Mesmo símbolo (Seta-A) em 6 tipografias */}
+      <DCSection
+        title="Mesmo símbolo · 6 tipografias (Seta-A)"
+        subtitle="A02 Seta-A com cada uma das 6 tipografias — comparação direta"
+        gap={24}
+      >
+        {TYPES.map((t, i) => (
+          <DCArtboard key={i} label={`${t.id} · ${t.name}`} width={420} height={200}>
+            <div style={{ width:'100%', height:'100%', display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center', background:'#fff', gap: 8, padding: 20 }}>
+              <Lockup Mark={A02} type={t} size={50} showTagline={false}/>
+              <div style={{ fontFamily:"'IBM Plex Mono', monospace", fontSize: 8, color: MUTE, letterSpacing: 1.2, textTransform:'uppercase', textAlign:'center' }}>
+                {t.note}
+              </div>
+            </div>
+          </DCArtboard>
+        ))}
+      </DCSection>
+
+      {/* SEÇÃO 5 — Inverso, fundo escuro, todos os símbolos */}
+      <DCSection
+        title="Estudo em fundo escuro"
+        subtitle="Verificação rápida de contraste · todos os 12 sobre INK"
+        gap={20}
+      >
+        {MARKS.map((m, i) => (
+          <DCArtboard key={i} label={`${m.id} · ${m.name}`} width={220} height={220} style={{ background: INK }}>
+            <div style={{ width:'100%', height:'100%', display:'flex', alignItems:'center', justifyContent:'center' }}>
+              <m.M size={110} color={PAPER} accent={ACCENT}/>
+            </div>
+          </DCArtboard>
+        ))}
+      </DCSection>
+
+      {/* Próximos passos */}
+      <div style={{ padding:'0 60px 80px' }}>
+        <div style={{
+          width: 720, padding: 28, background: '#fff', borderLeft: `3px solid ${ACCENT}`,
+          fontFamily:"'Space Grotesk', sans-serif", boxShadow:'0 1px 3px rgba(0,0,0,0.08)',
+        }}>
+          <div style={{ fontSize: 11, fontFamily:"'IBM Plex Mono', monospace", letterSpacing: 2, textTransform:'uppercase', color: MUTE, marginBottom: 10 }}>
+            Próximos passos
+          </div>
+          <ul style={{ margin: 0, paddingLeft: 18, fontSize: 13, color: INK, lineHeight: 1.7 }}>
+            <li>Diga 2–3 <b>símbolos</b> e 1–2 <b>tipografias</b> que mais te chamaram a atenção</li>
+            <li>A gente refina o pareamento e testa em paletas (laranja, azul, vermelho)</li>
+            <li>Depois: construção geométrica formal, manual de marca e variações responsivas</li>
+          </ul>
+        </div>
+      </div>
+    </DesignCanvas>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById('root')).render(<App/>);
+</script>
+</body>
+</html>
