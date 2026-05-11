@@ -1,0 +1,128 @@
+---
+import { site, whatsappLink } from '../config/site';
+
+const year = new Date().getFullYear();
+
+const portfolio = [
+  { label: 'Vitrine', href: '/portfolio/vitrine' },
+  { label: 'Cérebro', href: '/portfolio/cerebro' },
+  { label: 'Bancada', href: '/portfolio/bancada' },
+  { label: 'Engrenagens', href: '/portfolio/engrenagens' },
+  { label: 'Cadência', href: '/portfolio/cadencia' },
+  { label: 'Balcão', href: '/portfolio/balcao' },
+  { label: 'Voz', href: '/portfolio/voz' },
+  { label: 'Bússola', href: '/portfolio/bussola' },
+];
+
+const empresa = [
+  { label: 'Sobre', href: '/sobre' },
+  { label: 'Processo', href: '/processo' },
+  { label: 'Casos', href: '/casos' },
+  { label: 'Blog', href: '/blog' },
+  { label: 'Contato', href: '/contato' },
+  { label: 'Privacidade', href: '/privacidade' },
+];
+---
+
+<footer class="site-footer">
+  <div class="container-page py-16 grid gap-12 md:grid-cols-[1.5fr_1fr_1fr_1fr]">
+    <div>
+      <a href="/" class="brand-row">
+        <span class="brand-mark">A</span>
+        <span class="brand-name">{site.name}</span>
+      </a>
+      <p class="mt-5 text-sm leading-relaxed text-[var(--color-ink-soft)] max-w-sm">
+        {site.manifesto}
+      </p>
+      <div class="mt-6 flex gap-3">
+        <a href={whatsappLink()} target="_blank" rel="noopener" class="btn btn-whatsapp text-sm">
+          WhatsApp
+        </a>
+        <a href={site.social.instagram} target="_blank" rel="noopener" class="btn btn-ghost text-sm">
+          Instagram
+        </a>
+      </div>
+    </div>
+
+    <div>
+      <h4 class="footer-heading">Portfólio</h4>
+      <ul class="footer-list">
+        {portfolio.map((item) => (
+          <li><a href={item.href}>{item.label}</a></li>
+        ))}
+      </ul>
+    </div>
+
+    <div>
+      <h4 class="footer-heading">Empresa</h4>
+      <ul class="footer-list">
+        {empresa.map((item) => (
+          <li><a href={item.href}>{item.label}</a></li>
+        ))}
+      </ul>
+    </div>
+
+    <div>
+      <h4 class="footer-heading">Devs & parceiros</h4>
+      <ul class="footer-list">
+        <li><a href="https://stack.atingehub.com.br" target="_blank" rel="noopener">AtingeHub Stack</a></li>
+        <li><a href={site.social.github} target="_blank" rel="noopener">GitHub</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="container-page py-6 flex flex-col md:flex-row items-start md:items-center justify-between gap-3 border-t border-[var(--color-line)] text-xs text-[var(--color-mute)]">
+    <span>© {year} {site.name}. {site.contact.address}. Atendimento na região de {site.contact.region.slice(0, 4).join(', ')}.</span>
+    <a href={`mailto:${site.legal.dpoEmail}`}>{site.legal.dpoEmail}</a>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    background: var(--color-card);
+    border-top: 1px solid var(--color-line);
+    margin-top: var(--space-32);
+  }
+
+  .brand-row {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.625rem;
+    font-family: var(--font-display);
+    font-size: 1.25rem;
+    font-weight: 500;
+    color: var(--color-ink);
+  }
+  .brand-mark {
+    width: 2rem; height: 2rem;
+    border-radius: var(--radius-full);
+    background: var(--color-ink);
+    color: var(--color-paper);
+    display: grid; place-items: center;
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 1.125rem;
+    font-style: italic;
+  }
+
+  .footer-heading {
+    font-family: var(--font-body);
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--color-mute);
+    margin-bottom: 1rem;
+  }
+
+  .footer-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.625rem;
+    font-size: 0.95rem;
+  }
+  .footer-list a {
+    color: var(--color-ink-soft);
+  }
+  .footer-list a:hover { color: var(--color-ink); }
+</style>

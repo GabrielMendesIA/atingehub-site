@@ -1,0 +1,53 @@
+# AtingeHub
+
+> Sistemas de IA para varejo brasileiro, instalados sob medida. Cada solução resolve um problema concreto, com stack aberta e relação humana em primeiro lugar.
+
+A AtingeHub é uma consultoria e implementação de IA aplicada ao varejo de pequeno e médio porte no Brasil (Sorocaba/SP e região). Fundada e operada por Gabriel Mendes, com 5 anos de experiência atendendo empresários do varejo (maquininha de cartão e crediário) antes do pivô para IA.
+
+## Posicionamento não-negociável
+
+- AtingeHub é o sistema; Gabriel é o fundador co-criando junto com o cliente.
+- Relação humana primeiro, IA como extensão — nunca substituto.
+- Cada solução nasce de um problema concreto da empresa, não de catálogo.
+- Stack 100% aberta ou self-hosted — cliente fica dono dos dados e da infra.
+
+## Portfólio de 8 produtos
+
+- **Vitrine** — site/página de captura com checkout integrado.
+- **Cérebro** — segundo cérebro em Obsidian + audio overviews do NotebookLM.
+- **Bancada** — agentes Claude executando tarefas internas calibradas.
+- **Engrenagens** — 3 workflows operacionais em n8n (captura, follow-up, relatório).
+- **Cadência** — prospecção ativa + enriquecimento + disparos segmentados.
+- **Balcão** — CRM Chatwoot self-hosted multicanal.
+- **Voz** — IA respondendo no WhatsApp 24h, com escalada humana.
+- **Bússola** — acompanhamento estratégico mensal recorrente.
+
+## Stack tecnológica
+
+- Obsidian + NotebookLM (Cérebro)
+- Claude Code + skills + subagentes (Bancada, Voz)
+- n8n + Evolution API (Engrenagens, Cadência)
+- Chatwoot self-hosted (Balcão)
+- Astro 5 (este site)
+- Repositório do plugin Claude Code distribuível: https://github.com/GabrielMendesIA/atingehub-stack
+
+## Páginas principais
+
+- /sobre — perfil do fundador e história da marca
+- /portfolio — visão geral dos 8 produtos
+- /portfolio/[slug] — página individual de cada produto
+- /processo — como funciona discovery → diagnóstico → entrega → acompanhamento
+- /casos — cases reais (Açaí Algomais, AUTOMAKER)
+- /blog — newsletter sobre IA aplicada, bastidores e mercado
+- /contato — canais de contato
+- /privacidade — política de privacidade e LGPD
+
+## Sitemap
+
+https://atingehub.com/sitemap-index.xml
+
+## Contato
+
+WhatsApp: +55 15 99999-9999
+E-mail: oi@atingehub.com
+Endereço: Sorocaba/SP, atendimento presencial em Sorocaba, Votorantim, Itu, Salto, Boituva, Mairinque.

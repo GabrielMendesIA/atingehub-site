@@ -1,0 +1,61 @@
+---
+interface Props {
+  variant?: 'default' | 'compact';
+}
+const { variant = 'default' } = Astro.props;
+
+const pilares = [
+  {
+    eyebrow: 'Sistema',
+    title: 'Sistema, não chatbot.',
+    body: 'Cada solução nasce de um problema concreto do seu negócio — não de um catálogo de IA pronto.',
+  },
+  {
+    eyebrow: 'Humano',
+    title: 'Relação primeiro.',
+    body: 'A IA é extensão de quem você é, nunca substituto. Quem conduz o relacionamento continua sendo você.',
+  },
+  {
+    eyebrow: 'Dono',
+    title: 'Você fica com tudo.',
+    body: 'Dados, código, infraestrutura. Stack aberta e self-hosted. Sem lock-in, sem dependência.',
+  },
+];
+---
+
+<section class={`manifesto ${variant}`}>
+  <div class="container-page">
+    {variant === 'default' && (
+      <p class="eyebrow">Manifesto</p>
+    )}
+    <div class={`grid gap-10 md:gap-14 ${variant === 'compact' ? 'md:grid-cols-3' : 'md:grid-cols-3'} mt-6`}>
+      {pilares.map((p) => (
+        <div class="pilar">
+          <p class="eyebrow">{p.eyebrow}</p>
+          <h3 class="pilar-title">{p.title}</h3>
+          <p class="pilar-body">{p.body}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .manifesto {
+    padding: var(--space-24) 0;
+  }
+  .manifesto.compact {
+    padding: var(--space-16) 0;
+  }
+
+  .pilar-title {
+    margin-top: 0.5rem;
+    font-size: 1.5rem;
+    line-height: 1.2;
+  }
+  .pilar-body {
+    margin-top: 0.625rem;
+    color: var(--color-ink-soft);
+    line-height: 1.65;
+  }
+</style>

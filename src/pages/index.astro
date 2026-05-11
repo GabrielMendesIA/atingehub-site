@@ -1,0 +1,106 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Hero from '../components/Hero.astro';
+import Manifesto from '../components/Manifesto.astro';
+import ProductCard from '../components/ProductCard.astro';
+import WhatsAppCTA from '../components/WhatsAppCTA.astro';
+import { site } from '../config/site';
+
+const products = (await getCollection('products')).sort(
+  (a, b) => a.data.order - b.data.order
+);
+
+const homeJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  name: site.name,
+  url: site.url,
+  description: site.description,
+  publisher: { '@type': 'Organization', name: site.name },
+};
+---
+
+<BaseLayout
+  title={undefined}
+  description={site.description}
+  jsonLd={homeJsonLd}
+>
+  <Hero
+    eyebrow="AtingeHub"
+    title="Sistemas de IA para o <em>varejo brasileiro</em>, instalados sob medida."
+    subtitle="Cada solução nasce de um problema concreto da sua loja — não de catálogo de IA pronto. Stack aberta, cliente fica dono dos dados, relação humana em primeiro lugar."
+    secondaryCta={{ label: 'Ver portfólio', href: '/portfolio' }}
+  />
+
+  <Manifesto />
+
+  <section class="portfolio-section">
+    <div class="container-page">
+      <p class="eyebrow">Portfólio</p>
+      <h2 class="section-title">8 produtos que combinam como você precisar.</h2>
+      <p class="section-lead">
+        Vendidos isolados ou em combo. Cada um resolve um problema concreto, com entregável palpável e prazo definido.
+      </p>
+
+      <div class="product-grid">
+        {products.map((p) => (
+          <ProductCard
+            name={p.data.name}
+            slogan={p.data.slogan}
+            summary={p.data.summary}
+            family={p.data.family}
+            href={`/portfolio/${p.data.slug || p.id}`}
+          />
+        ))}
+      </div>
+
+      <div class="portfolio-cta">
+        <a href="/portfolio" class="btn btn-ghost">Ver todos os produtos →</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="process-teaser">
+    <div class="container-page">
+      <p class="eyebrow">Processo</p>
+      <h2 class="section-title">Implementação em paralelo ao uso real do seu negócio.</h2>
+      <p class="section-lead">
+        Discovery, diagnóstico, entrega modular semana a semana, acompanhamento mensal. Você aprende fazendo, no ritmo da loja, sem parar a operação.
+      </p>
+      <a href="/processo" class="btn btn-ghost">Como funciona →</a>
+    </div>
+  </section>
+
+  <WhatsAppCTA />
+</BaseLayout>
+
+<style>
+  .portfolio-section,
+  .process-teaser {
+    padding: var(--space-24) 0;
+  }
+
+  .section-title {
+    margin-top: 0.5rem;
+    max-width: 42rem;
+  }
+  .section-lead {
+    margin-top: 1rem;
+    color: var(--color-ink-soft);
+    font-size: 1.0625rem;
+    max-width: 42rem;
+    line-height: 1.65;
+  }
+
+  .product-grid {
+    margin-top: 3rem;
+    display: grid;
+    gap: 1.25rem;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  }
+
+  .portfolio-cta {
+    margin-top: 3rem;
+  }
+</style>

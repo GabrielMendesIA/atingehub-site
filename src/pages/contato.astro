@@ -1,0 +1,106 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Hero from '../components/Hero.astro';
+import { site, whatsappLink } from '../config/site';
+---
+
+<BaseLayout
+  title="Contato"
+  description={`Falar com a ${site.name}. WhatsApp ${site.contact.whatsappLabel}, e-mail ${site.contact.email}. Atendimento em ${site.contact.region.slice(0, 3).join(', ')}.`}
+>
+  <Hero
+    eyebrow="Contato"
+    title="Conversa de 20 minutos, <em>sem compromisso</em>."
+    subtitle="Me conta a dor concreta do seu negócio. Se a AtingeHub não for o caminho, te indico quem é. Se for, a gente já alinha próximos passos."
+    primaryCta={{
+      label: 'Falar no WhatsApp agora',
+      href: whatsappLink(),
+      external: true,
+    }}
+  />
+
+  <section class="contato">
+    <div class="container-page contato-grid">
+      <div>
+        <h2>Canais</h2>
+        <ul class="contato-list">
+          <li>
+            <span class="eyebrow">WhatsApp</span>
+            <a href={whatsappLink()} target="_blank" rel="noopener">{site.contact.whatsappLabel}</a>
+            <p class="hint">Resposta em até 4 horas em dia útil.</p>
+          </li>
+          <li>
+            <span class="eyebrow">E-mail</span>
+            <a href={`mailto:${site.contact.email}`}>{site.contact.email}</a>
+            <p class="hint">Use pra proposta formal ou contrato.</p>
+          </li>
+          <li>
+            <span class="eyebrow">Instagram</span>
+            <a href={site.social.instagram} target="_blank" rel="noopener">@{site.contact.instagram}</a>
+          </li>
+        </ul>
+      </div>
+
+      <div>
+        <h2>Atendimento</h2>
+        <p class="contato-body">
+          {site.contact.address}.
+        </p>
+        <p class="contato-body">
+          Atendo presencial em <strong>{site.contact.region.join(', ')}</strong>. Para outras regiões, atendimento é remoto via Google Meet — sem perda de profundidade.
+        </p>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .contato {
+    padding: var(--space-16) 0 var(--space-24);
+  }
+  .contato-grid {
+    display: grid;
+    gap: 3rem;
+  }
+  @media (min-width: 768px) {
+    .contato-grid {
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+    }
+  }
+
+  h2 {
+    font-size: 1.75rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .contato-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.75rem;
+  }
+  .contato-list li {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+  .contato-list a {
+    font-size: 1.25rem;
+    font-weight: 500;
+    color: var(--color-ink);
+  }
+  .contato-list a:hover {
+    color: var(--color-accent-strong);
+  }
+  .hint {
+    font-size: 0.875rem;
+    color: var(--color-mute);
+  }
+
+  .contato-body {
+    color: var(--color-ink-soft);
+    line-height: 1.7;
+    margin-bottom: 1rem;
+  }
+  .contato-body strong { color: var(--color-ink); }
+</style>

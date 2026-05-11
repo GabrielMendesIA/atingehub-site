@@ -1,0 +1,123 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { site } from '../config/site';
+
+const ultimaAtualizacao = '2026-05-04';
+---
+
+<BaseLayout
+  title="Privacidade"
+  description={`Política de privacidade e tratamento de dados da ${site.name}.`}
+  noindex={false}
+>
+  <div class="container-page legal-page">
+    <p class="eyebrow">Política de privacidade</p>
+    <h1>Como a AtingeHub trata seus dados</h1>
+    <p class="meta">Última atualização: {ultimaAtualizacao}</p>
+
+    <section>
+      <h2>1. Quem somos</h2>
+      <p>
+        A <strong>{site.name}</strong> é uma operação de consultoria e implementação de sistemas de inteligência artificial sediada em {site.contact.address}, fundada e operada por {site.founder.name}.
+      </p>
+    </section>
+
+    <section>
+      <h2>2. Quais dados coletamos</h2>
+      <p>
+        Quando você nos contata pelo WhatsApp, e-mail ou formulários do site, coletamos: nome, telefone, e-mail, segmento do seu negócio, e dor relatada. Esses dados são usados <strong>exclusivamente</strong> para qualificar atendimento e dimensionar proposta.
+      </p>
+      <p>
+        Quando você se torna cliente, podemos receber acesso a sistemas, planilhas, conteúdos e dados operacionais necessários para construir as soluções contratadas. Tratamos esses dados como confidenciais — não compartilhamos com terceiros sem autorização expressa por escrito.
+      </p>
+    </section>
+
+    <section>
+      <h2>3. Base legal (LGPD)</h2>
+      <ul>
+        <li><strong>Consentimento</strong> — quando você inicia contato por canais de comunicação.</li>
+        <li><strong>Execução de contrato</strong> — quando você se torna cliente.</li>
+        <li><strong>Legítimo interesse</strong> — para comunicação institucional e melhoria do serviço, sempre observando seus direitos.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>4. Stack aberta e self-hosted</h2>
+      <p>
+        Princípio não-negociável da AtingeHub: <strong>você fica dono dos dados e da infraestrutura</strong>. Toda solução implementada roda em servidores e contas controladas pelo cliente. Não armazenamos dados operacionais de clientes em sistemas da AtingeHub — eles vivem no Chatwoot, n8n, Obsidian, Supabase e VPS do próprio cliente.
+      </p>
+    </section>
+
+    <section>
+      <h2>5. Seus direitos</h2>
+      <p>
+        Você tem direito a acessar, corrigir, anonimizar, bloquear ou eliminar dados pessoais que mantemos. Também pode revogar consentimento a qualquer momento. Para exercer qualquer direito, escreva para <a href={`mailto:${site.legal.dpoEmail}`}>{site.legal.dpoEmail}</a>.
+      </p>
+    </section>
+
+    <section>
+      <h2>6. Cookies e analytics</h2>
+      <p>
+        Este site usa cookies estritamente necessários para funcionamento e — quando você consentir — cookies analíticos (Google Analytics 4) para entender o que está dando certo na comunicação. Você pode optar por não consentir sem prejuízo da navegação.
+      </p>
+    </section>
+
+    <section>
+      <h2>7. Encarregado de dados (DPO)</h2>
+      <p>
+        Dúvidas, solicitações ou denúncias relacionadas ao tratamento de dados pessoais: <a href={`mailto:${site.legal.dpoEmail}`}>{site.legal.dpoEmail}</a>.
+      </p>
+    </section>
+  </div>
+</BaseLayout>
+
+<style>
+  .legal-page {
+    padding: var(--space-16) 0 var(--space-24);
+    max-width: 48rem;
+  }
+
+  .legal-page h1 {
+    margin-top: 0.5rem;
+    font-size: clamp(1.875rem, 4vw, 2.5rem);
+  }
+
+  .meta {
+    margin-top: 0.5rem;
+    color: var(--color-mute);
+    font-size: 0.875rem;
+  }
+
+  section {
+    margin-top: 2.5rem;
+  }
+
+  section h2 {
+    font-size: 1.375rem;
+    margin-bottom: 0.875rem;
+  }
+
+  section p,
+  section ul {
+    color: var(--color-ink-soft);
+    line-height: 1.7;
+  }
+
+  section p + p,
+  section p + ul,
+  section ul + p {
+    margin-top: 1rem;
+  }
+
+  section ul {
+    list-style: disc;
+    padding-left: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  section strong {
+    color: var(--color-ink);
+  }
+</style>

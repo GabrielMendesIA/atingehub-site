@@ -1,0 +1,59 @@
+/*
+ * Tokens da marca AtingeHub — PROVISÓRIO
+ *
+ * Substituir este arquivo quando o manual de marca final voltar.
+ * Os tokens abaixo são neutros + 1 acento herdado da landing atual.
+ * Tailwind v4 lê as variáveis via @theme inline em global.css.
+ */
+
+:root {
+  /* Cores — neutros + acento */
+  --color-ink: #1a1a1a;          /* texto principal */
+  --color-ink-soft: #4a4a4a;     /* texto secundário */
+  --color-mute: #7a7a7a;         /* texto auxiliar */
+  --color-line: #e5e5e5;         /* bordas, divisores */
+  --color-paper: #fafaf7;        /* fundo */
+  --color-card: #ffffff;         /* superfícies elevadas */
+
+  /* Acento (terracota herdada — provisório) */
+  --color-accent: #d97757;
+  --color-accent-soft: #f4d8cb;
+  --color-accent-strong: #b35a3c;
+
+  /* Suporte */
+  --color-whatsapp: #25d366;
+  --color-success: #16a34a;
+  --color-warn: #d97706;
+
+  /* Tipografia — Inter + Fraunces (provisório, swap no manual final) */
+  --font-display: 'Fraunces', Georgia, 'Times New Roman', serif;
+  --font-body: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, 'Cascadia Code', monospace;
+
+  /* Espaçamento (escala 4px) */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-12: 3rem;
+  --space-16: 4rem;
+  --space-24: 6rem;
+  --space-32: 8rem;
+
+  /* Raios */
+  --radius-sm: 0.375rem;
+  --radius-md: 0.75rem;
+  --radius-lg: 1.25rem;
+  --radius-full: 9999px;
+
+  /* Sombras */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.04);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.06);
+  --shadow-lg: 0 12px 40px rgba(0, 0, 0, 0.08);
+
+  /* Container */
+  --container-max: 72rem; /* 1152px */
+  --container-px: 1.25rem;
+}

@@ -1,0 +1,65 @@
+---
+import { whatsappLink } from '../config/site';
+
+interface Props {
+  title?: string;
+  body?: string;
+  message?: string;
+  cta?: string;
+}
+
+const {
+  title = 'Conversa de 20 minutos, sem compromisso',
+  body = 'Me conta a dor concreta do seu negócio. Se a AtingeHub não for o caminho, te indico quem é.',
+  message,
+  cta = 'Falar no WhatsApp',
+} = Astro.props;
+---
+
+<section class="wa-cta">
+  <div class="container-page wa-cta-inner">
+    <div>
+      <p class="eyebrow">Próximo passo</p>
+      <h2 class="wa-cta-title">{title}</h2>
+      <p class="wa-cta-body">{body}</p>
+    </div>
+    <a
+      href={whatsappLink(message)}
+      target="_blank"
+      rel="noopener"
+      class="btn btn-whatsapp"
+    >
+      {cta}
+    </a>
+  </div>
+</section>
+
+<style>
+  .wa-cta {
+    background: var(--color-card);
+    border-top: 1px solid var(--color-line);
+    border-bottom: 1px solid var(--color-line);
+    padding: var(--space-16) 0;
+  }
+  .wa-cta-inner {
+    display: grid;
+    gap: 1.5rem;
+    align-items: center;
+  }
+  @media (min-width: 768px) {
+    .wa-cta-inner {
+      grid-template-columns: 1fr auto;
+      gap: 3rem;
+    }
+  }
+  .wa-cta-title {
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    margin-top: 0.5rem;
+    max-width: 36rem;
+  }
+  .wa-cta-body {
+    margin-top: 0.75rem;
+    color: var(--color-ink-soft);
+    max-width: 36rem;
+  }
+</style>

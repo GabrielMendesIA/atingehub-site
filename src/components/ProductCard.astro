@@ -1,0 +1,67 @@
+---
+interface Props {
+  name: string;
+  slogan: string;
+  summary: string;
+  family: 'operacional' | 'inteligencia' | 'estrategico';
+  href: string;
+}
+
+const { name, slogan, summary, family, href } = Astro.props;
+
+const familyLabel = {
+  operacional: 'Operacional',
+  inteligencia: 'Inteligência',
+  estrategico: 'Estratégico',
+}[family];
+---
+
+<a href={href} class="product-card">
+  <p class="eyebrow">{familyLabel}</p>
+  <h3 class="product-name">{name}</h3>
+  <p class="product-slogan">{slogan}</p>
+  <p class="product-summary">{summary}</p>
+  <span class="product-link">Ver detalhes →</span>
+</a>
+
+<style>
+  .product-card {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 1.75rem 1.5rem;
+    background: var(--color-card);
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-lg);
+    color: var(--color-ink);
+    transition: transform 0.15s, border-color 0.15s, box-shadow 0.15s;
+  }
+  .product-card:hover {
+    transform: translateY(-2px);
+    border-color: var(--color-ink-soft);
+    box-shadow: var(--shadow-md);
+    color: var(--color-ink);
+  }
+  .product-name {
+    font-size: 1.625rem;
+    margin-top: 0.25rem;
+  }
+  .product-slogan {
+    color: var(--color-ink-soft);
+    font-weight: 500;
+    font-size: 0.95rem;
+  }
+  .product-summary {
+    margin-top: 0.5rem;
+    color: var(--color-mute);
+    font-size: 0.9rem;
+    line-height: 1.6;
+    flex: 1;
+  }
+  .product-link {
+    margin-top: 1rem;
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--color-accent-strong);
+  }
+</style>
