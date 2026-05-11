@@ -1,16 +1,16 @@
 /**
- * Configuração central do site AtingeHub
+ * Configuração central do site AtingeHUB
  * Todos os componentes consomem daqui. Editar em 1 lugar = atualiza tudo.
  */
 
 export const site = {
-  name: 'AtingeHub',
+  name: 'AtingeHUB',
   url: 'https://atingehub.com',
   tagline: 'Sistemas de IA para varejo brasileiro.',
   description:
-    'A AtingeHub instala sistemas de IA sob medida no varejo brasileiro. Cada produto resolve um problema concreto, com stack aberta e relação humana em primeiro lugar.',
+    'A AtingeHUB instala sistemas de IA sob medida no varejo brasileiro. Cada produto resolve um problema concreto, com stack aberta e relação humana em primeiro lugar.',
   manifesto:
-    'AtingeHub é o sistema; Gabriel é o fundador co-criando junto. Relação humana primeiro, IA como extensão — nunca substituto. Cliente fica dono dos dados e da infra.',
+    'AtingeHUB é o sistema; Gabriel é o fundador co-criando junto. Relação humana primeiro, IA como extensão — nunca substituto. Cliente fica dono dos dados e da infra.',
   founder: {
     name: 'Gabriel Mendes',
     role: 'Fundador e arquiteto',
@@ -22,7 +22,7 @@ export const site = {
     whatsapp: '5515999999999',
     whatsappLabel: '+55 15 99999-9999',
     whatsappMessage:
-      'Oi Gabriel, vim pelo site da AtingeHub. Queria entender melhor como funciona.',
+      'Oi Gabriel, vim pelo site da AtingeHUB. Queria entender melhor como funciona.',
     email: 'oi@atingehub.com',
     instagram: 'atingehub',
     address: 'Sorocaba/SP',

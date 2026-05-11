@@ -36,7 +36,7 @@ A **Cadência** vira essa lógica: você passa a falar com cliente num ritmo def
 
 ## Quando faz mais sentido
 
-Cadência é o único produto da AtingeHub com **mensalidade obrigatória** (setup + recorrente). Porque prospecção não é "ligar e deixar rodando" — é operação. Quem opera precisa estar perto.
+Cadência é o único produto da AtingeHUB com **mensalidade obrigatória** (setup + recorrente). Porque prospecção não é "ligar e deixar rodando" — é operação. Quem opera precisa estar perto.
 
 Faz mais sentido depois das **Engrenagens** entregues (a infra de WhatsApp e logs precisa estar madura). Vendido sem Engrenagens, dá pra fazer, mas você gasta o dobro do tempo lidando com tarefa operacional que poderia ser automática.
 

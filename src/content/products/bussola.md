@@ -17,7 +17,7 @@ pricing:
   monthly_required: true
 seo:
   title: Bússola — acompanhamento estratégico mensal de IA
-  description: Call mensal, review trimestral, ajustes contínuos. O fio que mantém seu sistema de IA vivo e calibrado depois da entrega. Acompanhamento humano da AtingeHub.
+  description: Call mensal, review trimestral, ajustes contínuos. O fio que mantém seu sistema de IA vivo e calibrado depois da entrega. Acompanhamento humano da AtingeHUB.
 ---
 
 ## O que a Bússola resolve

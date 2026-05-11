@@ -17,7 +17,7 @@ pricing:
   monthly_required: false
 seo:
   title: Vitrine — sua landing de captura
-  description: Página única que captura lead, registra LGPD e (com checkout) cobra na hora. Implementação em 3 a 5 semanas pela AtingeHub.
+  description: Página única que captura lead, registra LGPD e (com checkout) cobra na hora. Implementação em 3 a 5 semanas pela AtingeHUB.
 ---
 
 ## O que a Vitrine resolve
@@ -37,10 +37,10 @@ A **Vitrine** é a página única que recebe o tráfego, captura o dado com cons
 
 ## Quando faz mais sentido
 
-Vitrine é porta de entrada da AtingeHub. Funciona isolada, e funciona bem. Cliente que tem fluxo de anúncio rodando mas perde lead no caminho ganha em retenção desde a primeira semana.
+Vitrine é porta de entrada da AtingeHUB. Funciona isolada, e funciona bem. Cliente que tem fluxo de anúncio rodando mas perde lead no caminho ganha em retenção desde a primeira semana.
 
 Combina muito bem com **Engrenagens** (automação que captura o lead da Vitrine e segue ele no WhatsApp) e **Cérebro** (organização do conteúdo que vai virar copy da página).
 
 ## Risco e mitigação
 
-"Vitrine" também é nome de plataformas de e-commerce conhecidas (Vtex, Tray). Nas primeiras conversas, qualificamos em material escrito: *"Vitrine by AtingeHub — sua landing de captura"*. Em call, falamos solto.
+"Vitrine" também é nome de plataformas de e-commerce conhecidas (Vtex, Tray). Nas primeiras conversas, qualificamos em material escrito: *"Vitrine by AtingeHUB — sua landing de captura"*. Em call, falamos solto.

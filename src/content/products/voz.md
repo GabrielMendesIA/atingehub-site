@@ -39,8 +39,8 @@ A **Voz** é a IA que responde no seu lugar quando você não está. Calibrada n
 
 Voz **não pode ser vendida isolada** — exige o **Balcão** rodando (Chatwoot é a infra que a IA precisa). **Cérebro** é pré-requisito soft: sem ele, a IA chuta mais; com ele, a IA tem contexto do seu negócio.
 
-É o único produto da AtingeHub com **mensalidade obrigatória** — porque calibração contínua é parte do produto, não acessório. IA parada vira erro a partir do mês 2.
+É o único produto da AtingeHUB com **mensalidade obrigatória** — porque calibração contínua é parte do produto, não acessório. IA parada vira erro a partir do mês 2.
 
 ## Risco e mitigação
 
-"Voz" é palavra curta e pode virar genérica em busca/SEO. Em material escrito, sempre acompanhamos com verbo de ação no slogan, ou qualificamos como *"a Voz, IA de atendimento da AtingeHub"*. Em call, falamos solto.
+"Voz" é palavra curta e pode virar genérica em busca/SEO. Em material escrito, sempre acompanhamos com verbo de ação no slogan, ou qualificamos como *"a Voz, IA de atendimento da AtingeHUB"*. Em call, falamos solto.

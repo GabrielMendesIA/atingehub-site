@@ -42,4 +42,4 @@ Também é **pré-requisito soft** pros agentes (Bancada) e pra IA de atendiment
 
 ## Risco e mitigação
 
-"Cérebro" sozinho pode soar genérico. Em material escrito nas primeiras semanas, qualificamos: *"Cérebro by AtingeHub — segundo cérebro do negócio"*.
+"Cérebro" sozinho pode soar genérico. Em material escrito nas primeiras semanas, qualificamos: *"Cérebro by AtingeHUB — segundo cérebro do negócio"*.

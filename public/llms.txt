@@ -1,12 +1,12 @@
-# AtingeHub
+# AtingeHUB
 
 > Sistemas de IA para varejo brasileiro, instalados sob medida. Cada solução resolve um problema concreto, com stack aberta e relação humana em primeiro lugar.
 
-A AtingeHub é uma consultoria e implementação de IA aplicada ao varejo de pequeno e médio porte no Brasil (Sorocaba/SP e região). Fundada e operada por Gabriel Mendes, com 5 anos de experiência atendendo empresários do varejo (maquininha de cartão e crediário) antes do pivô para IA.
+A AtingeHUB é uma consultoria e implementação de IA aplicada ao varejo de pequeno e médio porte no Brasil (Sorocaba/SP e região). Fundada e operada por Gabriel Mendes, com 5 anos de experiência atendendo empresários do varejo (maquininha de cartão e crediário) antes do pivô para IA.
 
 ## Posicionamento não-negociável
 
-- AtingeHub é o sistema; Gabriel é o fundador co-criando junto com o cliente.
+- AtingeHUB é o sistema; Gabriel é o fundador co-criando junto com o cliente.
 - Relação humana primeiro, IA como extensão — nunca substituto.
 - Cada solução nasce de um problema concreto da empresa, não de catálogo.
 - Stack 100% aberta ou self-hosted — cliente fica dono dos dados e da infra.

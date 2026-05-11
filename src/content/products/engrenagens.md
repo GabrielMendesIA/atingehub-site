@@ -39,7 +39,7 @@ As **Engrenagens** são 3 workflows que encaixam essas peças e fazem o operacio
 
 ## Quando faz mais sentido
 
-Engrenagens é uma das melhores portas de entrada da AtingeHub. Não depende de Cérebro nem de IA generativa — é automação clássica, previsível, robusta. Qualquer negócio com volume mínimo de WhatsApp ganha em organização desde a primeira semana.
+Engrenagens é uma das melhores portas de entrada da AtingeHUB. Não depende de Cérebro nem de IA generativa — é automação clássica, previsível, robusta. Qualquer negócio com volume mínimo de WhatsApp ganha em organização desde a primeira semana.
 
 É a base técnica que a **Cadência** (prospecção ativa) e a **Voz** (IA de atendimento) usam depois. Sem Engrenagens, esses dois sobem com menos qualidade.
 
