@@ -1,193 +1,419 @@
 ---
-import { navigation, whatsappLink } from '../config/site';
-import LogoMark from './LogoMark.astro';
-import Wordmark from './Wordmark.astro';
+import { navigation, whatsappLink, site } from '../config/site';
 ---
 
-<header class="site-header">
-  <div class="container-page header-row">
-    <a href="/" class="brand" aria-label="AtingeHUB — Home">
-      <LogoMark size={32} />
-      <Wordmark size="sm" />
-    </a>
+<!-- Spacer reserva o espaço da logo grande inicial — evita CLS quando encolhe -->
+<div class="header-spacer" aria-hidden="true"></div>
 
-    <nav class="nav-desktop" aria-label="Principal">
+<!-- Brand flutuante (logo + wordmark) — encolhe e migra ao rolar -->
+<a href="/" class="brand-floating" aria-label={`${site.name} — Início`} data-brand>
+  <span class="brand-mark">
+    <svg viewBox="0 0 100 80" aria-hidden="true">
+      <path d="M16 64L28 42L40 64Z" fill="#4A4A4A" />
+      <path d="M60 64L74 38L88 64Z" fill="#8A8A8A" />
+      <path d="M24 64L50 16L76 64Z" fill="#F5F3EE" />
+      <path d="M50 16L50 6" stroke="#D97757" stroke-width="2.5" stroke-linecap="round" />
+      <path d="M50 7L60 9L50 13Z" fill="#D97757" />
+    </svg>
+  </span>
+  <span class="brand-wordmark">
+    Atinge<span class="hub">HUB</span>
+  </span>
+</a>
+
+<!-- Hamburger flutuante à direita -->
+<button
+  type="button"
+  class="menu-floating"
+  aria-label="Abrir menu"
+  data-menu-toggle
+>
+  <span class="menu-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </span>
+  <span class="menu-label">menu</span>
+</button>
+
+<!-- Menu overlay (clip-path expanding from hamburger) -->
+<div class="menu-overlay" data-menu-overlay hidden>
+  <button
+    type="button"
+    class="menu-close"
+    aria-label="Fechar menu"
+    data-menu-close
+  >×</button>
+
+  <nav class="menu-nav" aria-label="Principal">
+    <ul>
       {navigation.map((item) => (
-        <a href={item.href} class="nav-link">
-          {item.label}
-        </a>
+        <li>
+          <a href={item.href}>{item.label}</a>
+        </li>
       ))}
-    </nav>
+    </ul>
 
-    <a
-      href={whatsappLink()}
-      target="_blank"
-      rel="noopener"
-      class="btn btn-primary nav-cta"
-    >
-      $ iniciar conversa
-    </a>
-
-    <button
-      type="button"
-      class="menu-toggle"
-      aria-label="Abrir menu"
-      data-menu-toggle
-    >
-      <span></span>
-      <span></span>
-      <span></span>
-    </button>
-  </div>
-
-  <div class="mobile-menu" data-mobile-menu hidden>
-    <div class="container-page mobile-menu-inner">
-      {navigation.map((item) => (
-        <a href={item.href} class="mobile-nav-link">
-          {item.label}
-        </a>
-      ))}
+    <div class="menu-footer">
+      <p class="eyebrow"><span class="accent">●</span> Falar comigo</p>
       <a
         href={whatsappLink()}
         target="_blank"
         rel="noopener"
-        class="btn btn-primary mt-4"
+        class="btn btn-primary menu-cta"
       >
         $ iniciar conversa →
       </a>
     </div>
-  </div>
-</header>
+  </nav>
+</div>
 
 <style>
-  .site-header {
-    position: sticky;
-    top: 0;
-    z-index: 50;
-    background: color-mix(in srgb, var(--bg) 88%, transparent);
-    backdrop-filter: blur(14px);
-    border-bottom: 1px solid var(--border);
+  /* ─── Spacer (reserva espaço da logo grande) ───────────────── */
+  .header-spacer {
+    height: 220px;
+    width: 100%;
+    pointer-events: none;
+  }
+  @media (max-width: 768px) {
+    .header-spacer {
+      height: 180px;
+    }
   }
 
-  .header-row {
+  /* ─── Brand flutuante ──────────────────────────────────────── */
+  .brand-floating {
+    position: fixed;
+    top: 40px;
+    left: 50%;
+    z-index: 60;
     display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 18px 32px;
-    gap: 16px;
-  }
-
-  .brand {
-    display: inline-flex;
-    align-items: center;
-    gap: 12px;
-    color: var(--text);
-    transition: opacity 0.2s;
-  }
-  .brand:hover {
-    opacity: 0.85;
-    color: var(--text);
-  }
-
-  .nav-desktop {
-    display: none;
-    align-items: center;
-    gap: 32px;
-    margin-left: auto;
-    margin-right: 24px;
-  }
-  @media (min-width: 920px) {
-    .nav-desktop {
-      display: flex;
-    }
-  }
-
-  .nav-link {
-    font-family: var(--font-mono);
-    font-size: 12px;
-    color: var(--text-muted);
-    letter-spacing: 0.5px;
-    text-transform: lowercase;
-    transition: color 0.15s;
-  }
-  .nav-link:hover {
-    color: var(--text);
-  }
-
-  .nav-cta {
-    display: none;
-  }
-  @media (min-width: 920px) {
-    .nav-cta {
-      display: inline-flex;
-    }
-  }
-
-  .menu-toggle {
-    display: inline-flex;
     flex-direction: column;
-    gap: 5px;
-    padding: 10px;
-    background: transparent;
-    border: 1px solid var(--border);
-    border-radius: var(--radius-sm);
-    cursor: pointer;
+    align-items: center;
+    gap: 14px;
+    color: var(--text);
+    text-decoration: none;
+    pointer-events: auto;
+    transform: translateX(-50%);
+    transition:
+      top 600ms cubic-bezier(0.65, 0, 0.35, 1),
+      left 600ms cubic-bezier(0.65, 0, 0.35, 1),
+      transform 600ms cubic-bezier(0.65, 0, 0.35, 1),
+      gap 600ms cubic-bezier(0.65, 0, 0.35, 1);
   }
-  .menu-toggle span {
+  .brand-floating:hover {
+    color: var(--text);
+  }
+
+  .brand-mark {
     display: block;
-    width: 18px;
-    height: 1.5px;
-    background: var(--text);
+    width: 144px;
+    height: 115px;
+    filter: drop-shadow(0 0 24px rgba(217, 119, 87, 0.45));
+    transition:
+      width 600ms cubic-bezier(0.65, 0, 0.35, 1),
+      height 600ms cubic-bezier(0.65, 0, 0.35, 1),
+      filter 600ms cubic-bezier(0.65, 0, 0.35, 1);
   }
-  @media (min-width: 920px) {
-    .menu-toggle {
-      display: none;
-    }
+  .brand-mark svg {
+    width: 100%;
+    height: 100%;
+    display: block;
   }
 
-  .mobile-menu {
-    border-top: 1px solid var(--border);
-    background: var(--bg);
-  }
-  .mobile-menu[hidden] {
-    display: none;
-  }
-  .mobile-menu-inner {
-    padding: 32px;
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-  }
-  .mobile-nav-link {
+  .brand-wordmark {
     font-family: var(--font-display);
-    font-size: 28px;
-    font-weight: 700;
+    font-weight: 800;
+    letter-spacing: -0.04em;
+    font-size: 38px;
+    line-height: 1;
     color: var(--text);
-    padding: 8px 0;
-    letter-spacing: -0.02em;
+    white-space: nowrap;
+    transition: font-size 600ms cubic-bezier(0.65, 0, 0.35, 1);
   }
-  .mobile-nav-link:hover {
+  .brand-wordmark .hub {
+    font-weight: 900;
     color: var(--claude);
   }
 
-  .mt-4 {
-    margin-top: 16px;
-    align-self: flex-start;
+  /* Estado compacto (scroll > 40px) ─ migra pro canto esquerdo, fica horizontal */
+  :global(body[data-scrolled='true']) .brand-floating {
+    top: 14px;
+    left: 24px;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+    transform: translateX(0);
+  }
+  :global(body[data-scrolled='true']) .brand-mark {
+    width: 40px;
+    height: 32px;
+    filter: drop-shadow(0 0 10px rgba(217, 119, 87, 0.5));
+  }
+  :global(body[data-scrolled='true']) .brand-wordmark {
+    font-size: 20px;
+  }
+
+  /* Mobile ajustes ──────────────────────────────────────────── */
+  @media (max-width: 768px) {
+    .brand-floating {
+      top: 28px;
+      gap: 10px;
+    }
+    .brand-mark {
+      width: 108px;
+      height: 86px;
+    }
+    .brand-wordmark {
+      font-size: 28px;
+    }
+    :global(body[data-scrolled='true']) .brand-floating {
+      top: 12px;
+      left: 16px;
+    }
+    :global(body[data-scrolled='true']) .brand-mark {
+      width: 32px;
+      height: 26px;
+    }
+    :global(body[data-scrolled='true']) .brand-wordmark {
+      font-size: 17px;
+    }
+  }
+
+  /* Estado menu aberto — logo voa pro canto e some atrás do overlay */
+  :global(body[data-menu='open']) .brand-floating {
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 200ms;
+  }
+
+  /* ─── Hamburger flutuante ──────────────────────────────────── */
+  .menu-floating {
+    position: fixed;
+    top: 16px;
+    right: 20px;
+    z-index: 70;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 16px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-full);
+    background: color-mix(in srgb, var(--bg) 75%, transparent);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    color: var(--text);
+    cursor: pointer;
+    transition:
+      padding 300ms ease-out,
+      background 200ms,
+      border-color 200ms,
+      transform 200ms;
+  }
+  .menu-floating:hover {
+    border-color: var(--border-strong);
+    transform: translateY(-1px);
+  }
+
+  .menu-icon {
+    display: inline-flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .menu-icon span {
+    display: block;
+    width: 16px;
+    height: 1.5px;
+    background: var(--text);
+    transition: width 300ms;
+  }
+
+  .menu-label {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 1px;
+    text-transform: lowercase;
+    font-weight: 500;
+  }
+
+  /* Hamburger no estado compacto cresce um pouco */
+  :global(body[data-scrolled='true']) .menu-floating {
+    padding: 12px 18px;
+  }
+  :global(body[data-scrolled='true']) .menu-icon span {
+    width: 18px;
+  }
+
+  /* Menu aberto = esconder hamburger */
+  :global(body[data-menu='open']) .menu-floating {
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 200ms;
+  }
+
+  @media (max-width: 768px) {
+    .menu-floating {
+      top: 12px;
+      right: 14px;
+      padding: 8px 14px;
+    }
+  }
+
+  /* ─── Menu overlay (clip-path circular) ────────────────────── */
+  .menu-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 80;
+    background: var(--bg);
+    overflow-y: auto;
+    clip-path: circle(0% at calc(100% - 48px) 36px);
+    transition: clip-path 600ms cubic-bezier(0.65, 0, 0.35, 1);
+  }
+  .menu-overlay[hidden] {
+    display: none;
+  }
+  .menu-overlay.is-visible {
+    clip-path: circle(150% at calc(100% - 48px) 36px);
+  }
+  .menu-overlay::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
+    background-size: 48px 48px;
+    pointer-events: none;
+    z-index: 0;
+  }
+  .menu-overlay::after {
+    content: '';
+    position: fixed;
+    top: -40%;
+    right: -10%;
+    width: 90vw;
+    height: 90vh;
+    background: radial-gradient(ellipse, var(--claude-glow), transparent 60%);
+    opacity: 0.4;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .menu-close {
+    position: absolute;
+    top: 18px;
+    right: 22px;
+    width: 56px;
+    height: 56px;
+    border-radius: var(--radius-full);
+    border: 1px solid var(--border);
+    background: var(--bg-card);
+    color: var(--text);
+    font-size: 28px;
+    cursor: pointer;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: border-color 200ms, transform 200ms;
+  }
+  .menu-close:hover {
+    border-color: var(--text);
+    transform: rotate(90deg);
+  }
+
+  .menu-nav {
+    position: relative;
+    z-index: 1;
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 120px 32px 48px;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .menu-nav ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .menu-nav ul a {
+    display: block;
+    padding: 6px 0;
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-style: italic;
+    font-size: clamp(38px, 6vw, 64px);
+    line-height: 1;
+    letter-spacing: -0.025em;
+    color: var(--text);
+    transition: color 200ms;
+  }
+  .menu-nav ul a:hover {
+    color: var(--claude);
+  }
+
+  .menu-footer {
+    margin-top: 56px;
+    padding-top: 32px;
+    border-top: 1px solid var(--border);
+  }
+  .menu-cta {
+    margin-top: 14px;
   }
 </style>
 
 <script>
-  const toggle = document.querySelector('[data-menu-toggle]');
-  const menu = document.querySelector('[data-mobile-menu]');
-  toggle?.addEventListener('click', () => {
-    if (!menu) return;
-    const isHidden = menu.hasAttribute('hidden');
-    if (isHidden) {
-      menu.removeAttribute('hidden');
-      toggle.setAttribute('aria-label', 'Fechar menu');
+  // Scroll state (compacto / expandido)
+  function updateScrollState() {
+    if (window.scrollY > 40) {
+      document.body.dataset.scrolled = 'true';
     } else {
-      menu.setAttribute('hidden', '');
-      toggle.setAttribute('aria-label', 'Abrir menu');
+      delete document.body.dataset.scrolled;
     }
+  }
+  window.addEventListener('scroll', updateScrollState, { passive: true });
+  updateScrollState();
+
+  // Menu open/close com clip-path circular
+  const toggle = document.querySelector('[data-menu-toggle]');
+  const close = document.querySelector('[data-menu-close]');
+  const overlay = document.querySelector('[data-menu-overlay]');
+
+  function openMenu() {
+    if (!overlay) return;
+    document.body.dataset.menu = 'open';
+    document.body.style.overflow = 'hidden';
+    overlay.removeAttribute('hidden');
+    // Force reflow pra clip-path animar
+    void (overlay as HTMLElement).offsetWidth;
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => overlay.classList.add('is-visible'));
+    });
+  }
+
+  function closeMenu() {
+    if (!overlay) return;
+    delete document.body.dataset.menu;
+    document.body.style.overflow = '';
+    overlay.classList.remove('is-visible');
+    setTimeout(() => overlay.setAttribute('hidden', ''), 600);
+  }
+
+  toggle?.addEventListener('click', openMenu);
+  close?.addEventListener('click', closeMenu);
+
+  // Fechar com ESC
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && document.body.dataset.menu === 'open') {
+      closeMenu();
+    }
+  });
+
+  // Fechar ao clicar em link
+  overlay?.querySelectorAll('a').forEach((link) => {
+    link.addEventListener('click', closeMenu);
   });
 </script>
