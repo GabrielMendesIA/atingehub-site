@@ -1,0 +1,490 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Hero from '../components/Hero.astro';
+import WhatsAppCTA from '../components/WhatsAppCTA.astro';
+import { site } from '../config/site';
+
+const pageJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'AboutPage',
+  name: `Por que agora — ${site.name}`,
+  url: `${site.url}/por-que-agora`,
+  description:
+    'A janela 2026-2028 do varejo brasileiro com IA. 6 dores reais, 5 setores próximos da virada em Sorocaba, 4 pilares × 8 produtos.',
+};
+
+const setores = [
+  {
+    nome: 'Food service',
+    contexto: 'Delivery e cardápio em ritmo de iFood.',
+    body: 'Cliente espera resposta em 30 segundos. Quem não responde, perde pra concorrência que já automatizou. Açaí, padaria, hamburgueria, marmita, restaurante — todos jogando o mesmo jogo de velocidade.',
+  },
+  {
+    nome: 'Auto peças e oficinas',
+    contexto: 'Catálogo enorme · atendente novo demora 6 meses pra dominar.',
+    body: 'IA encurta a curva: agente consulta peça, valida compatibilidade, fecha orçamento, marca serviço. O dono volta a olhar pra margem em vez de responder mensagem repetida.',
+  },
+  {
+    nome: 'Confecção e moda',
+    contexto: 'Ciclos curtos · estoque rotativo · cliente indeciso.',
+    body: 'Foto de produto chega, cliente provou e saiu sem levar. Quem puxa de volta no dia certo, com a peça certa, leva a venda. Quem não puxa, perde — e nem sabe que perdeu.',
+  },
+  {
+    nome: 'Pet shop e veterinária',
+    contexto: 'Relacionamento de anos · pets que voltam todo mês.',
+    body: 'Lembrete de vacina, retorno de banho, ração que está acabando. Cada esquecimento é cliente migrando pro concorrente da esquina que lembrou primeiro.',
+  },
+  {
+    nome: 'Estética e saúde',
+    contexto: 'Dermato · fisio · dentista · clínica.',
+    body: 'A primeira pergunta no WhatsApp quase sempre é "qual o preço?". Quem responde com profundidade — explicando o procedimento, ouvindo a dor real — fideliza antes do orçamento sair.',
+  },
+];
+
+const dores = [
+  {
+    titulo: 'O lead chega no WhatsApp e o atendente já dormiu',
+    body: 'Cliente manda mensagem 22h de quarta. Resposta sai 9h de quinta. Até lá ele já comprou do concorrente que respondeu em 2 minutos.',
+    produto: 'Voz',
+    slug: 'voz',
+    cor: 'voz',
+  },
+  {
+    titulo: 'O cliente sumiu no segundo contato e ninguém puxou de volta',
+    body: 'Pediu orçamento, recebeu, sumiu. Ficou na cabeça do vendedor por 2 dias e depois caiu no esquecimento. Cliente quente virou frio. Sem culpado — só sem processo.',
+    produto: 'Cadência',
+    slug: 'cadencia',
+    cor: 'cadencia',
+  },
+  {
+    titulo: 'Seus dados estão na cabeça do dono e em 4 planilhas',
+    body: 'Quanto vendeu da geleia de morango em abril? Quem foi o melhor cliente em 2025? Quanto custa de fato fabricar o combo? Resposta: "preciso olhar"... e olha 3 dias depois.',
+    produto: 'Cérebro',
+    slug: 'cerebro',
+    cor: 'cerebro',
+  },
+  {
+    titulo: 'Se você sair uma semana, a loja para',
+    body: 'Tudo passa por você. Aprovação de desconto, dúvida de cliente, fechamento de caixa, conferência de estoque. Férias viram problema. Doença vira crise.',
+    produto: 'Bancada · Engrenagens',
+    slug: 'engrenagens',
+    cor: 'engrenagens',
+  },
+  {
+    titulo: 'Anúncio caro porque você fala pra todo mundo',
+    body: 'CPM alto, conversão baixa, ROAS sofrível. Falta o filtro: quem realmente é seu cliente? E falta a criatividade que conversa só com ele.',
+    produto: 'Vitrine',
+    slug: 'vitrine',
+    cor: 'vitrine',
+  },
+  {
+    titulo: 'O concorrente baixou preço e você precisa baixar junto',
+    body: 'Briga de preço corrói margem. Falta o argumento de valor — falta o porquê de você cobrar mais. E falta um lugar fora da cabeça do dono pra essa estratégia ficar viva.',
+    produto: 'Bússola',
+    slug: 'bussola',
+    cor: 'bussola',
+  },
+];
+
+const pilares = [
+  {
+    nome: 'Atendimento',
+    tese: 'Responder rápido. Lembrar de quem é o cliente. Não deixar conversa esfriar.',
+    produtos: [
+      { nome: 'Voz', slug: 'voz' },
+      { nome: 'Balcão', slug: 'balcao' },
+    ],
+  },
+  {
+    nome: 'Campanhas',
+    tese: 'Falar com quem tem chance de comprar — no momento certo, com a oferta certa.',
+    produtos: [
+      { nome: 'Vitrine', slug: 'vitrine' },
+      { nome: 'Cadência', slug: 'cadencia' },
+    ],
+  },
+  {
+    nome: 'Decisão',
+    tese: 'Saber o que está acontecendo na sua loja sem depender da memória do dono.',
+    produtos: [
+      { nome: 'Cérebro', slug: 'cerebro' },
+      { nome: 'Bússola', slug: 'bussola' },
+    ],
+  },
+  {
+    nome: 'Operação',
+    tese: 'Tirar o operacional repetitivo das mãos de quem deveria estar vendendo.',
+    produtos: [
+      { nome: 'Engrenagens', slug: 'engrenagens' },
+      { nome: 'Bancada', slug: 'bancada' },
+    ],
+  },
+];
+---
+
+<BaseLayout
+  title="Por que agora — A janela 2026-2028 pra varejo brasileiro"
+  description="A massa está entrando agora. 6 dores reais do varejo, 5 setores em virada em Sorocaba, 4 pilares × 8 produtos da AtingeHUB."
+  jsonLd={pageJsonLd}
+>
+  <Hero
+    eyebrow="A janela existe"
+    title="A vizinha do lado <em>já começou.</em>"
+    subtitle="De 2023 a 2025 o varejo testou IA como brinquedo. <strong>De 2026 em diante virou ferramenta de produção.</strong> Tem uma janela aberta pra entrar quando isso ainda é diferencial — antes de virar commodity."
+    withLogoMark={true}
+    secondaryCta={{ label: 'os 4 compromissos →', href: '/manifesto' }}
+  />
+
+  <section class="row janela">
+    <div class="container-page">
+      <div class="row-header">
+        <span class="num">01</span>
+        <h2>A massa está entrando agora</h2>
+      </div>
+      <p class="sub">2023-2025 brincadeira · 2026-2028 produção · depois disso, padrão de mercado</p>
+      <div class="janela-prose">
+        <p>De 2023 a 2025 o varejo brasileiro testou IA como brinquedo — chatbot bobo de FAQ, prompt no ChatGPT pra escrever post de Instagram. Era novidade, gerava conversa em evento, mas <strong>quase ninguém colocava em produção</strong>.</p>
+        <p>De 2026 em diante virou outra coisa. Agente respondendo no WhatsApp por 24h. n8n distribuindo lead pro vendedor certo. Vault organizando o que está na cabeça do dono. Bússola estratégica humana usando dados que antes ninguém tinha tempo de olhar. <strong>Isso não é palco — é loja.</strong></p>
+        <p>A janela aberta hoje é simples: quem entra em 2026-2028 ainda está com <strong>vantagem de tempo</strong>. Quem entrar depois entra porque todo mundo tem — IA virou commodity, igual maquininha de cartão. O cedo de quem começou virou o normal de todos. O cedo de hoje é não esperar virar normal.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="row setores">
+    <div class="container-page">
+      <div class="row-header">
+        <span class="num">02</span>
+        <h2>5 setores na virada · aqui do lado, em Sorocaba</h2>
+      </div>
+      <p class="sub">Não é mercado de Silicon Valley · é Avenida Itavuvu, Centro, Zona Norte</p>
+      <p class="lead">
+        Esses 5 setores eu acompanho de perto há 5 anos — antes vendendo maquininha e crediário, agora instalando IA. Nenhum exige números pra justificar. Quem está no jogo sente.
+      </p>
+
+      <div class="setores-grid">
+        {setores.map((s) => (
+          <article class="setor-card">
+            <h3>{s.nome}</h3>
+            <p class="setor-contexto">{s.contexto}</p>
+            <p class="setor-body">{s.body}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="row dores">
+    <div class="container-page">
+      <div class="row-header">
+        <span class="num">03</span>
+        <h2>6 dores que você já sentiu — e o produto que destrava</h2>
+      </div>
+      <p class="sub">A frase do problema é frase de loja · A frase da resposta é frase de sistema</p>
+      <p class="lead">
+        Não precisa de diagnóstico longo pra reconhecer dor de varejo. Aqui são 6 que aparecem em quase toda primeira call. Cada uma já tem produto pensado pra destravar.
+      </p>
+
+      <div class="dores-grid">
+        {dores.map((d) => (
+          <a href={`/portfolio/${d.slug}`} class="dor-card glow-card" style={`--glow: var(--${d.cor}-glow)`}>
+            <p class="dor-eyebrow" style={`color: var(--${d.cor})`}>
+              <span>●</span> {d.produto}
+            </p>
+            <h3 class="dor-titulo">"{d.titulo}"</h3>
+            <p class="dor-body">{d.body}</p>
+            <span class="dor-link" style={`color: var(--${d.cor})`}>ver o produto →</span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="row pilares-row">
+    <div class="container-page">
+      <div class="row-header">
+        <span class="num">04</span>
+        <h2>4 pilares · 8 produtos · 1 sistema</h2>
+      </div>
+      <p class="sub">Atendimento · Campanhas · Decisão · Operação</p>
+      <p class="lead">
+        Não é catálogo de IA solto. São <strong>4 pilares de varejo</strong> que precisam funcionar juntos pra loja parar de depender de você 24h. Cada pilar tem 2 produtos, e os 8 conversam entre si.
+      </p>
+
+      <div class="pilares-grid">
+        {pilares.map((p) => (
+          <article class="pilar-card">
+            <p class="pilar-num">Pilar</p>
+            <h3>{p.nome}</h3>
+            <p class="pilar-tese">{p.tese}</p>
+            <ul class="pilar-prods">
+              {p.produtos.map((prod) => (
+                <li>
+                  <a href={`/portfolio/${prod.slug}`} class="pilar-prod" style={`--prod-color: var(--${prod.slug})`}>
+                    <span class="dot"></span>
+                    {prod.nome}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="row humano">
+    <div class="container-page humano-inner">
+      <div class="row-header">
+        <span class="num">05</span>
+        <h2>Humano com IA · não humano vs IA</h2>
+      </div>
+      <p class="sub">A IA libera tempo · O tempo volta pra venda complexa, fidelização, estratégia</p>
+      <div class="humano-prose">
+        <p>A IA não tira o atendente da loja. <strong>Tira o atendente do operacional repetitivo</strong> — responder horário de funcionamento pela centésima vez, confirmar pedido, mandar boleto — e devolve pra ele o que dá margem: negociação, escuta, venda complexa, fidelização.</p>
+        <p>A IA não tira o dono da operação. <strong>Tira o dono da agenda travada</strong> — aprovação de desconto, dúvida de cliente, lembrete de cobrança — e devolve pra ele o que dá direção: estratégia, parceria, posicionamento, decisão sobre o que vem depois.</p>
+        <p>É amplificação, não substituição. <strong>Você fica mais você</strong> — com mais tempo, mais foco, mais decisão sua nas mãos.</p>
+      </div>
+    </div>
+  </section>
+
+  <WhatsAppCTA
+    title="Sua loja está em <em>qual desses 5 setores?</em>"
+    body="Conversa de 20 minutos. Me conta o setor, o tamanho e a dor mais visível. Eu te mostro qual dos 8 produtos faria sentido começar — e por onde a janela 2026-2028 entra na sua agenda."
+  />
+</BaseLayout>
+
+<style>
+  .janela {
+    padding-top: 64px;
+    padding-bottom: 30px;
+  }
+  .janela-prose {
+    max-width: 760px;
+  }
+  .janela-prose p {
+    margin-top: 18px;
+    font-size: 17px;
+    line-height: 1.75;
+    color: var(--text-muted);
+  }
+  .janela-prose p:first-child {
+    margin-top: 8px;
+  }
+  .janela-prose strong {
+    color: var(--text);
+    font-weight: 500;
+  }
+
+  .setores .lead {
+    margin-bottom: 40px;
+  }
+
+  .setores-grid {
+    display: grid;
+    gap: 18px;
+    grid-template-columns: 1fr;
+  }
+  @media (min-width: 640px) {
+    .setores-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  @media (min-width: 1000px) {
+    .setores-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  .setor-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    padding: 26px 24px;
+    transition: border-color 0.25s, background 0.25s;
+  }
+  .setor-card:hover {
+    border-color: var(--border-strong);
+    background: var(--bg-card-hover);
+  }
+  .setor-card h3 {
+    font-size: 22px;
+    margin-bottom: 10px;
+  }
+  .setor-contexto {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--claude);
+    margin-bottom: 14px;
+  }
+  .setor-body {
+    font-size: 14.5px;
+    line-height: 1.7;
+    color: var(--text-muted);
+  }
+
+  .dores .lead {
+    margin-bottom: 40px;
+  }
+
+  .dores-grid {
+    display: grid;
+    gap: 18px;
+    grid-template-columns: 1fr;
+  }
+  @media (min-width: 700px) {
+    .dores-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  @media (min-width: 1100px) {
+    .dores-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  .dor-card {
+    display: flex;
+    flex-direction: column;
+    padding: 26px 24px;
+    cursor: pointer;
+    text-decoration: none;
+  }
+  .dor-card:hover {
+    border-color: var(--border-strong);
+  }
+  .dor-eyebrow {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    margin-bottom: 14px;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .dor-titulo {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-weight: 600;
+    font-size: 19px;
+    line-height: 1.25;
+    color: var(--text);
+    margin-bottom: 14px;
+    letter-spacing: -0.01em;
+  }
+  .dor-body {
+    font-size: 14.5px;
+    line-height: 1.7;
+    color: var(--text-muted);
+    margin-bottom: 18px;
+  }
+  .dor-link {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    margin-top: auto;
+    transition: opacity 0.18s;
+  }
+  .dor-card:hover .dor-link {
+    opacity: 0.85;
+  }
+
+  .pilares-row .lead {
+    margin-bottom: 40px;
+  }
+
+  .pilares-grid {
+    display: grid;
+    gap: 18px;
+    grid-template-columns: 1fr;
+  }
+  @media (min-width: 700px) {
+    .pilares-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  @media (min-width: 1100px) {
+    .pilares-grid {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+
+  .pilar-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    padding: 28px 24px;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+  .pilar-num {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    margin-bottom: 12px;
+  }
+  .pilar-card h3 {
+    font-size: 26px;
+    margin-bottom: 14px;
+  }
+  .pilar-tese {
+    font-size: 14.5px;
+    line-height: 1.65;
+    color: var(--text-muted);
+    margin-bottom: 22px;
+  }
+  .pilar-prods {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: auto;
+    padding-top: 18px;
+    border-top: 1px solid var(--border);
+  }
+  .pilar-prod {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--text);
+    font-family: var(--font-mono);
+    font-size: 13px;
+    letter-spacing: 0.3px;
+    transition: color 0.18s;
+  }
+  .pilar-prod:hover {
+    color: var(--prod-color);
+  }
+  .pilar-prod .dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--prod-color);
+    flex-shrink: 0;
+  }
+
+  .humano {
+    padding-top: 64px;
+    padding-bottom: 30px;
+  }
+  .humano-prose {
+    max-width: 760px;
+  }
+  .humano-prose p {
+    margin-top: 18px;
+    font-size: 17px;
+    line-height: 1.75;
+    color: var(--text-muted);
+  }
+  .humano-prose p:first-child {
+    margin-top: 8px;
+  }
+  .humano-prose strong {
+    color: var(--text);
+    font-weight: 500;
+  }
+</style>
