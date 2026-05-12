@@ -1,0 +1,86 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import LogoMark from '../components/LogoMark.astro';
+import DiagnosticoWizard from '../components/DiagnosticoWizard.tsx';
+import { site } from '../config/site';
+
+const pageJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'WebPage',
+  name: `Diagnóstico — ${site.name}`,
+  url: `${site.url}/diagnostico`,
+  description:
+    'Diagnóstico personalizado de IA aplicada ao varejo. 15 perguntas, resultado na hora, próximo passo concreto.',
+  isPartOf: {
+    '@type': 'WebSite',
+    name: site.name,
+    url: site.url,
+  },
+};
+---
+
+<BaseLayout
+  title="Diagnóstico — IA aplicada ao seu varejo"
+  description="15 perguntas, 15 minutos. Você sai com um diagnóstico personalizado da sua operação, 2 ou 3 produtos AtingeHUB sugeridos e o próximo passo concreto."
+  jsonLd={pageJsonLd}
+>
+  <section class="hero-diag">
+    <div class="container-page">
+      <div class="hero-mark"><LogoMark size={56} glow /></div>
+      <p class="eyebrow"><span class="accent">●</span> Diagnóstico online · sem cadastro de mailing</p>
+      <h1 class="hero-title">
+        Antes de propor qualquer coisa,<br />
+        <em>a gente lê sua loja juntos.</em>
+      </h1>
+      <p class="hero-subtitle">
+        Esse é o mesmo método que aplicamos com cada cliente AtingeHUB — só que online, no seu tempo. Em 15 minutos você responde 15 perguntas e sai com diagnóstico personalizado: o que destrava primeiro, qual produto cruza com sua dor, e o próximo passo concreto pra crescer.
+      </p>
+    </div>
+  </section>
+
+  <section class="row diag-row">
+    <div class="container-page container-narrow">
+      <DiagnosticoWizard client:load />
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .hero-diag {
+    padding: 80px 0 30px;
+  }
+  @media (max-width: 768px) {
+    .hero-diag {
+      padding: 50px 0 20px;
+    }
+  }
+
+  .hero-mark {
+    margin-bottom: 24px;
+  }
+
+  .hero-title {
+    margin-top: 20px;
+    max-width: 880px;
+    font-size: clamp(36px, 5vw, 64px);
+    line-height: 1.05;
+  }
+
+  .hero-subtitle {
+    margin-top: 24px;
+    color: var(--text-muted);
+    font-size: 16px;
+    line-height: 1.75;
+    max-width: 680px;
+  }
+
+  .diag-row {
+    padding-top: 20px;
+    padding-bottom: 0;
+    border-top: none;
+  }
+
+  .container-narrow {
+    max-width: 820px;
+  }
+</style>
