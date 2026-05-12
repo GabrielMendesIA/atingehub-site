@@ -44,3 +44,57 @@ Balcão é case real de cliente que quer organizar só o time humano antes de pe
 ## Risco e mitigação
 
 Cliente pode fechar só o Balcão e nunca subir pra Voz — risco intencional. O discovery força a pergunta certa: *"Você quer só organizar o time humano OU também quer IA respondendo?"*. Se a resposta hoje é "só humano", fechamos o Balcão limpo e mantemos a conversa aberta pra IA depois.
+
+---
+
+## Por dentro · stack técnica
+
+### Chatwoot · suporte e vendas num painel só
+
+Seja **suporte** ou **vendas** — os dois usos mais comuns — o dono do negócio passa a ter visão do time inteiro em tempo real. Você vê quem está atendendo o quê, pode **reatribuir conversa pro colaborador certo** num clique, entrar no atendimento junto quando o caso for delicado, ou passar do humano pra IA (e vice-versa) sem o cliente perceber o handoff.
+
+**Multicanal de verdade:** WhatsApp, Instagram DM, Facebook Messenger, e-mail, chat do site, chat do seu app — tudo numa caixa só. O cliente manda onde prefere; vocês respondem no mesmo lugar, com histórico unificado.
+
+### Arquitetura da implementação
+
+```
+Chatwoot self-hosted (Docker)
+   ├── Postgres (banco)
+   ├── Redis (cache + queues)
+   ├── Sidekiq (workers)
+   └── Rails web app
+        ↓ webhooks
+    Evolution API (WhatsApp)
+    Instagram Business API
+    Facebook Pages API
+    SMTP / IMAP (email)
+    Chat widget (site)
+```
+
+Tudo roda **no seu servidor** (VPS própria, incluída no one-shot). Sem dependência de SaaS terceiro, sem risco de fechar conta, sem aumento surpresa de preço por agente.
+
+### Pipeline visual e atribuição
+
+- **Status customizado** — desenhado pra sua operação: novo, em atendimento, aguardando cliente, fechado, ganho, perdido
+- **Labels** — etiquetas por origem (anúncio, indicação, retorno), por nicho, por urgência
+- **Custom attributes** — campos próprios do seu negócio (CNPJ, segmento, ticket histórico, observação)
+- **Atribuição automática** — round-robin entre atendentes, ou por regra (quem fala inglês recebe lead gringo)
+- **Auto-resolução** — conversa sem atividade por X dias fecha sozinha com mensagem padrão
+
+### Whitelabel completo
+
+- Subdomínio no seu domínio (`atendimento.seunegocio.com.br`)
+- Logo + cores + nome da sua empresa
+- E-mails transacionais com seu domínio remetente
+- O cliente nem percebe que tem Chatwoot por baixo
+
+### Entregáveis técnicos
+
+- Chatwoot instalado em domínio próprio, 3 a 5 semanas
+- 2+ inboxes ativos (você escolhe quais canais)
+- Pipeline com status + labels customizadas pro seu fluxo
+- Custom attributes pros campos que importam ao seu negócio
+- Time treinado em 1 a 2 sessões — opera 5 dias sem perguntar nada técnico
+- VPS configurada com Docker, backups automáticos diários, Postgres dimensionado
+- Documentação interna: como cadastrar atendente novo, como mudar regra de atribuição, como exportar conversa
+- **Pré-requisito técnico obrigatório pra Voz** — sem Chatwoot rodando, a IA não tem onde se plugar

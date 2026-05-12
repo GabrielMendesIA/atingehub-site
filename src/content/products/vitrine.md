@@ -44,3 +44,60 @@ Combina muito bem com **Engrenagens** (automação que captura o lead da Vitrine
 ## Risco e mitigação
 
 "Vitrine" também é nome de plataformas de e-commerce conhecidas (Vtex, Tray). Nas primeiras conversas, qualificamos em material escrito: *"Vitrine by AtingeHUB — sua landing de captura"*. Em call, falamos solto.
+
+---
+
+## Por dentro · stack técnica
+
+### Astro 5 · landing rápida, SEO nativo, deploy estático
+
+A Vitrine roda em **Astro 5** com Tailwind CSS, content collections e SSG (static site generation). Tudo vira HTML+CSS estático na build — **sem servidor, sem manutenção, sem fila de processamento**. Performance Lighthouse acima de 95, mobile-first, acessibilidade desde o setup.
+
+### Anatomia do checkout
+
+```
+landing → form (validação inline) → captura LGPD → webhook
+                                                       ↓
+                                                  ┌─────┐
+                                                  │ n8n │ → CRM, planilha, Cérebro
+                                                  └─────┘
+                                                       ↓
+                                              Stripe / Mercado Pago
+                                                       ↓
+                                                  pagamento aprovado
+                                                       ↓
+                                              webhook de retorno
+                                                       ↓
+                                          email + WhatsApp confirmação
+```
+
+### Variantes de entrega
+
+**Vitrine Captura** (one-shot menor)
+- Página + form + LGPD + integração webhook
+- Pixel Meta + Google Tag Manager
+- Sem cobrança online — leva o lead pro WhatsApp ou CRM
+
+**Vitrine Checkout** (one-shot maior)
+- Tudo da Captura +
+- Gateway de pagamento (Stripe ou Mercado Pago — escolhido no setup)
+- Recibo + nota fiscal automatizada (via integração com sistema do cliente)
+- Webhook de pagamento aprovado dispara fluxo pós-venda
+
+### Hospedagem e domínio
+
+- Deploy estático em **Vercel** (recomendado) ou **Hostinger** (alternativa)
+- HTTPS automático com Let's Encrypt
+- CDN global incluído
+- Editor visual opcional: cliente edita texto e imagem via interface simples (sem mexer no código)
+
+### Entregáveis técnicos
+
+- Página no ar em domínio próprio (3 a 5 semanas)
+- Code repository no GitHub do cliente — você fica dono do código
+- Variante Captura: form + LGPD + webhook + analytics
+- Variante Checkout: Stripe ou Mercado Pago integrado + recibo automático
+- Mobile-first sempre — 60% do tráfego vem de WhatsApp/Instagram
+- SEO base: sitemap.xml, robots.txt, OG image, JSON-LD Organization, performance Lighthouse 95+
+- Treinamento de 1h: cliente aprende a editar texto e imagem sozinho
+- Integração nativa com Engrenagens (n8n captura o lead e segue ele)

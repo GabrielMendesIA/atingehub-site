@@ -43,3 +43,42 @@ Também é **pré-requisito soft** pros agentes (Bancada) e pra IA de atendiment
 ## Risco e mitigação
 
 "Cérebro" sozinho pode soar genérico. Em material escrito nas primeiras semanas, qualificamos: *"Cérebro by AtingeHUB — segundo cérebro do negócio"*.
+
+---
+
+## Por dentro · stack técnica
+
+### Obsidian · o segundo cérebro de você e do seu time
+
+Antes de ser do negócio, o segundo cérebro é **seu**. É onde você e seus colaboradores guardam aprendizados, anotações de call, decisões, provas de fornecedor, roteiros de atendimento, ideias de campanha — tudo **linkado por contexto, não por pasta**. Cada pessoa tem o seu vault, mas o conhecimento compartilhado alimenta o negócio inteiro.
+
+**O pulo do gato:** esse vault é o combustível da sua IA. Quanto mais contexto o orquestrador e os subagentes têm sobre como você trabalha, como fala com cliente, quais são as suas regras não-escritas — mais **personalizada** fica a resposta. A IA genérica responde *"manda um e-mail profissional"*. A IA com o seu vault responde *"manda no tom que você usa com o fornecedor X, citando o acordo de 90 dias que vocês fecharam em março"*.
+
+**Entregáveis do Obsidian:**
+
+- Vault pessoal do dono e 1–3 colaboradores — cada um com contexto próprio, conhecimento compartilhado via links
+- Estrutura PARA pronta — Projects, Areas, Resources, Archive — adaptada ao seu negócio
+- Templates de nota (reunião, decisão, SOP, aprendizado de cliente) com etiquetas, data e links padronizados
+- 30+ notas reais produzidas por você e o time — isso vira o material de treino da IA orquestradora
+- Vault conectado ao agente: tudo que você escrever vira contexto pra resposta dele
+
+### NotebookLM · estude, agregue conteúdo e ensine sua IA
+
+O Obsidian guarda. O **NotebookLM responde**. Você joga as notas do seu negócio, os contratos, os e-mails de fornecedor e as instruções operacionais num caderno temático — e pergunta em linguagem natural. A resposta vem com **citação da fonte**, não com informação genérica da internet.
+
+Exemplo de consulta real:
+
+> *Quais foram os 3 motivos mais frequentes de devolução nos últimos 90 dias?*
+>
+> [resposta com citação: `devolucoes-q1.md`, `whatsapp-atendimento.md`, `fornecedores/notas-fiscais.md`]
+
+**Entregáveis do NotebookLM:**
+
+- 3+ cadernos temáticos (operações, marketing, financeiro)
+- Áudio-resumo de cada caderno — primeira entrega "mágica" pro dono, escuta no carro ou na academia
+- Rotina semanal de alimentação automática dos cadernos (notas novas entram no caderno certo)
+- Treinamento: você aprende a perguntar e a conferir a fonte de cada resposta
+
+### Por que Obsidian + NotebookLM juntos
+
+Obsidian é onde você **estrutura** o conhecimento. NotebookLM é onde você **consulta** ele. Os dois rodam em paralelo, alimentados pelo mesmo material. A IA do Bancada e da Voz puxam contexto de ambos — quanto mais maduro o Cérebro, mais personalizada a IA fica.

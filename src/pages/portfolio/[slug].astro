@@ -338,6 +338,54 @@ const slug = product.data.slug || product.id;
   .prose :global(li) {
     list-style: disc;
   }
+  .prose :global(li strong),
+  .prose :global(li code) {
+    color: var(--text);
+  }
+  .prose :global(hr) {
+    margin: 48px 0;
+    border: none;
+    border-top: 1px solid var(--border);
+  }
+  .prose :global(pre) {
+    margin-top: 22px;
+    padding: 22px 24px;
+    background: rgba(0, 0, 0, 0.5);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    overflow-x: auto;
+    font-family: var(--font-mono);
+    font-size: 13px;
+    line-height: 1.75;
+    color: var(--text-muted);
+  }
+  .prose :global(pre code) {
+    background: transparent;
+    padding: 0;
+    color: inherit;
+    font-size: inherit;
+  }
+  .prose :global(p code),
+  .prose :global(li code) {
+    font-family: var(--font-mono);
+    font-size: 0.88em;
+    background: rgba(255, 255, 255, 0.06);
+    padding: 1px 6px;
+    border-radius: 3px;
+    color: var(--text);
+  }
+  .prose :global(blockquote) {
+    margin-top: 22px;
+    padding: 16px 22px;
+    border-left: 3px solid var(--product-color, var(--claude));
+    background: var(--bg-soft);
+    color: var(--text-muted);
+    font-style: italic;
+    line-height: 1.7;
+  }
+  .prose :global(blockquote p) {
+    margin-top: 0;
+  }
 
   /* Aside ─────────────────────────────────────────────── */
   .prose-aside {

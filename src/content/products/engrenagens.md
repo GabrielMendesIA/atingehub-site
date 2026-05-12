@@ -46,3 +46,52 @@ Engrenagens é uma das melhores portas de entrada da AtingeHUB. Não depende de 
 ## Risco e mitigação
 
 O plural "Engrenagens" é pesado em copy curta. Em call e proposta, falamos "o módulo Engrenagens" ou "as Engrenagens" — nunca "a Engrenagens".
+
+---
+
+## Por dentro · stack técnica
+
+### n8n · a cola que faz seus sistemas conversarem entre si
+
+Todo negócio tem ferramentas que **deveriam** conversar e não conversam: a planilha que não fala com o CRM, o ERP que não avisa o financeiro, o formulário do site que vira e-mail perdido. O **n8n** é a cola visual de baixo custo que liga uma coisa na outra — planilhas, ERPs, e-mail, agenda, APIs internas, WhatsApp, qualquer sistema que tenha jeito de puxar ou empurrar dado.
+
+E mais: é o **motor pra criar soluções novas sem virar projeto de TI**. Precisa avisar o financeiro toda vez que a venda passa de X? n8n. Quer puxar o estoque do fornecedor e atualizar seu catálogo? n8n. Quer que o agente de IA responda também no Telegram e no Instagram? n8n. Tudo rodando **no seu próprio servidor**, sem depender de plataforma que pode subir preço ou fechar conta.
+
+### Anatomia de um workflow operacional
+
+```
+trigger → buffer → edit fields → ai agent → formato saída → output
+  ⚡          ⧗          ✎             ◎              ✂              💬
+WhatsApp   6s         normaliza   claude+vault   split tipo    Evolution
+```
+
+Cada nó conversa com tools laterais: model `claude`, memory `postgres`, tools `produtos / clientes / calculadora`. A mesma estrutura serve pros 3 workflows operacionais.
+
+### Os 3 workflows da entrega
+
+1. **Captura WhatsApp → planilha/CRM**
+   - Trigger: nova mensagem entrando via Evolution API
+   - Edit Fields: normaliza payload (nome, telefone, primeira mensagem)
+   - Output: linha em Google Sheets + tag em Chatwoot/CRM
+
+2. **Follow-up automático**
+   - Schedule trigger: a cada hora
+   - Condição: leads que não receberam resposta em X horas
+   - AI Agent: gera mensagem contextual baseada no histórico
+   - Output: envia via Evolution API + atualiza status
+
+3. **Relatório diário operacional**
+   - Schedule trigger: 18h ou fim do expediente
+   - Coleta: leads do dia, conversas em aberto, valor entrado
+   - AI Agent: resume em texto humano (não tabela seca)
+   - Output: WhatsApp pro dono + e-mail backup
+
+### Entregáveis técnicos
+
+- 3 workflows n8n em produção, rodando 7 dias sem intervenção manual
+- VPS configurada com Docker (incluída no one-shot)
+- Evolution API conectada e mantida no seu WhatsApp Business
+- Postgres para memória persistente dos agentes
+- Logs limpos e custos de API previsíveis (Anthropic + Evolution)
+- Senhas, credenciais e acessos organizados, testados e documentados — **você fica dono**
+- Opcional: agente conectado ao motor de automação pra você pedir nova automação em português (alimenta a Bancada)

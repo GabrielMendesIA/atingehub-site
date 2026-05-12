@@ -44,3 +44,60 @@ Voz **não pode ser vendida isolada** — exige o **Balcão** rodando (Chatwoot 
 ## Risco e mitigação
 
 "Voz" é palavra curta e pode virar genérica em busca/SEO. Em material escrito, sempre acompanhamos com verbo de ação no slogan, ou qualificamos como *"a Voz, IA de atendimento da AtingeHUB"*. Em call, falamos solto.
+
+---
+
+## Por dentro · stack técnica
+
+### Claude + n8n + Chatwoot · o trio que sustenta a IA de atendimento
+
+A Voz não é um chatbot. É um **agente especializado** rodando dentro da sua infraestrutura — orquestrado pelo n8n, plugado no Chatwoot do Balcão, alimentado por chunks de conhecimento do Cérebro.
+
+### Fluxo de uma mensagem
+
+```
+cliente → WhatsApp → Evolution → n8n trigger → Buffer 6s
+                                                    ↓
+                                            normaliza payload
+                                                    ↓
+                                          AI Agent (Claude)
+                                          ├── contexto: vault
+                                          ├── tool: produtos
+                                          ├── tool: clientes
+                                          └── tool: calculadora
+                                                    ↓
+                                          confiança < 0.7?
+                                          ├── sim → escala humano
+                                          └── não → resposta direto
+                                                    ↓
+                                          format saída → split por tipo
+                                                    ↓
+                                          Evolution → WhatsApp → cliente
+```
+
+### Calibração contínua mensal · não é acessório
+
+A maior diferença entre **agente que envergonha** e **agente que vende** é a calibração contínua. Preço muda, oferta muda, mensagem padrão muda. **Não dá pra deixar parado**. Por isso a Voz tem mensalidade obrigatória — porque calibração contínua é parte do produto, não acessório.
+
+### Componentes da entrega
+
+- **System prompt** calibrado no tom do empresário (extraído do Cérebro)
+- **Chunks de conhecimento** — produtos, logística, pagamentos, empresa, regras — versionados em pasta dedicada
+- **Triagem** — classificador inicial separa dúvida simples (resolve sozinha) de complexa (escala)
+- **Memória de conversa** — Postgres mantém últimas 20 trocas pra contexto
+- **Escalada explícita** — quando passa pro humano, vem com resumo do que já foi tratado
+- **Confiança quantificada** — score < limiar (0.7 padrão) força handoff
+
+### Padrão herdado do AUTOMAKER
+
+A AtingeHUB usa o padrão Maia/Sofia validado em produção no AUTOMAKER e no Açaí Algomais. **Reuso de arquitetura, calibração nova por cliente.** O time do cliente não precisa de engenheiro pra operar — só preenche campos nos chunks quando preço/oferta muda.
+
+### Entregáveis técnicos
+
+- Agente respondendo em produção, 7 dias sem intervenção (período de homologação)
+- Chunks de conhecimento (5+ documentos: produtos, logística, pagamentos, empresa, regras) versionados
+- System prompt calibrado, em arquivo editável pelo cliente
+- Painel de calibração mensal: mensagens IA × escaladas humanas, dúvidas frequentes, oportunidades de ajuste
+- Relatório de impacto: taxa de handoff < 30%, tempo médio de resposta, NPS pós-atendimento
+- **Pré-requisito técnico**: Balcão rodando (Chatwoot) + Cérebro recomendado (vault)
+- Cliente fica dono de tudo: chunks abertos, prompts auditáveis, sem caixa-preta

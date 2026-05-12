@@ -43,3 +43,55 @@ Faz mais sentido depois das **Engrenagens** entregues (a infra de WhatsApp e log
 ## Risco e mitigação
 
 Cadência pode parecer que "já faz tudo" e o cliente pode pular as Engrenagens. Em todo material de venda e proposta, declaramos: *"Cadência precisa do WhatsApp organizado pelas Engrenagens. Sem isso, vira correria operacional dentro da prospecção."*
+
+---
+
+## Por dentro · stack técnica
+
+### n8n + Evolution + APIs de enriquecimento
+
+A mesma stack das **Engrenagens** (n8n + Evolution API + VPS), com workflows diferentes — focados em **prospecção ativa** ao invés de operação reativa.
+
+### Workflow de enriquecimento (pré-disparo)
+
+```
+lista bruta → CNPJ.ws / Receita → segmenta → AI Agent → personaliza
+    📋             🔍                  🏷️         ◎              ✎
+   xlsx       enriquece dados   tag porte    claude       msg por contato
+```
+
+A AtingeHUB usa um pipeline próprio (já validado em produção, ver `Projects/enriquecer-cnpj/` e a skill `consulta-cnpj`) pra:
+
+1. **Captura de prospects** — listas externas, scraping autorizado, indicações
+2. **Enriquecimento** — consulta CNPJ via cnpj.biz (Playwright headed) ou CNPJ.ws (n8n nativo). Cruza com dados de endereço, segmento, porte, sócios.
+3. **Segmentação automática** — agrupa por nicho/região/ticket potencial usando AI Agent
+4. **Personalização contextual** — cada mensagem é única, gerada a partir do perfil enriquecido
+
+### Workflow de disparo segmentado
+
+```
+segmento → janela ética → spinner → Evolution → tracking
+   🎯           ⏰            🌀         💬             📊
+ lista X    horário comercial  variantes  envia       resposta vira lead
+```
+
+- **Janela ética** — disparos só em horário comercial, dia útil
+- **Rate limit** — máx 50 disparos/hora por número WhatsApp (evita banimento)
+- **Spinner de variantes** — cada mensagem tem 3-5 versões rotacionadas pra evitar pattern detection
+- **Tracking** — resposta vira lead no Balcão automaticamente
+
+### Workflow de remarketing
+
+- Cliente esquecido (sem contato há X dias) entra na fila
+- AI Agent puxa contexto do último contato (do Cérebro/Chatwoot)
+- Mensagem personalizada baseada no histórico real, não copy massificado
+- Quem responde, sai da fila automática e vai pro Balcão
+
+### Entregáveis técnicos
+
+- Workflows de captura + enriquecimento + disparo + remarketing rodando em ritmo definido (semanal, quinzenal ou mensal)
+- Base de prospects estruturada e auditável (Google Sheets ou Postgres no seu servidor)
+- Integração com API de enriquecimento CNPJ (CNPJ.ws, cnpj.biz ou similar — escolhido no setup)
+- Painel mensal de métricas: enviadas · respostas · conversões · custo por lead qualificado
+- Operação contínua mensal: rodamos o disparo, lemos a resposta, ajustamos tom, rotacionamos lista
+- Compliance LGPD: opt-out automático em toda primeira mensagem, base de descadastros respeitada
