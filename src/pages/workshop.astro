@@ -1,0 +1,490 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Hero from '../components/Hero.astro';
+import WhatsAppCTA from '../components/WhatsAppCTA.astro';
+import { site, whatsappLink } from '../config/site';
+
+const pageJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Event',
+  name: `Workshop AtingeHUB — IA pro seu varejo em 3h`,
+  description:
+    'Workshop presencial de 3 horas em Sorocaba para 8-15 lojistas. Você sai com agente de IA rodando no seu WhatsApp e vault de conhecimento da sua operação montado.',
+  eventStatus: 'https://schema.org/EventScheduled',
+  eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
+  location: {
+    '@type': 'Place',
+    name: 'Sorocaba (local a confirmar)',
+    address: {
+      '@type': 'PostalAddress',
+      addressLocality: 'Sorocaba',
+      addressRegion: 'SP',
+      addressCountry: 'BR',
+    },
+  },
+  organizer: {
+    '@type': 'Organization',
+    name: site.name,
+    url: site.url,
+  },
+  url: `${site.url}/workshop`,
+};
+
+const paraQuem = [
+  {
+    cabe: true,
+    texto: 'Tem loja, fábrica ou serviço rodando há 5+ anos. Operação em pé, equipe pequena, dor concreta.',
+  },
+  {
+    cabe: true,
+    texto: 'Está em Sorocaba, Votorantim, Itu, Salto, Boituva, Mairinque — ou disposto a vir até aqui no dia.',
+  },
+  {
+    cabe: true,
+    texto: 'Quer instalar IA dentro da sua operação real. Não quer assistir palestra teórica de IA.',
+  },
+  {
+    cabe: false,
+    texto: 'Está começando agora no varejo. O workshop pressupõe operação rodando.',
+  },
+  {
+    cabe: false,
+    texto: 'Procura curso pra revender certificado ou virar consultor de IA. Não é o caso aqui.',
+  },
+  {
+    cabe: false,
+    texto: 'Vai mandar funcionário pra tomar nota. Workshop é pra quem decide.',
+  },
+];
+
+const programa = [
+  {
+    hora: '00:00–00:20',
+    bloco: 'Chegada e abertura',
+    body: 'Café, apresentação rápida em roda, alinhamento do que cada um quer levar embora.',
+  },
+  {
+    hora: '00:20–01:00',
+    bloco: 'O que muda em 2026-2028',
+    body: 'A janela aberta no varejo brasileiro com IA. 4 pilares (Atendimento · Campanhas · Decisão · Operação) e como eles ligam nos 8 produtos AtingeHUB. Sem slide cansativo — exemplos de loja.',
+  },
+  {
+    hora: '01:00–01:50',
+    bloco: 'Agente Voz · ao vivo no seu WhatsApp',
+    body: 'Cada lojista sai do bloco com um agente de IA V0 instalado num WhatsApp de teste, treinado com o cardápio/serviço da sua operação. Não é demo de palco. É na sua tela.',
+  },
+  {
+    hora: '01:50–02:00',
+    bloco: 'Pausa',
+    body: 'Café, água, conversa cruzada entre lojistas. Aqui costuma sair a maior parte das ideias.',
+  },
+  {
+    hora: '02:00–02:40',
+    bloco: 'Vault Cérebro · seu conhecimento organizado',
+    body: 'Montagem ao vivo de um vault Obsidian + Claude + NotebookLM com 3-5 documentos da sua operação. Quando termina, você consulta sua loja como se conversasse com ela.',
+  },
+  {
+    hora: '02:40–03:00',
+    bloco: 'Perguntas individuais e próximos passos',
+    body: 'Sessão 1-pra-1 rápida com cada lojista. Mapa pessoal: quais dos 8 produtos fariam sentido começar primeiro. Sem proposta empurrada.',
+  },
+];
+
+const levaEmbora = [
+  {
+    titulo: 'Agente Voz V0 rodando no seu WhatsApp de teste',
+    body: 'Treinado com o conteúdo real da sua loja — cardápio, catálogo, serviços, horários. Continua funcionando depois do workshop.',
+  },
+  {
+    titulo: 'Vault de conhecimento da sua operação',
+    body: 'Obsidian + Claude + NotebookLM montados, com 3-5 documentos seus já indexados. Você consulta o conhecimento da loja em linguagem natural.',
+  },
+  {
+    titulo: 'Mapa pessoal · 8 produtos × suas 3 dores',
+    body: 'Quais dos 8 produtos AtingeHUB cruzam com as 3 dores mais visíveis da sua operação hoje. Em ordem de prioridade.',
+  },
+  {
+    titulo: 'Próximos passos sem proposta empurrada',
+    body: 'Se a AtingeHUB faz sentido, alinha a continuidade. Se não faz, você sai com os entregáveis e segue sozinho — é seu.',
+  },
+];
+
+const whatsappWorkshop = whatsappLink(
+  'Oi Gabriel, quero entrar na lista de pré-inscritos do Workshop AtingeHUB. Trabalho com [setor], minha loja é em [bairro/cidade].'
+);
+---
+
+<BaseLayout
+  title="Workshop presencial — IA pro seu varejo em 3h, em Sorocaba"
+  description="3 horas, uma sala, 8 a 15 lojistas. Você sai com agente de IA rodando no seu WhatsApp e vault de conhecimento da sua operação montado. Em Sorocaba."
+  jsonLd={pageJsonLd}
+>
+  <Hero
+    eyebrow="Workshop presencial em Sorocaba"
+    title="3 horas. <em>Uma sala.</em><br />Você sai com IA rodando."
+    subtitle="Não é palestra. É <strong>oficina presencial</strong> pra 8 a 15 lojistas de Sorocaba e região. Você instala o que precisa na sua loja durante o encontro — agente no WhatsApp, vault da operação. Sai da sala com algo funcionando."
+    withLogoMark={true}
+    primaryCta={{
+      label: '$ pré-inscrição via WhatsApp',
+      href: whatsappWorkshop,
+      external: true,
+    }}
+    secondaryCta={{ label: 'ver os 8 produtos →', href: '/portfolio' }}
+  />
+
+  <section class="row para-quem">
+    <div class="container-page">
+      <div class="row-header">
+        <span class="num">01</span>
+        <h2>Pra quem é · e pra quem não é</h2>
+      </div>
+      <p class="sub">Antes da pré-inscrição · 3 sim, 3 não</p>
+      <p class="lead">
+        O workshop é uma <strong>oficina aplicada</strong>. Pressupõe operação rodando e decisão do dono. Não é evento de inspiração — é dia de instalar.
+      </p>
+
+      <div class="quem-grid">
+        <div class="quem-coluna">
+          <p class="quem-head sim"><span>●</span> Faz sentido se você</p>
+          <ul class="quem-lista">
+            {paraQuem.filter((p) => p.cabe).map((p) => (
+              <li class="quem-item sim">
+                <span class="quem-check">✓</span>
+                {p.texto}
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <div class="quem-coluna">
+          <p class="quem-head nao"><span>●</span> Não faz sentido se você</p>
+          <ul class="quem-lista">
+            {paraQuem.filter((p) => !p.cabe).map((p) => (
+              <li class="quem-item nao">
+                <span class="quem-check">×</span>
+                {p.texto}
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="row programa-row">
+    <div class="container-page">
+      <div class="row-header">
+        <span class="num">02</span>
+        <h2>Programa de 3 horas · timeline</h2>
+      </div>
+      <p class="sub">6 blocos · 0% palestra de slide · 100% loja na tela</p>
+      <p class="lead">
+        Cada bloco entrega um pedaço funcionando — não um conceito pra estudar depois. Você sai instalado.
+      </p>
+
+      <ol class="programa-lista">
+        {programa.map((p) => (
+          <li class="programa-item">
+            <span class="programa-hora">{p.hora}</span>
+            <div class="programa-texto">
+              <h3>{p.bloco}</h3>
+              <p>{p.body}</p>
+            </div>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <section class="row leva-row">
+    <div class="container-page">
+      <div class="row-header">
+        <span class="num">03</span>
+        <h2>O que você leva embora · 4 entregáveis</h2>
+      </div>
+      <p class="sub">Coisas funcionando · não certificado de conclusão</p>
+      <p class="lead">
+        No fim das 3h, tudo isso fica com você. Continua rodando depois do workshop, independente de você seguir com a AtingeHUB ou não.
+      </p>
+
+      <div class="leva-grid">
+        {levaEmbora.map((l) => (
+          <article class="leva-card glow-card">
+            <h3>{l.titulo}</h3>
+            <p>{l.body}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="row logistica-row">
+    <div class="container-page">
+      <div class="row-header">
+        <span class="num">04</span>
+        <h2>Logística · data, local, investimento</h2>
+      </div>
+      <p class="sub">Primeira turma · em formação</p>
+
+      <div class="logistica-grid">
+        <div class="logistica-item">
+          <p class="logistica-label">Data</p>
+          <p class="logistica-valor">A confirmar</p>
+          <p class="logistica-nota">Pré-inscritos recebem a data fechada com antecedência.</p>
+        </div>
+        <div class="logistica-item">
+          <p class="logistica-label">Local</p>
+          <p class="logistica-valor">Sorocaba/SP</p>
+          <p class="logistica-nota">Endereço definido conforme tamanho confirmado da turma. Centro ou Zona Norte.</p>
+        </div>
+        <div class="logistica-item">
+          <p class="logistica-label">Investimento</p>
+          <p class="logistica-valor">A definir</p>
+          <p class="logistica-nota">Comunicado individualmente aos pré-inscritos. Inclui café, material e instalação ao vivo.</p>
+        </div>
+        <div class="logistica-item">
+          <p class="logistica-label">Vagas</p>
+          <p class="logistica-valor">Máx. 15</p>
+          <p class="logistica-nota">Limite pra cada lojista ter atendimento individual e instalação real.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="row limite-row">
+    <div class="container-page limite-inner">
+      <div class="row-header">
+        <span class="num">05</span>
+        <h2>Por que limitado a 15</h2>
+      </div>
+      <p class="sub">Restrição estratégica · não escassez de marketing</p>
+      <div class="limite-prose">
+        <p>Com 15 lojistas dá pra <strong>atender cada um individualmente</strong> entre 02:40 e 03:00. Dá pra instalar agente real na operação de cada um, não simulação. Dá pra entender, em 3 horas, qual é o setor, o tamanho e a dor de cada negócio que está na sala.</p>
+        <p>Acima de 15 vira palestra. <strong>Vira o que o workshop não quer ser.</strong></p>
+        <p>Por isso a pré-inscrição é pelo WhatsApp comigo — em vez de formulário automático. Quero saber quem está vindo antes de fechar a turma.</p>
+      </div>
+
+      <div class="limite-cta">
+        <a href={whatsappWorkshop} target="_blank" rel="noopener" class="btn btn-primary">
+          $ pré-inscrição via WhatsApp
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <WhatsAppCTA
+    title="Bate como faz sentido <em>pra você?</em>"
+    body="Manda mensagem com o setor da sua loja e o bairro/cidade. Eu retorno em algumas horas com data prevista da próxima turma — e te conto se já tem outro lojista do seu setor na lista."
+    message="Oi Gabriel, quero entrar na lista de pré-inscritos do Workshop AtingeHUB. Trabalho com [setor], minha loja é em [bairro/cidade]."
+    cta="$ entrar na lista →"
+  />
+</BaseLayout>
+
+<style>
+  .para-quem .lead {
+    margin-bottom: 40px;
+  }
+
+  .quem-grid {
+    display: grid;
+    gap: 32px;
+  }
+  @media (min-width: 800px) {
+    .quem-grid {
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+    }
+  }
+
+  .quem-head {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    margin-bottom: 18px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .quem-head.sim {
+    color: var(--cadencia);
+  }
+  .quem-head.nao {
+    color: var(--text-dim);
+  }
+  .quem-head span {
+    font-size: 10px;
+  }
+
+  .quem-lista {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  .quem-item {
+    display: grid;
+    grid-template-columns: 24px 1fr;
+    gap: 12px;
+    font-size: 15px;
+    line-height: 1.65;
+    color: var(--text-muted);
+    padding: 14px 16px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+  }
+  .quem-item.sim .quem-check {
+    color: var(--cadencia);
+    font-weight: 700;
+  }
+  .quem-item.nao .quem-check {
+    color: var(--text-dim);
+    font-weight: 700;
+  }
+  .quem-check {
+    font-family: var(--font-mono);
+  }
+
+  .programa-row .lead {
+    margin-bottom: 40px;
+  }
+
+  .programa-lista {
+    list-style: none;
+    counter-reset: programa;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+  .programa-item {
+    display: grid;
+    gap: 14px;
+    padding: 22px 24px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    transition: border-color 0.25s;
+  }
+  @media (min-width: 700px) {
+    .programa-item {
+      grid-template-columns: 160px 1fr;
+      gap: 28px;
+    }
+  }
+  .programa-item:hover {
+    border-color: var(--border-strong);
+  }
+  .programa-hora {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    letter-spacing: 0.5px;
+    color: var(--claude);
+    align-self: start;
+    padding-top: 2px;
+  }
+  .programa-texto h3 {
+    font-size: 20px;
+    margin-bottom: 8px;
+  }
+  .programa-texto p {
+    font-size: 14.5px;
+    line-height: 1.7;
+    color: var(--text-muted);
+  }
+
+  .leva-row .lead {
+    margin-bottom: 40px;
+  }
+
+  .leva-grid {
+    display: grid;
+    gap: 18px;
+    grid-template-columns: 1fr;
+  }
+  @media (min-width: 700px) {
+    .leva-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  .leva-card {
+    padding: 26px 24px;
+  }
+  .leva-card h3 {
+    font-size: 19px;
+    line-height: 1.25;
+    margin-bottom: 12px;
+  }
+  .leva-card p {
+    font-size: 14.5px;
+    line-height: 1.7;
+    color: var(--text-muted);
+  }
+
+  .logistica-grid {
+    margin-top: 32px;
+    display: grid;
+    gap: 18px;
+    grid-template-columns: 1fr;
+  }
+  @media (min-width: 700px) {
+    .logistica-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  @media (min-width: 1000px) {
+    .logistica-grid {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+
+  .logistica-item {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    padding: 24px 22px;
+  }
+  .logistica-label {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    margin-bottom: 10px;
+  }
+  .logistica-valor {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 28px;
+    color: var(--text);
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    margin-bottom: 14px;
+  }
+  .logistica-nota {
+    font-size: 13px;
+    line-height: 1.6;
+    color: var(--text-muted);
+  }
+
+  .limite-prose {
+    margin-top: 20px;
+    max-width: 760px;
+  }
+  .limite-prose p {
+    margin-top: 18px;
+    font-size: 17px;
+    line-height: 1.75;
+    color: var(--text-muted);
+  }
+  .limite-prose p:first-child {
+    margin-top: 8px;
+  }
+  .limite-prose strong {
+    color: var(--text);
+    font-weight: 500;
+  }
+
+  .limite-cta {
+    margin-top: 36px;
+  }
+</style>
