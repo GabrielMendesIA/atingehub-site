@@ -5,16 +5,20 @@ import tailwindcss from '@tailwindcss/vite';
 import sitemap from '@astrojs/sitemap';
 import mdx from '@astrojs/mdx';
 import robotsTxt from 'astro-robots-txt';
+import react from '@astrojs/react';
+import vercel from '@astrojs/vercel';
 
 const SITE_URL = 'https://atingehub.com';
 
 export default defineConfig({
   site: SITE_URL,
   trailingSlash: 'never',
+  adapter: vercel(),
   vite: {
     plugins: [tailwindcss()],
   },
   integrations: [
+    react(),
     sitemap(),
     mdx(),
     robotsTxt({
@@ -22,7 +26,7 @@ export default defineConfig({
         {
           userAgent: '*',
           allow: '/',
-          disallow: ['/draft/', '/_astro/'],
+          disallow: ['/draft/', '/_astro/', '/api/'],
         },
       ],
       sitemap: true,
