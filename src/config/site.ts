@@ -39,10 +39,10 @@ export const site = {
 
 export const navigation = [
   { label: 'Sobre', href: '/sobre' },
+  { label: 'Manifesto', href: '/manifesto' },
+  { label: 'Por que agora', href: '/por-que-agora' },
   { label: 'Portfólio', href: '/portfolio' },
-  { label: 'Processo', href: '/processo' },
-  { label: 'Casos', href: '/casos' },
-  { label: 'Blog', href: '/blog' },
+  { label: 'Workshop', href: '/workshop' },
   { label: 'Contato', href: '/contato' },
 ] as const;
 
