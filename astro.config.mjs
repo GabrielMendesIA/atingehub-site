@@ -1,11 +1,8 @@
 // @ts-check
 import { defineConfig } from 'astro/config';
-
 import tailwindcss from '@tailwindcss/vite';
 import sitemap from '@astrojs/sitemap';
-import mdx from '@astrojs/mdx';
 import robotsTxt from 'astro-robots-txt';
-import react from '@astrojs/react';
 import vercel from '@astrojs/vercel';
 
 const SITE_URL = 'https://atingehub.com';
@@ -18,16 +15,10 @@ export default defineConfig({
     plugins: [tailwindcss()],
   },
   integrations: [
-    react(),
     sitemap(),
-    mdx(),
     robotsTxt({
       policy: [
-        {
-          userAgent: '*',
-          allow: '/',
-          disallow: ['/draft/', '/_astro/', '/api/'],
-        },
+        { userAgent: '*', allow: '/', disallow: ['/_astro/'] },
       ],
       sitemap: true,
     }),

@@ -1,181 +1,273 @@
 ---
-import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Hero from '../components/Hero.astro';
-import Manifesto from '../components/Manifesto.astro';
-import ProductCard from '../components/ProductCard.astro';
-import WhatsAppCTA from '../components/WhatsAppCTA.astro';
+import ServiceCard from '../components/ServiceCard.astro';
+import ProcessStep from '../components/ProcessStep.astro';
+import PainSolution from '../components/PainSolution.astro';
 import Terminal from '../components/Terminal.astro';
-import { site } from '../config/site';
-
-const products = (await getCollection('products')).sort(
-  (a, b) => a.data.order - b.data.order
-);
-
-const homeJsonLd = {
-  '@context': 'https://schema.org',
-  '@type': 'WebSite',
-  name: site.name,
-  url: site.url,
-  description: site.description,
-  publisher: { '@type': 'Organization', name: site.name },
-};
+import BookingForm from '../components/BookingForm.astro';
 
 const terminalLines = [
-  { type: 'comm', text: '// implementação acompanhada' },
+  { type: 'comm' as const, text: '// implementação acompanhada' },
   { prompt: '$', text: 'atingehub --deploy ia-no-seu-negocio' },
-  { type: 'comm', text: '→ carregando ferramentas', tail: '[obsidian, claude, n8n, chatwoot]', tailType: 'var' },
-  { type: 'comm', text: '→ conectando whatsapp ✓ crm ✓ cérebro ✓' },
-  { type: 'ok', text: '✓ sistema rodando 24h · 8 produtos · 50+ habilidades' },
+  { type: 'comm' as const, text: '→ carregando ferramentas ', tail: '[obsidian, claude, n8n, chatwoot]', tailType: 'var' as const },
+  { type: 'comm' as const, text: '→ conectando whatsapp ✓ crm ✓ cérebro ✓' },
+  { type: 'ok' as const, text: '✓ sistema rodando 24h · 8 produtos · 50+ habilidades' },
+];
+
+const pairs = [
+  {
+    dor: 'O lead chega no Zap e o atendente já dormiu',
+    produto: 'Voz',
+    pilar: 'Atendimento',
+    body: 'Agente responde em 30 segundos, conhece seu cardápio, registra histórico e escala pra você só o que precisa de gente.',
+    cor: 'var(--voz)',
+  },
+  {
+    dor: 'O cliente sumiu no segundo contato e ninguém puxou de volta',
+    produto: 'Cadência',
+    pilar: 'Campanhas',
+    body: 'Follow-up automático no momento certo. Cliente quente não esfria por esquecimento de vendedor.',
+    cor: 'var(--cadencia)',
+  },
+  {
+    dor: 'Seus dados estão na cabeça do dono e em 4 planilhas',
+    produto: 'Cérebro',
+    pilar: 'Decisão',
+    body: 'Vault com tudo da operação · consulta em linguagem natural. Resposta em segundos, não em 3 dias.',
+    cor: 'var(--cerebro)',
+  },
+  {
+    dor: 'Se você sair uma semana, a loja para',
+    produto: 'Engrenagens',
+    pilar: 'Operação',
+    body: 'Automações n8n tiram o operacional repetitivo da agenda do dono. Aprovação, cobrança, conferência viram fluxo.',
+    cor: 'var(--engrenagens)',
+  },
+  {
+    dor: 'Anúncio caro porque você fala pra todo mundo',
+    produto: 'Vitrine',
+    pilar: 'Campanhas',
+    body: 'IA segmenta quem é seu cliente de verdade. Peça e copy que conversam só com ele. CPM cai, conversão sobe.',
+    cor: 'var(--vitrine)',
+  },
+  {
+    dor: 'O concorrente baixou preço e você precisa baixar junto',
+    produto: 'Bússola',
+    pilar: 'Decisão',
+    body: 'Análise estratégica de margem e posicionamento, com dado que você nem sabia que tinha. Sai do reflexo, entra na decisão.',
+    cor: 'var(--bussola)',
+  },
+];
+
+const services = [
+  {
+    title: 'Atendimento',
+    description:
+      'Agente que responde no WhatsApp 24h, conhece seu cardápio/catálogo, registra histórico e escala pra você só o que precisa de gente.',
+    products: ['Voz', 'Balcão'],
+    accent: 'var(--voz)',
+  },
+  {
+    title: 'Campanhas',
+    description:
+      'Anúncio que fala com quem tem chance de comprar. Follow-up automático com cliente que entrou e sumiu. CPM cai, conversão sobe.',
+    products: ['Vitrine', 'Cadência'],
+    accent: 'var(--vitrine)',
+  },
+  {
+    title: 'Decisão',
+    description:
+      'Seus dados em um lugar só, conversáveis em linguagem natural. Bússola estratégica humana usando o que antes ninguém tinha tempo de olhar.',
+    products: ['Cérebro', 'Bússola'],
+    accent: 'var(--cerebro)',
+  },
+  {
+    title: 'Operação',
+    description:
+      'n8n distribuindo lead, lembrete de cobrança automático, controle de estoque acompanhado. O operacional para de morar na sua agenda.',
+    products: ['Engrenagens', 'Bancada'],
+    accent: 'var(--engrenagens)',
+  },
+];
+
+const steps = [
+  {
+    num: '01',
+    title: 'Diagnóstico',
+    description:
+      'Call de 20 minutos com o dono. Eu ouço a dor concreta, mapeio onde IA cabe e onde não cabe. Sem proposta empurrada.',
+  },
+  {
+    num: '02',
+    title: 'Mapa',
+    description:
+      'Documento curto com 3 frentes prioritárias, prazo realista e preço transparente. Você decide se entra agora, depois ou nunca.',
+  },
+  {
+    num: '03',
+    title: 'Instalação',
+    description:
+      'Implementação em ondas semanais. Cada onda entrega um pedaço funcionando dentro da sua operação — não slide, não palco.',
+  },
+  {
+    num: '04',
+    title: 'Acompanhamento',
+    description:
+      'Call quinzenal de ajuste, suporte direto comigo no Zap. Stack 100% sua: se quiser tocar sozinho depois, leva tudo junto.',
+  },
 ];
 ---
 
-<BaseLayout description={site.description} jsonLd={homeJsonLd}>
-  <section class="hero">
-    <div class="container-page hero-grid">
-      <div class="hero-text">
-        <p class="eyebrow"><span class="accent">●</span> AtingeHUB · Sistemas de IA para varejo brasileiro</p>
-        <h1 class="hero-title">
-          Mérito,<br /><em>com pulso.</em>
-        </h1>
-        <p class="hero-subtitle">
-          Uma <strong>IA rodando dentro do seu negócio</strong> — não um chatbot. 8 produtos que combinam como você precisa, com stack aberta e relação humana em primeiro lugar.
-        </p>
-        <div class="hero-ctas">
-          <a href="https://wa.me/5515999999999" target="_blank" rel="noopener" class="btn btn-primary">
-            $ iniciar conversa
-          </a>
-          <a href="/portfolio" class="btn btn-ghost">ver portfólio →</a>
-        </div>
-      </div>
+<BaseLayout>
+  <Hero
+    eyebrow="AtingeHUB · IA pro varejo brasileiro"
+    titleStart="IA dentro do seu"
+    rotatingWords={['varejo', 'WhatsApp', 'caixa', 'negócio']}
+    subtitle="Sistemas que <strong>respondem, lembram e decidem</strong> — não chatbots. Stack aberta, instalação acompanhada em Sorocaba e região."
+    primaryCta={{ label: 'Agendar conversa', href: '#contato' }}
+    secondaryCta={{ label: 'Ver serviços', href: '#servicos' }}
+  />
 
-      <div class="hero-terminal">
-        <Terminal lines={terminalLines} />
-      </div>
+  <section class="terminal-strip">
+    <div class="container-page">
+      <Terminal lines={terminalLines} title="atingehub · stack rodando" />
+      <p class="term-foot">Stack 100% aberta · self-hosted ou na sua infra · você fica dono</p>
     </div>
   </section>
 
-  <Manifesto />
-
-  <section class="row portfolio-section">
+  <section id="servicos" class="section">
     <div class="container-page">
-      <div class="row-header">
-        <span class="num">02</span>
-        <h2>8 produtos · toolkit integrado</h2>
+      <div class="section-head">
+        <span class="eyebrow">Serviços</span>
+        <h2>Soluções de IA que entregam resultado</h2>
+        <p class="lead">
+          4 frentes, 8 produtos. Cada um resolve um problema concreto. Combinam como sua operação precisa.
+        </p>
       </div>
-      <p class="sub">Operacional · Inteligência · Estratégico</p>
-      <p class="lead">
-        Vendidos isolados ou em combo. Cada um resolve um problema concreto, com entregável palpável e prazo definido. Não é catálogo de IA — é sistema.
-      </p>
-
-      <div class="product-grid">
-        {products.map((p) => (
-          <ProductCard
-            name={p.data.name}
-            slug={p.data.slug || p.id}
-            slogan={p.data.slogan}
-            summary={p.data.summary}
-            family={p.data.family}
-            href={`/portfolio/${p.data.slug || p.id}`}
-            accentColor={p.data.accent_color}
+      <div class="services-grid">
+        {services.map((s) => (
+          <ServiceCard
+            title={s.title}
+            description={s.description}
+            products={s.products}
+            accent={s.accent}
           />
         ))}
       </div>
-
-      <div class="portfolio-cta">
-        <a href="/portfolio" class="btn btn-ghost">ver portfólio completo →</a>
+      <div class="services-cta">
+        <a href="#dores" class="cta-inline">Ver cenários reais de loja ↓</a>
       </div>
     </div>
   </section>
 
-  <section class="row process-teaser">
+  <section id="dores" class="section dores-bg">
     <div class="container-page">
-      <div class="row-header">
-        <span class="num">03</span>
-        <h2>Por que agora · a janela 2026-2028</h2>
+      <div class="section-head">
+        <span class="eyebrow">Reconhece o cenário?</span>
+        <h2>6 dores que você já sentiu · 6 produtos que destravam</h2>
+        <p class="lead">
+          A dor é frase de loja. A solução é produto. Conecta direto, sem palestra.
+        </p>
       </div>
-      <p class="sub">Atendimento · Campanhas · Decisão · Operação</p>
-      <p class="lead">
-        A vizinha do lado já começou. Tem janela aberta no varejo brasileiro pra entrar com IA enquanto isso ainda é diferencial — antes de virar commodity igual maquininha de cartão.
-      </p>
-      <a href="/por-que-agora" class="btn btn-ghost">por que agora →</a>
+      <PainSolution items={pairs} />
+      <div class="dores-cta">
+        <a href="#contato" class="cta-inline">Sua dor não está aqui? Conta na call →</a>
+      </div>
     </div>
   </section>
 
-  <WhatsAppCTA />
+  <section id="processo" class="section-tight processo-bg">
+    <div class="container-page">
+      <div class="section-head">
+        <span class="eyebrow">Processo</span>
+        <h2>Da ideia ao impacto em 4 passos</h2>
+      </div>
+      <div class="steps-grid">
+        {steps.map((s) => <ProcessStep num={s.num} title={s.title} description={s.description} />)}
+      </div>
+    </div>
+  </section>
+
+  <BookingForm />
 </BaseLayout>
 
 <style>
-  .hero {
-    padding: 100px 0 50px;
+  .terminal-strip {
+    padding: 8px 0 32px;
   }
-  @media (max-width: 768px) {
-    .hero {
-      padding: 60px 0 40px;
-    }
+  .terminal-strip :global(.terminal) {
+    max-width: 620px;
+    margin: 0 auto;
   }
-
-  .hero-grid {
-    display: grid;
-    gap: 56px;
-    align-items: center;
-  }
-  @media (min-width: 1000px) {
-    .hero-grid {
-      grid-template-columns: 1.2fr 1fr;
-      gap: 80px;
-    }
+  .term-foot {
+    margin-top: 18px;
+    text-align: center;
+    font-family: var(--font-mono);
+    font-size: 11.5px;
+    letter-spacing: 0.8px;
+    color: var(--text-dim);
   }
 
-  .hero-title {
-    margin-top: 24px;
-    font-size: clamp(48px, 6.5vw, 84px);
-    line-height: 1;
-    letter-spacing: -0.035em;
-  }
-
-  .hero-subtitle {
-    margin-top: 24px;
-    color: var(--text-muted);
-    font-size: 17px;
-    line-height: 1.7;
-    max-width: 560px;
-  }
-
-  .hero-ctas {
-    margin-top: 36px;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 12px;
-  }
-
-  .hero-terminal {
-    width: 100%;
-  }
-
-  .portfolio-section .lead,
-  .process-teaser .lead {
-    max-width: 720px;
-  }
-
-  .product-grid {
-    margin-top: 36px;
+  .services-grid {
     display: grid;
     gap: 18px;
     grid-template-columns: 1fr;
   }
-  @media (min-width: 640px) {
-    .product-grid {
+  @media (min-width: 600px) {
+    .services-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (min-width: 1000px) {
+    .services-grid { grid-template-columns: repeat(4, 1fr); }
+  }
+
+  .services-cta {
+    margin-top: 40px;
+    text-align: center;
+  }
+  .cta-inline {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    color: var(--accent);
+    letter-spacing: 0.5px;
+  }
+  .cta-inline:hover { color: var(--accent-hover); }
+
+  .dores-bg {
+    background: var(--bg);
+  }
+  .dores-cta {
+    margin-top: 48px;
+    text-align: center;
+  }
+
+  .processo-bg {
+    background: var(--bg-soft);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+  .steps-grid {
+    display: grid;
+    gap: 8px;
+    grid-template-columns: 1fr;
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+  @media (min-width: 700px) {
+    .steps-grid {
       grid-template-columns: repeat(2, 1fr);
     }
   }
   @media (min-width: 1000px) {
-    .product-grid {
+    .steps-grid {
       grid-template-columns: repeat(4, 1fr);
+      gap: 0;
     }
-  }
-
-  .portfolio-cta {
-    margin-top: 36px;
+    .steps-grid :global(.step) {
+      border-left: 1px solid var(--border);
+    }
+    .steps-grid :global(.step):first-child {
+      border-left: none;
+    }
   }
 </style>

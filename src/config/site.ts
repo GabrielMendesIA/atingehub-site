@@ -1,29 +1,17 @@
-/**
- * Configuração central do site AtingeHUB
- * Todos os componentes consomem daqui. Editar em 1 lugar = atualiza tudo.
- */
-
 export const site = {
   name: 'AtingeHUB',
   url: 'https://atingehub.com',
-  tagline: 'Sistemas de IA para varejo brasileiro.',
+  tagline: 'Sistemas de IA para o varejo brasileiro.',
   description:
-    'A AtingeHUB instala sistemas de IA sob medida no varejo brasileiro. Cada produto resolve um problema concreto, com stack aberta e relação humana em primeiro lugar.',
-  manifesto:
-    'AtingeHUB é o sistema; Gabriel é o fundador co-criando junto. Relação humana primeiro, IA como extensão — nunca substituto. Cliente fica dono dos dados e da infra.',
+    'IA dentro da sua operação. Sistemas que conversam, lembram e decidem — não chatbots. Stack aberta, instalação acompanhada em Sorocaba e região.',
   founder: {
     name: 'Gabriel Mendes',
-    role: 'Fundador e arquiteto',
-    background:
-      '5 anos atendendo empresários do varejo de Sorocaba com maquininha de cartão e crediário. Diretor de teatro. Criador de conteúdo. Construiu o AUTOMAKER (Maia + Sofia) e mantém o Açaí Algomais rodando como case real.',
-    photo: '/brand/gabriel.jpg',
+    role: 'Fundador',
   },
   contact: {
-    whatsapp: '5515999999999',
-    whatsappLabel: '+55 15 99999-9999',
-    whatsappMessage:
-      'Oi Gabriel, vim pelo site da AtingeHUB. Queria entender melhor como funciona.',
-    email: 'oi@atingehub.com',
+    whatsapp: '5515998554455',
+    whatsappLabel: '+55 15 99855-4455',
+    email: 'contato@atingehub.com.br',
     instagram: 'atingehub',
     address: 'Sorocaba/SP',
     region: ['Sorocaba', 'Votorantim', 'Itu', 'Salto', 'Boituva', 'Mairinque'],
@@ -32,21 +20,17 @@ export const site = {
     instagram: 'https://instagram.com/atingehub',
     github: 'https://github.com/GabrielMendesIA/atingehub-stack',
   },
-  legal: {
-    dpoEmail: 'privacidade@atingehub.com',
-  },
 } as const;
 
 export const navigation = [
-  { label: 'Sobre', href: '/sobre' },
-  { label: 'Manifesto', href: '/manifesto' },
-  { label: 'Por que agora', href: '/por-que-agora' },
-  { label: 'Portfólio', href: '/portfolio' },
+  { label: 'Serviços', href: '/#servicos' },
+  { label: 'Processo', href: '/#processo' },
   { label: 'Workshop', href: '/workshop' },
-  { label: 'Contato', href: '/contato' },
+  { label: 'Contato', href: '/#contato' },
 ] as const;
 
 export const whatsappLink = (message?: string) => {
-  const msg = encodeURIComponent(message || site.contact.whatsappMessage);
+  const fallback = 'Oi Gabriel, vim pelo site da AtingeHUB. Queria conversar.';
+  const msg = encodeURIComponent(message || fallback);
   return `https://wa.me/${site.contact.whatsapp}?text=${msg}`;
 };

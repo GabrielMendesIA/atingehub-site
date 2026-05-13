@@ -1,0 +1,345 @@
+---
+import { whatsappLink, site } from '../config/site';
+
+const sectorOptions = [
+  'Food service',
+  'Auto peças & oficinas',
+  'Confecção & moda',
+  'Pet shop & veterinária',
+  'Estética & saúde',
+  'Outro varejo',
+];
+
+const timelineOptions = [
+  { value: 'agora', label: 'Pra ontem' },
+  { value: '1-3m', label: '1-3 meses' },
+  { value: '3-6m', label: '3-6 meses' },
+  { value: 'explorar', label: 'Só explorando' },
+];
+
+const budgetOptions = [
+  { value: 'ate-30k', label: 'Até R$ 30k/mês' },
+  { value: '30-100k', label: 'R$ 30k – 100k' },
+  { value: '100-300k', label: 'R$ 100k – 300k' },
+  { value: '300k+', label: 'R$ 300k+' },
+];
+---
+
+<section id="contato" class="booking section">
+  <div class="container-page">
+    <div class="section-head">
+      <span class="eyebrow">Começar agora</span>
+      <h2>Conversa de 20 minutos sobre seu negócio</h2>
+      <p class="lead">
+        Conta o que tá travando. Se a AtingeHUB faz sentido, alinhamos próximos passos. Se não faz, te indico quem faz.
+      </p>
+    </div>
+
+    <div class="booking-grid">
+      <aside class="booking-side">
+        <div class="side-card">
+          <h3>O que esperar</h3>
+          <ul class="expect-list">
+            <li><span class="check">✓</span> Call de 20 minutos sem compromisso</li>
+            <li><span class="check">✓</span> Resposta em até 4h em dia útil</li>
+            <li><span class="check">✓</span> Diagnóstico real, não pitch de vendas</li>
+            <li><span class="check">✓</span> Preço transparente desde o primeiro contato</li>
+          </ul>
+          <hr />
+          <p class="side-alt">
+            <span>Prefere WhatsApp direto?</span>
+            <a href={whatsappLink()} target="_blank" rel="noopener" class="side-wa">
+              {site.contact.whatsappLabel} →
+            </a>
+          </p>
+          <p class="side-alt">
+            <span>Email pra proposta formal?</span>
+            <a href={`mailto:${site.contact.email}`} class="side-wa">{site.contact.email} →</a>
+          </p>
+        </div>
+      </aside>
+
+      <form class="booking-form" id="booking-form" novalidate>
+        <div class="form-progress">
+          <span>Progresso do formulário</span>
+          <strong><span id="progress-count">0</span>/6</strong>
+        </div>
+
+        <div class="row-2">
+          <div class="field">
+            <label class="form-label" for="bk-name">Nome completo <span class="req">*</span></label>
+            <input type="text" id="bk-name" name="name" required placeholder="Seu nome completo" class="form-input" data-progress />
+          </div>
+          <div class="field">
+            <label class="form-label" for="bk-email">Email <span class="req">*</span></label>
+            <input type="email" id="bk-email" name="email" required placeholder="voce@empresa.com" class="form-input" data-progress />
+          </div>
+        </div>
+
+        <div class="field">
+          <label class="form-label" for="bk-wa">WhatsApp <span class="opt">(opcional)</span></label>
+          <input type="tel" id="bk-wa" name="whatsapp" placeholder="(15) 99999-9999" class="form-input" />
+        </div>
+
+        <div class="field">
+          <label class="form-label">Setor da operação <span class="req">*</span></label>
+          <div class="chip-group" role="radiogroup" data-chip-group="sector" data-progress>
+            {sectorOptions.map((opt) => (
+              <button type="button" class="chip" role="radio" aria-pressed="false" data-value={opt}>{opt}</button>
+            ))}
+          </div>
+        </div>
+
+        <div class="field">
+          <label class="form-label">Prazo pra começar <span class="req">*</span></label>
+          <div class="chip-group" role="radiogroup" data-chip-group="timeline" data-progress>
+            {timelineOptions.map((opt) => (
+              <button type="button" class="chip" role="radio" aria-pressed="false" data-value={opt.value}>{opt.label}</button>
+            ))}
+          </div>
+        </div>
+
+        <div class="field">
+          <label class="form-label" for="bk-challenge">Maior dor da operação hoje <span class="req">*</span></label>
+          <textarea
+            id="bk-challenge"
+            name="challenge"
+            required
+            minlength="50"
+            placeholder="Ex: lead chega no Zap fora do horário e some, atendimento depende 100% de mim, planilha sai do controle…"
+            class="form-textarea"
+            data-progress
+          ></textarea>
+          <div class="counter">
+            <span class="counter-hint">Mínimo 50 caracteres</span>
+            <span><span id="char-count">0</span>/50</span>
+          </div>
+        </div>
+
+        <div class="field">
+          <label class="form-label">Faturamento mensal aproximado <span class="req">*</span></label>
+          <div class="chip-group" role="radiogroup" data-chip-group="budget" data-progress>
+            {budgetOptions.map((opt) => (
+              <button type="button" class="chip" role="radio" aria-pressed="false" data-value={opt.value}>{opt.label}</button>
+            ))}
+          </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary submit" disabled id="bk-submit">
+          Agendar minha conversa
+        </button>
+        <p class="form-foot">
+          Ao enviar, você concorda em receber retorno por email ou WhatsApp em até 4h em dia útil.
+        </p>
+      </form>
+    </div>
+  </div>
+</section>
+
+<style>
+  .booking { background: var(--bg); }
+
+  .booking-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 32px;
+    align-items: start;
+  }
+  @media (min-width: 920px) {
+    .booking-grid {
+      grid-template-columns: 360px 1fr;
+      gap: 48px;
+    }
+  }
+
+  .side-card {
+    position: sticky;
+    top: 96px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 28px;
+  }
+  .side-card h3 {
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 18px;
+    color: var(--text);
+    font-family: var(--font-sans);
+  }
+  .expect-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .expect-list li {
+    display: grid;
+    grid-template-columns: 18px 1fr;
+    gap: 10px;
+    font-size: 14px;
+    color: var(--text-muted);
+    line-height: 1.5;
+  }
+  .check {
+    color: var(--accent);
+    font-weight: 700;
+    font-family: var(--font-mono);
+  }
+  .side-card hr {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 22px 0 18px;
+  }
+  .side-alt {
+    font-size: 13px;
+    color: var(--text-dim);
+    margin-bottom: 10px;
+  }
+  .side-alt span { display: block; margin-bottom: 2px; }
+  .side-wa {
+    font-size: 14px;
+    color: var(--text);
+    font-weight: 500;
+  }
+  .side-wa:hover { color: var(--accent); }
+
+  .booking-form {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 32px;
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+  }
+  @media (min-width: 700px) {
+    .booking-form { padding: 40px; }
+  }
+
+  .form-progress {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--border);
+    font-size: 13px;
+    color: var(--text-dim);
+  }
+  .form-progress strong {
+    color: var(--accent);
+    font-family: var(--font-mono);
+    font-weight: 500;
+  }
+
+  .field { display: flex; flex-direction: column; }
+  .row-2 {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 22px;
+  }
+  @media (min-width: 600px) {
+    .row-2 { grid-template-columns: 1fr 1fr; }
+  }
+
+  .opt {
+    font-weight: 400;
+    color: var(--text-dim);
+    font-size: 13px;
+  }
+
+  .counter {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 6px;
+    font-size: 12px;
+    color: var(--text-dim);
+    font-family: var(--font-mono);
+  }
+  .counter-hint { letter-spacing: 0.2px; }
+
+  .submit {
+    width: 100%;
+    padding: 16px;
+    font-size: 15px;
+    margin-top: 8px;
+  }
+  .submit:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+  }
+
+  .form-foot {
+    font-size: 12px;
+    color: var(--text-dim);
+    text-align: center;
+    margin-top: 4px;
+  }
+</style>
+
+<script>
+  const form = document.getElementById('booking-form') as HTMLFormElement | null;
+  if (form) {
+    const progressEl = document.getElementById('progress-count');
+    const submitBtn = document.getElementById('bk-submit') as HTMLButtonElement;
+    const charCountEl = document.getElementById('char-count');
+    const challengeTa = form.querySelector<HTMLTextAreaElement>('#bk-challenge');
+
+    // Chip groups: single select per group
+    form.querySelectorAll<HTMLElement>('[data-chip-group]').forEach((group) => {
+      group.addEventListener('click', (e) => {
+        const target = e.target as HTMLElement;
+        if (!target.matches('.chip')) return;
+        group.querySelectorAll<HTMLElement>('.chip').forEach((c) => c.setAttribute('aria-pressed', 'false'));
+        target.setAttribute('aria-pressed', 'true');
+        group.dataset.selected = target.dataset.value || '';
+        update();
+      });
+    });
+
+    function isFilled(slot: Element): boolean {
+      if (slot.matches('[data-chip-group]')) return !!(slot as HTMLElement).dataset.selected;
+      const el = slot as HTMLInputElement | HTMLTextAreaElement;
+      if (el.type === 'email') return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(el.value);
+      if (el.tagName === 'TEXTAREA') return el.value.trim().length >= 50;
+      return el.value.trim().length > 0;
+    }
+
+    function update() {
+      const slots = Array.from(form!.querySelectorAll('[data-progress]'));
+      const filled = slots.filter(isFilled).length;
+      if (progressEl) progressEl.textContent = String(filled);
+      if (charCountEl && challengeTa) {
+        charCountEl.textContent = String(challengeTa.value.trim().length);
+      }
+      if (submitBtn) submitBtn.disabled = filled < 6;
+    }
+
+    form.addEventListener('input', update);
+    form.addEventListener('change', update);
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const data: Record<string, string> = {};
+      form.querySelectorAll<HTMLInputElement | HTMLTextAreaElement>('input, textarea').forEach((el) => {
+        if (el.name) data[el.name] = el.value;
+      });
+      form.querySelectorAll<HTMLElement>('[data-chip-group]').forEach((g) => {
+        const key = g.dataset.chipGroup || 'group';
+        data[key] = g.dataset.selected || '';
+      });
+      // For now: fallback to WhatsApp with prefilled body
+      const msg =
+        `Oi Gabriel, novo lead via site sober.\n\n` +
+        `Nome: ${data.name}\nEmail: ${data.email}\nWhatsApp: ${data.whatsapp || '—'}\n` +
+        `Setor: ${data.sector}\nPrazo: ${data.timeline}\nFaturamento: ${data.budget}\n\n` +
+        `Dor: ${data.challenge}`;
+      const url = `https://wa.me/5515998554455?text=${encodeURIComponent(msg)}`;
+      window.open(url, '_blank');
+    });
+
+    update();
+  }
+</script>

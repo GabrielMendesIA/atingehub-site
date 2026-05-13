@@ -1,0 +1,40 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="Página não encontrada" description="A página que você procurou não existe aqui.">
+  <section class="nf">
+    <div class="container-page">
+      <span class="eyebrow">404</span>
+      <h1>Essa página não <em>existe.</em></h1>
+      <p>O endereço que você acessou não tem nada aqui. Volta pra home ou agenda uma conversa.</p>
+      <div class="nf-ctas">
+        <a href="/" class="btn btn-primary">Voltar pra home</a>
+        <a href="/#contato" class="btn btn-ghost">Agendar conversa</a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .nf {
+    padding: 140px 0 100px;
+    text-align: center;
+  }
+  .nf h1 {
+    margin-top: 18px;
+    font-size: clamp(40px, 5vw, 64px);
+  }
+  .nf p {
+    margin: 22px auto 0;
+    max-width: 480px;
+    color: var(--text-muted);
+  }
+  .nf-ctas {
+    margin-top: 36px;
+    display: inline-flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    justify-content: center;
+  }
+</style>

@@ -1,0 +1,362 @@
+---
+const modeOptions = [
+  {
+    value: 'gravado',
+    label: 'Gravado',
+    sub: 'Acesso imediato após pagamento',
+  },
+  {
+    value: 'aovivo',
+    label: 'Ao vivo',
+    sub: 'Próxima turma confirmada por email',
+  },
+  {
+    value: 'ambos',
+    label: 'Gravado + ao vivo',
+    sub: 'Acesso vitalício à gravação + 1 sessão ao vivo',
+  },
+];
+
+const liveDates = [
+  'Próxima turma · data a confirmar',
+];
+---
+
+<section class="checkout-wrap section">
+  <div class="container-page">
+    <div class="section-head">
+      <span class="eyebrow">Comprar agora</span>
+      <h2>3 passos pra ter IA rodando</h2>
+      <p class="lead">
+        Você compra agora, recebe o repositório no GitHub na mesma hora e escolhe quando assistir ao workshop.
+      </p>
+    </div>
+
+    <div class="steps-row">
+      <div class="step-pill">
+        <span class="pill-num">01</span>
+        <div><strong>Pagamento</strong><span>Pix ou cartão · imediato</span></div>
+      </div>
+      <div class="step-pill">
+        <span class="pill-num">02</span>
+        <div><strong>Acesso ao GitHub</strong><span>Convite na hora · 50+ skills</span></div>
+      </div>
+      <div class="step-pill">
+        <span class="pill-num">03</span>
+        <div><strong>Workshop</strong><span>Gravado ou ao vivo · você escolhe</span></div>
+      </div>
+    </div>
+
+    <form id="checkout-form" class="checkout-form" novalidate>
+      <h3>Finalizar compra do Workshop</h3>
+
+      <div class="row-2">
+        <div class="field">
+          <label class="form-label" for="ck-name">Nome completo <span class="req">*</span></label>
+          <input type="text" id="ck-name" name="name" required placeholder="Seu nome completo" class="form-input" data-ap />
+        </div>
+        <div class="field">
+          <label class="form-label" for="ck-email">Email pro envio do GitHub <span class="req">*</span></label>
+          <input type="email" id="ck-email" name="email" required placeholder="voce@email.com" class="form-input" data-ap />
+        </div>
+      </div>
+
+      <div class="field">
+        <label class="form-label" for="ck-github">Usuário GitHub <span class="req">*</span></label>
+        <input type="text" id="ck-github" name="github" required placeholder="@seu-usuario" class="form-input" data-ap />
+        <p class="hint">É pro qual usuário liberamos o convite do repositório. Se ainda não tem, crie em github.com.</p>
+      </div>
+
+      <div class="field">
+        <label class="form-label">Modalidade do workshop <span class="req">*</span></label>
+        <div class="mode-grid" data-chip-group="mode" data-ap>
+          {modeOptions.map((opt) => (
+            <button type="button" class="mode-chip" role="radio" aria-pressed="false" data-value={opt.value}>
+              <span class="mode-label">{opt.label}</span>
+              <span class="mode-sub">{opt.sub}</span>
+            </button>
+          ))}
+        </div>
+      </div>
+
+      <div class="field" id="live-field" hidden>
+        <label class="form-label" for="ck-date">Data da turma ao vivo</label>
+        <div class="select-wrap">
+          <select id="ck-date" name="liveDate" class="form-input form-select">
+            <option value="">Selecione uma data</option>
+            {liveDates.map((d) => <option value={d}>{d}</option>)}
+          </select>
+        </div>
+        <p class="hint">As datas confirmadas chegam por email após a compra.</p>
+      </div>
+
+      <div class="field">
+        <label class="form-label" for="ck-wa">WhatsApp <span class="opt">(opcional)</span></label>
+        <input type="tel" id="ck-wa" name="whatsapp" placeholder="(15) 99999-9999" class="form-input" />
+        <p class="hint">Pra resolver dúvida da instalação básica fora do horário do workshop.</p>
+      </div>
+
+      <label class="check-row" id="ck-confirm-label">
+        <input type="checkbox" id="ck-confirm" data-ap />
+        <span class="check-text">
+          Entendo que vou receber o <strong>convite do repositório AtingeHUB Stack no GitHub</strong> assim que o pagamento for confirmado, e que a <strong>instalação básica</strong> é feita por mim com base na documentação — o workshop mostra o funcionamento, mas o setup mínimo é responsabilidade minha.
+        </span>
+      </label>
+
+      <button type="submit" class="btn btn-primary submit" disabled id="ck-submit">
+        <span class="cta-label">Comprar acesso</span>
+        <span class="cta-price">R$ <span data-price>—</span></span>
+      </button>
+      <p class="form-foot">
+        Pagamento via Pix (com desconto) ou cartão em até 12x. Acesso ao GitHub liberado em até 1 hora após confirmação.
+      </p>
+    </form>
+  </div>
+</section>
+
+<style>
+  .checkout-wrap { background: var(--bg-soft); border-top: 1px solid var(--border); }
+
+  .steps-row {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 12px;
+    max-width: 820px;
+    margin: 0 auto 48px;
+  }
+  @media (min-width: 700px) {
+    .steps-row { grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  }
+  .step-pill {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 18px 20px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+  }
+  .step-pill strong {
+    display: block;
+    color: var(--text);
+    font-size: 14px;
+    font-weight: 500;
+  }
+  .step-pill span {
+    display: block;
+    color: var(--text-dim);
+    font-size: 12px;
+    margin-top: 2px;
+  }
+  .pill-num {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    color: var(--accent);
+    letter-spacing: 1px;
+    flex-shrink: 0;
+  }
+
+  .checkout-form {
+    max-width: 820px;
+    margin: 0 auto;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 32px;
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+  }
+  @media (min-width: 700px) {
+    .checkout-form { padding: 40px; }
+  }
+  .checkout-form > h3 {
+    font-size: 20px;
+    text-align: center;
+    margin-bottom: 6px;
+    color: var(--text);
+    font-family: var(--font-sans);
+    font-weight: 600;
+  }
+
+  .row-2 {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 22px;
+  }
+  @media (min-width: 600px) {
+    .row-2 { grid-template-columns: 1fr 1fr; }
+  }
+
+  .field { display: flex; flex-direction: column; }
+  .hint {
+    font-size: 12px;
+    color: var(--text-dim);
+    margin-top: 6px;
+    line-height: 1.5;
+  }
+  .opt {
+    font-weight: 400;
+    color: var(--text-dim);
+    font-size: 13px;
+  }
+
+  .select-wrap { position: relative; }
+  .form-select {
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='none' stroke='%23A0A0A8' stroke-width='1.5' d='M1 1l5 5 5-5'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 16px center;
+    padding-right: 40px;
+    cursor: pointer;
+  }
+
+  /* ─── Mode chips (modalidade do workshop) ─────────────── */
+  .mode-grid {
+    display: grid;
+    gap: 10px;
+    grid-template-columns: 1fr;
+  }
+  @media (min-width: 700px) {
+    .mode-grid { grid-template-columns: repeat(3, 1fr); }
+  }
+  .mode-chip {
+    text-align: left;
+    padding: 16px 18px;
+    background: var(--bg-input);
+    border: 1px solid var(--border-input);
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition: all 0.18s;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .mode-chip:hover {
+    border-color: var(--border-strong);
+  }
+  .mode-chip[aria-pressed="true"] {
+    border-color: var(--accent);
+    background: var(--accent-soft);
+  }
+  .mode-label {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--text);
+  }
+  .mode-sub {
+    font-size: 12.5px;
+    color: var(--text-muted);
+    line-height: 1.45;
+  }
+  .mode-chip[aria-pressed="true"] .mode-label {
+    color: var(--accent);
+  }
+
+  .submit {
+    width: 100%;
+    padding: 18px;
+    font-size: 15px;
+    margin-top: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 14px;
+  }
+  .submit:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+  }
+  .cta-label { font-weight: 600; }
+  .cta-price {
+    font-family: var(--font-mono);
+    font-size: 14px;
+    padding: 4px 10px;
+    background: rgba(255, 255, 255, 0.18);
+    border-radius: var(--radius-sm);
+    letter-spacing: 0.3px;
+  }
+
+  .form-foot {
+    font-size: 12px;
+    color: var(--text-dim);
+    text-align: center;
+  }
+</style>
+
+<script>
+  const form = document.getElementById('checkout-form') as HTMLFormElement | null;
+  if (form) {
+    const submitBtn = document.getElementById('ck-submit') as HTMLButtonElement;
+    const liveField = document.getElementById('live-field') as HTMLElement;
+    const priceEl = document.querySelector('[data-price]') as HTMLElement | null;
+
+    const PRICES: Record<string, number> = {
+      gravado: 297,
+      aovivo: 497,
+      ambos: 597,
+    };
+
+    function valid(slot: Element): boolean {
+      if (slot.matches('[data-chip-group]')) return !!(slot as HTMLElement).dataset.selected;
+      const el = slot as HTMLInputElement;
+      if (el.type === 'email') return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(el.value);
+      if (el.type === 'checkbox') return el.checked;
+      return el.value.trim().length > 0;
+    }
+
+    form.querySelectorAll<HTMLElement>('[data-chip-group]').forEach((group) => {
+      group.addEventListener('click', (e) => {
+        const target = (e.target as HTMLElement).closest('.mode-chip');
+        if (!target) return;
+        group.querySelectorAll<HTMLElement>('.mode-chip').forEach((c) =>
+          c.setAttribute('aria-pressed', 'false')
+        );
+        target.setAttribute('aria-pressed', 'true');
+        const value = (target as HTMLElement).dataset.value || '';
+        group.dataset.selected = value;
+        // Mostra dropdown de data só se incluir ao vivo
+        if (value === 'aovivo' || value === 'ambos') {
+          liveField.removeAttribute('hidden');
+        } else {
+          liveField.setAttribute('hidden', '');
+        }
+        // Atualiza preço
+        if (priceEl) priceEl.textContent = PRICES[value] ? String(PRICES[value]) : '—';
+        update();
+      });
+    });
+
+    function update() {
+      const slots = Array.from(form!.querySelectorAll('[data-ap]'));
+      const ok = slots.every(valid);
+      submitBtn.disabled = !ok;
+    }
+
+    form.addEventListener('input', update);
+    form.addEventListener('change', update);
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const fd = new FormData(form);
+      const data = Object.fromEntries(fd.entries());
+      const modeEl = form.querySelector<HTMLElement>('[data-chip-group="mode"]');
+      const mode = modeEl?.dataset.selected || '';
+      const price = PRICES[mode] || 0;
+
+      const msg =
+        `Oi Gabriel, quero comprar o Workshop AtingeHUB.\n\n` +
+        `Nome: ${data.name}\nEmail: ${data.email}\nGitHub: @${String(data.github).replace(/^@/, '')}\n` +
+        `WhatsApp: ${data.whatsapp || '—'}\n` +
+        `Modalidade: ${mode}${data.liveDate ? ` (${data.liveDate})` : ''}\n` +
+        `Valor: R$ ${price}\n\n` +
+        `Pode me mandar o link do Pix ou o checkout?`;
+      const url = `https://wa.me/5515998554455?text=${encodeURIComponent(msg)}`;
+      window.open(url, '_blank');
+    });
+
+    update();
+  }
+</script>

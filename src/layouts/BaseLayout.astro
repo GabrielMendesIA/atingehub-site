@@ -1,32 +1,47 @@
 ---
 import '../styles/global.css';
-import SEO from '../components/SEO.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
+import { site } from '../config/site';
 
 interface Props {
   title?: string;
   description?: string;
-  canonical?: string;
-  ogImage?: string;
-  type?: 'website' | 'article';
-  noindex?: boolean;
-  jsonLd?: object | object[];
-  productContext?: string;
 }
 
-const props = Astro.props;
-const { productContext, ...seoProps } = props;
+const { title, description = site.description } = Astro.props;
+const fullTitle = title ? `${title} — ${site.name}` : `${site.name} — ${site.tagline}`;
+const canonical = new URL(Astro.url.pathname, site.url).toString();
 ---
 
 <!doctype html>
-<html lang="pt-BR" data-product={productContext}>
+<html lang="pt-BR">
   <head>
-    <SEO {...seoProps} />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#0A0A0B" />
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:locale" content="pt_BR" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,700;9..144,800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+    />
   </head>
   <body>
     <Header />
-    <main id="main">
+    <main>
       <slot />
     </main>
     <Footer />

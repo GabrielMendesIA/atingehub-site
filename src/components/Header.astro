@@ -2,19 +2,19 @@
 import { navigation, whatsappLink, site } from '../config/site';
 ---
 
-<!-- Spacer reserva o espaço da logo grande inicial — evita CLS quando encolhe -->
+<!-- Spacer pra reservar o espaço da logo grande -->
 <div class="header-spacer" aria-hidden="true"></div>
 
 <!-- Fade escuro atrás do header — aparece ao rolar -->
 <div class="header-fade" aria-hidden="true"></div>
 
-<!-- Wordmark fixo no canto esquerdo, sempre igual -->
-<a href="/" class="brand-wordmark-fixed" aria-label={`${site.name} — Início`}>
+<!-- Wordmark fixo no canto esquerdo -->
+<a href="/" class="brand-wordmark" aria-label={`${site.name} — Início`}>
   Atinge<span class="hub">HUB</span>
 </a>
 
-<!-- Logo flutuante centralizada — só encolhe ao rolar, não migra -->
-<a href="/" class="logo-floating" aria-label={`${site.name} — Início`} data-brand>
+<!-- Logo flutuante centralizada — encolhe ao rolar -->
+<a href="/" class="logo-floating" aria-label={`${site.name} — Início`}>
   <svg viewBox="0 0 100 80" aria-hidden="true">
     <path d="M16 64L28 42L40 64Z" fill="#4A4A4A" />
     <path d="M60 64L74 38L88 64Z" fill="#8A8A8A" />
@@ -24,22 +24,22 @@ import { navigation, whatsappLink, site } from '../config/site';
   </svg>
 </a>
 
-<!-- Hamburger flutuante à direita -->
+<!-- Hamburger flutuante à direita (só ícone) -->
 <button
   type="button"
-  class="menu-floating"
+  class="menu-toggle"
   aria-label="Abrir menu"
+  aria-expanded="false"
   data-menu-toggle
 >
-  <span class="menu-icon">
+  <span class="bars" aria-hidden="true">
     <span></span>
     <span></span>
     <span></span>
   </span>
-  <span class="menu-label">menu</span>
 </button>
 
-<!-- Menu overlay (clip-path expanding from hamburger) -->
+<!-- Overlay com clip-path circular -->
 <div class="menu-overlay" data-menu-overlay hidden>
   <button
     type="button"
@@ -51,40 +51,36 @@ import { navigation, whatsappLink, site } from '../config/site';
   <nav class="menu-nav" aria-label="Principal">
     <ul>
       {navigation.map((item) => (
-        <li>
-          <a href={item.href}>{item.label}</a>
-        </li>
+        <li><a href={item.href}>{item.label}</a></li>
       ))}
     </ul>
 
     <div class="menu-footer">
-      <p class="eyebrow"><span class="accent">●</span> Falar comigo</p>
-      <a
-        href={whatsappLink()}
-        target="_blank"
-        rel="noopener"
-        class="btn btn-primary menu-cta"
-      >
-        $ iniciar conversa →
-      </a>
+      <span class="menu-eyebrow">Falar comigo</span>
+      <div class="menu-ctas">
+        <a href={whatsappLink()} target="_blank" rel="noopener" class="btn btn-whatsapp menu-cta">
+          WhatsApp direto
+        </a>
+        <a href="/#contato" class="btn btn-ghost menu-cta">
+          Agendar conversa
+        </a>
+      </div>
     </div>
   </nav>
 </div>
 
 <style>
-  /* ─── Spacer (reserva espaço da logo grande) ───────────────── */
+  /* ─── Spacer (reserva espaço da logo grande) ──────────────── */
   .header-spacer {
-    height: 220px;
+    height: 200px;
     width: 100%;
     pointer-events: none;
   }
   @media (max-width: 768px) {
-    .header-spacer {
-      height: 180px;
-    }
+    .header-spacer { height: 150px; }
   }
 
-  /* ─── Fade escuro atrás do header (aparece ao rolar) ───────── */
+  /* ─── Fade escuro atrás do header (aparece ao rolar) ──────── */
   .header-fade {
     position: fixed;
     top: 0;
@@ -95,242 +91,201 @@ import { navigation, whatsappLink, site } from '../config/site';
     pointer-events: none;
     background: linear-gradient(
       to bottom,
-      rgba(5, 5, 5, 0.9) 0%,
-      rgba(5, 5, 5, 0.75) 60%,
-      rgba(5, 5, 5, 0) 100%
+      rgba(10, 10, 11, 0.9) 0%,
+      rgba(10, 10, 11, 0.7) 60%,
+      rgba(10, 10, 11, 0) 100%
     );
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
     opacity: 0;
-    transition: opacity 500ms ease-out;
+    transition: opacity 400ms ease-out;
   }
   @media (max-width: 768px) {
-    .header-fade {
-      height: 64px;
-    }
+    .header-fade { height: 64px; }
   }
-  :global(body[data-scrolled='true']) .header-fade {
-    opacity: 1;
-  }
-  :global(body[data-menu='open']) .header-fade {
-    opacity: 0;
-  }
+  :global(body[data-scrolled='true']) .header-fade { opacity: 1; }
+  :global(body[data-menu='open']) .header-fade { opacity: 0; }
 
-  /* ─── Wordmark fixo no canto esquerdo ──────────────────────── */
-  .brand-wordmark-fixed {
+  /* ─── Wordmark fixo à esquerda ────────────────────────────── */
+  .brand-wordmark {
     position: fixed;
     top: 18px;
     left: 24px;
     z-index: 60;
     font-family: var(--font-display);
     font-weight: 800;
-    letter-spacing: -0.04em;
-    font-size: 22px;
+    letter-spacing: -0.035em;
+    font-size: 20px;
     line-height: 1;
     color: var(--text);
     text-decoration: none;
     white-space: nowrap;
+    transition: opacity 200ms;
   }
-  .brand-wordmark-fixed:hover {
-    color: var(--text);
-    opacity: 0.85;
-  }
-  .brand-wordmark-fixed .hub {
+  .brand-wordmark:hover { color: var(--text); opacity: 0.85; }
+  .brand-wordmark .hub {
     font-weight: 900;
-    color: var(--claude);
+    color: var(--accent);
+  }
+  @media (max-width: 768px) {
+    .brand-wordmark { top: 16px; left: 18px; font-size: 17px; }
   }
 
-  /* ─── Logo flutuante centralizada — apenas encolhe ─────────── */
+  /* ─── Logo flutuante centralizada (encolhe no scroll) ─────── */
   .logo-floating {
     position: fixed;
-    top: 56px;
+    top: 40px;
     left: 50%;
     z-index: 60;
     display: block;
-    width: 160px;
-    height: 128px;
+    width: 140px;
+    height: 112px;
     transform: translateX(-50%);
-    filter: drop-shadow(0 0 28px rgba(217, 119, 87, 0.4));
+    filter: drop-shadow(0 0 24px rgba(217, 119, 87, 0.4));
     transition:
-      top 800ms cubic-bezier(0.22, 1, 0.36, 1),
-      width 800ms cubic-bezier(0.22, 1, 0.36, 1),
-      height 800ms cubic-bezier(0.22, 1, 0.36, 1),
-      filter 800ms cubic-bezier(0.22, 1, 0.36, 1);
+      top 700ms cubic-bezier(0.22, 1, 0.36, 1),
+      width 700ms cubic-bezier(0.22, 1, 0.36, 1),
+      height 700ms cubic-bezier(0.22, 1, 0.36, 1),
+      filter 700ms cubic-bezier(0.22, 1, 0.36, 1);
   }
   .logo-floating svg {
     width: 100%;
     height: 100%;
     display: block;
   }
-
-  /* Estado compacto (scroll > 40px) — logo encolhe e sobe, fica centralizada */
   :global(body[data-scrolled='true']) .logo-floating {
     top: 8px;
-    width: 56px;
-    height: 45px;
-    filter: drop-shadow(0 0 12px rgba(217, 119, 87, 0.5));
+    width: 50px;
+    height: 40px;
+    filter: drop-shadow(0 0 10px rgba(217, 119, 87, 0.5));
   }
-
-  /* Mobile ajustes ──────────────────────────────────────────── */
   @media (max-width: 768px) {
-    .brand-wordmark-fixed {
-      top: 16px;
-      left: 18px;
-      font-size: 18px;
-    }
-    .logo-floating {
-      top: 48px;
-      width: 120px;
-      height: 96px;
-    }
+    .logo-floating { top: 36px; width: 108px; height: 86px; }
     :global(body[data-scrolled='true']) .logo-floating {
-      top: 6px;
-      width: 48px;
-      height: 38px;
+      top: 6px; width: 44px; height: 35px;
     }
   }
 
-  /* Estado menu aberto — escondem temporariamente atrás do overlay */
-  :global(body[data-menu='open']) .brand-wordmark-fixed,
+  /* Esconde brand e logo quando menu aberto */
+  :global(body[data-menu='open']) .brand-wordmark,
   :global(body[data-menu='open']) .logo-floating {
     opacity: 0;
     pointer-events: none;
     transition: opacity 200ms;
   }
 
-  /* ─── Hamburger flutuante ──────────────────────────────────── */
-  .menu-floating {
+  /* ─── Hamburger (só ícone, sem palavra) ───────────────────── */
+  .menu-toggle {
     position: fixed;
     top: 16px;
     right: 20px;
     z-index: 70;
-    display: inline-flex;
-    align-items: center;
-    gap: 10px;
-    padding: 10px 16px;
-    border: 1px solid var(--border);
+    width: 48px;
+    height: 48px;
+    border: 1px solid var(--border-strong);
     border-radius: var(--radius-full);
-    background: color-mix(in srgb, var(--bg) 75%, transparent);
+    background: rgba(15, 15, 18, 0.85);
     backdrop-filter: blur(14px);
     -webkit-backdrop-filter: blur(14px);
     color: var(--text);
     cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
     transition:
-      padding 300ms ease-out,
-      background 200ms,
       border-color 200ms,
-      transform 200ms;
+      transform 200ms,
+      background 200ms,
+      box-shadow 200ms;
   }
-  .menu-floating:hover {
-    border-color: var(--border-strong);
+  .menu-toggle:hover {
+    border-color: var(--accent);
     transform: translateY(-1px);
+    box-shadow: 0 6px 20px rgba(217, 119, 87, 0.25);
+  }
+  .menu-toggle:focus-visible {
+    outline: none;
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px var(--accent-soft);
+  }
+  @media (max-width: 768px) {
+    .menu-toggle { top: 12px; right: 14px; width: 44px; height: 44px; }
   }
 
-  .menu-icon {
+  .bars {
     display: inline-flex;
     flex-direction: column;
     gap: 4px;
   }
-  .menu-icon span {
+  .bars span {
     display: block;
-    width: 16px;
+    width: 18px;
     height: 1.5px;
     background: var(--text);
-    transition: width 300ms;
+    border-radius: 2px;
+    transition: transform 300ms, opacity 300ms;
   }
 
-  .menu-label {
-    font-family: var(--font-mono);
-    font-size: 12px;
-    letter-spacing: 1px;
-    text-transform: lowercase;
-    font-weight: 500;
-  }
-
-  /* Hamburger no estado compacto cresce um pouco */
-  :global(body[data-scrolled='true']) .menu-floating {
-    padding: 12px 18px;
-  }
-  :global(body[data-scrolled='true']) .menu-icon span {
-    width: 18px;
-  }
-
-  /* Menu aberto = esconder hamburger */
-  :global(body[data-menu='open']) .menu-floating {
+  :global(body[data-menu='open']) .menu-toggle {
     opacity: 0;
     pointer-events: none;
     transition: opacity 200ms;
   }
 
-  @media (max-width: 768px) {
-    .menu-floating {
-      top: 12px;
-      right: 14px;
-      padding: 8px 14px;
-    }
-  }
-
-  /* ─── Menu overlay (clip-path circular) ────────────────────── */
+  /* ─── Overlay com clip-path circular ──────────────────────── */
   .menu-overlay {
     position: fixed;
     inset: 0;
     z-index: 80;
     background: var(--bg);
     overflow-y: auto;
-    clip-path: circle(0% at calc(100% - 48px) 36px);
+    clip-path: circle(0% at calc(100% - 40px) 40px);
     transition: clip-path 600ms cubic-bezier(0.65, 0, 0.35, 1);
   }
-  .menu-overlay[hidden] {
-    display: none;
-  }
+  .menu-overlay[hidden] { display: none; }
   .menu-overlay.is-visible {
-    clip-path: circle(150% at calc(100% - 48px) 36px);
-  }
-  .menu-overlay::before {
-    content: '';
-    position: fixed;
-    inset: 0;
-    background-image:
-      linear-gradient(rgba(255, 255, 255, 0.025) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
-    background-size: 48px 48px;
-    pointer-events: none;
-    z-index: 0;
+    clip-path: circle(150% at calc(100% - 40px) 40px);
   }
   .menu-overlay::after {
     content: '';
     position: fixed;
-    top: -40%;
+    top: -30%;
     right: -10%;
-    width: 90vw;
-    height: 90vh;
-    background: radial-gradient(ellipse, var(--claude-glow), transparent 60%);
-    opacity: 0.4;
+    width: 80vw;
+    height: 80vh;
+    background: radial-gradient(ellipse, var(--accent-glow), transparent 60%);
+    opacity: 0.35;
     pointer-events: none;
     z-index: 0;
   }
 
   .menu-close {
     position: absolute;
-    top: 18px;
-    right: 22px;
-    width: 56px;
-    height: 56px;
+    top: 16px;
+    right: 20px;
+    width: 48px;
+    height: 48px;
     border-radius: var(--radius-full);
     border: 1px solid var(--border);
     background: var(--bg-card);
     color: var(--text);
-    font-size: 28px;
+    font-size: 26px;
+    line-height: 1;
     cursor: pointer;
     z-index: 2;
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: border-color 200ms, transform 200ms;
+    padding: 0;
+    transition: border-color 200ms, transform 300ms;
   }
   .menu-close:hover {
     border-color: var(--text);
     transform: rotate(90deg);
+  }
+  @media (max-width: 768px) {
+    .menu-close { top: 12px; right: 14px; width: 44px; height: 44px; font-size: 24px; }
   }
 
   .menu-nav {
@@ -344,26 +299,31 @@ import { navigation, whatsappLink, site } from '../config/site';
     flex-direction: column;
     justify-content: center;
   }
+  @media (max-width: 768px) {
+    .menu-nav { padding: 96px 24px 40px; }
+  }
+
   .menu-nav ul {
     list-style: none;
     display: flex;
     flex-direction: column;
-    gap: 6px;
+    gap: 4px;
   }
   .menu-nav ul a {
     display: block;
-    padding: 6px 0;
+    padding: 8px 0;
     font-family: var(--font-display);
     font-weight: 800;
     font-style: italic;
     font-size: clamp(38px, 6vw, 64px);
-    line-height: 1;
-    letter-spacing: -0.025em;
+    line-height: 1.05;
+    letter-spacing: -0.03em;
     color: var(--text);
-    transition: color 200ms;
+    transition: color 200ms, transform 200ms;
   }
   .menu-nav ul a:hover {
-    color: var(--claude);
+    color: var(--accent);
+    transform: translateX(4px);
   }
 
   .menu-footer {
@@ -371,13 +331,24 @@ import { navigation, whatsappLink, site } from '../config/site';
     padding-top: 32px;
     border-top: 1px solid var(--border);
   }
-  .menu-cta {
-    margin-top: 14px;
+  .menu-eyebrow {
+    display: block;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--text-dim);
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    margin-bottom: 16px;
   }
+  .menu-ctas {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .menu-cta { padding: 14px 22px; }
 </style>
 
 <script>
-  // Scroll state (compacto / expandido)
   function updateScrollState() {
     if (window.scrollY > 40) {
       document.body.dataset.scrolled = 'true';
@@ -388,18 +359,17 @@ import { navigation, whatsappLink, site } from '../config/site';
   window.addEventListener('scroll', updateScrollState, { passive: true });
   updateScrollState();
 
-  // Menu open/close com clip-path circular
-  const toggle = document.querySelector('[data-menu-toggle]');
-  const close = document.querySelector('[data-menu-close]');
-  const overlay = document.querySelector('[data-menu-overlay]');
+  const toggle = document.querySelector<HTMLButtonElement>('[data-menu-toggle]');
+  const close = document.querySelector<HTMLButtonElement>('[data-menu-close]');
+  const overlay = document.querySelector<HTMLElement>('[data-menu-overlay]');
 
   function openMenu() {
     if (!overlay) return;
     document.body.dataset.menu = 'open';
     document.body.style.overflow = 'hidden';
     overlay.removeAttribute('hidden');
-    // Force reflow pra clip-path animar
-    void (overlay as HTMLElement).offsetWidth;
+    toggle?.setAttribute('aria-expanded', 'true');
+    void overlay.offsetWidth;
     requestAnimationFrame(() => {
       requestAnimationFrame(() => overlay.classList.add('is-visible'));
     });
@@ -410,20 +380,17 @@ import { navigation, whatsappLink, site } from '../config/site';
     delete document.body.dataset.menu;
     document.body.style.overflow = '';
     overlay.classList.remove('is-visible');
+    toggle?.setAttribute('aria-expanded', 'false');
     setTimeout(() => overlay.setAttribute('hidden', ''), 600);
   }
 
   toggle?.addEventListener('click', openMenu);
   close?.addEventListener('click', closeMenu);
 
-  // Fechar com ESC
   document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && document.body.dataset.menu === 'open') {
-      closeMenu();
-    }
+    if (e.key === 'Escape' && document.body.dataset.menu === 'open') closeMenu();
   });
 
-  // Fechar ao clicar em link
   overlay?.querySelectorAll('a').forEach((link) => {
     link.addEventListener('click', closeMenu);
   });

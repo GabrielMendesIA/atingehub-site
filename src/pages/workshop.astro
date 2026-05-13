@@ -1,194 +1,151 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Hero from '../components/Hero.astro';
-import WhatsAppCTA from '../components/WhatsAppCTA.astro';
-import { site, whatsappLink } from '../config/site';
+import FAQ from '../components/FAQ.astro';
+import WorkshopApplicationForm from '../components/WorkshopApplicationForm.astro';
 
-const pageJsonLd = {
-  '@context': 'https://schema.org',
-  '@type': 'Event',
-  name: `Workshop AtingeHUB — IA pro seu varejo em 3h`,
-  description:
-    'Workshop presencial de 3 horas em Sorocaba para 8-15 lojistas. Você sai com agente de IA rodando no seu WhatsApp e vault de conhecimento da sua operação montado.',
-  eventStatus: 'https://schema.org/EventScheduled',
-  eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
-  location: {
-    '@type': 'Place',
-    name: 'Sorocaba (local a confirmar)',
-    address: {
-      '@type': 'PostalAddress',
-      addressLocality: 'Sorocaba',
-      addressRegion: 'SP',
-      addressCountry: 'BR',
-    },
-  },
-  organizer: {
-    '@type': 'Organization',
-    name: site.name,
-    url: site.url,
-  },
-  url: `${site.url}/workshop`,
-};
-
-const paraQuem = [
+const howItWorks = [
   {
-    cabe: true,
-    texto: 'Tem loja, fábrica ou serviço rodando há 5+ anos. Operação em pé, equipe pequena, dor concreta.',
+    num: '01',
+    title: 'Compra no site',
+    description:
+      'Pix ou cartão em até 12x. Confirmação automática em segundos. Você nem precisa esperar pra começar.',
   },
   {
-    cabe: true,
-    texto: 'Está em Sorocaba, Votorantim, Itu, Salto, Boituva, Mairinque — ou disposto a vir até aqui no dia.',
+    num: '02',
+    title: 'Acesso ao GitHub na hora',
+    description:
+      'Convite pro repositório AtingeHUB Stack — 50+ skills prontas pra Claude Code. As skills são suas pra sempre, mesmo se nunca assistir o workshop.',
   },
   {
-    cabe: true,
-    texto: 'Quer instalar IA dentro da sua operação real. Não quer assistir palestra teórica de IA.',
+    num: '03',
+    title: 'Workshop · gravado ou ao vivo',
+    description:
+      'Assiste a gravação na hora ou marca a próxima turma ao vivo. Você escolhe — e pode rever quantas vezes quiser.',
   },
   {
-    cabe: false,
-    texto: 'Está começando agora no varejo. O workshop pressupõe operação rodando.',
-  },
-  {
-    cabe: false,
-    texto: 'Procura curso pra revender certificado ou virar consultor de IA. Não é o caso aqui.',
-  },
-  {
-    cabe: false,
-    texto: 'Vai mandar funcionário pra tomar nota. Workshop é pra quem decide.',
+    num: '04',
+    title: 'Instalação básica sozinho',
+    description:
+      'Documentação no próprio GitHub. Setup mínimo em 30 minutos. Travou? WhatsApp direto comigo no horário comercial.',
   },
 ];
 
 const programa = [
+  { time: '00:00–00:15', block: 'Boas-vindas e setup', body: 'Como o repositório está organizado, o que é Claude Code, qual stack você precisa ter rodando antes de começar.' },
+  { time: '00:15–00:45', block: 'Os 4 pilares (Atendimento · Campanhas · Decisão · Operação)', body: 'O que cada um resolve no seu varejo, como as skills se conectam, exemplos de loja real.' },
+  { time: '00:45–01:15', block: 'Demo ao vivo · agente Voz no Zap', body: 'Instalação do agente de atendimento no WhatsApp de teste. Treino com cardápio/serviço real. Você vê linha por linha do que precisa fazer.' },
+  { time: '01:15–01:45', block: 'Demo ao vivo · Vault de conhecimento', body: 'Montagem ao vivo do vault Obsidian + Claude + NotebookLM. Como indexar documento da sua operação e consultar em linguagem natural.' },
+  { time: '01:45–02:00', block: 'Q&A · sua dor concreta', body: 'Sessão aberta. Você manda a dor, eu mostro qual das 50+ skills resolve. Sem palestrinha de palco — direto na ferramenta.' },
+];
+
+const youGet = [
   {
-    hora: '00:00–00:20',
-    bloco: 'Chegada e abertura',
-    body: 'Café, apresentação rápida em roda, alinhamento do que cada um quer levar embora.',
+    title: 'Acesso vitalício ao GitHub AtingeHUB Stack',
+    body: '50+ skills prontas pra Claude Code · agentes, automações, workflows n8n, prompts. Updates do repositório incluídos enquanto a stack rodar.',
+    accent: true,
   },
   {
-    hora: '00:20–01:00',
-    bloco: 'O que muda em 2026-2028',
-    body: 'A janela aberta no varejo brasileiro com IA. 4 pilares (Atendimento · Campanhas · Decisão · Operação) e como eles ligam nos 8 produtos AtingeHUB. Sem slide cansativo — exemplos de loja.',
+    title: 'Workshop em vídeo · acesso vitalício',
+    body: 'Gravação em alta qualidade pra rever quantas vezes precisar. Cada bloco capítulo separado, fácil de buscar.',
   },
   {
-    hora: '01:00–01:50',
-    bloco: 'Agente Voz · ao vivo no seu WhatsApp',
-    body: 'Cada lojista sai do bloco com um agente de IA V0 instalado num WhatsApp de teste, treinado com o cardápio/serviço da sua operação. Não é demo de palco. É na sua tela.',
+    title: '1 sessão ao vivo (opcional)',
+    body: 'Se escolher o plano com ao vivo, entra na próxima turma agendada. Q&A aberto, dúvida direta comigo.',
   },
   {
-    hora: '01:50–02:00',
-    bloco: 'Pausa',
-    body: 'Café, água, conversa cruzada entre lojistas. Aqui costuma sair a maior parte das ideias.',
+    title: 'Documentação de instalação básica',
+    body: 'Passo a passo escrito pra rodar a stack mínima em 30 minutos. Sem precisar adivinhar comando ou interpretar erro.',
   },
   {
-    hora: '02:00–02:40',
-    bloco: 'Vault Cérebro · seu conhecimento organizado',
-    body: 'Montagem ao vivo de um vault Obsidian + Claude + NotebookLM com 3-5 documentos da sua operação. Quando termina, você consulta sua loja como se conversasse com ela.',
+    title: 'WhatsApp direto pra dúvida pontual',
+    body: 'Travou na instalação? Manda print no Zap. Resposta em horário comercial — sem ticket, sem fila.',
   },
   {
-    hora: '02:40–03:00',
-    bloco: 'Perguntas individuais e próximos passos',
-    body: 'Sessão 1-pra-1 rápida com cada lojista. Mapa pessoal: quais dos 8 produtos fariam sentido começar primeiro. Sem proposta empurrada.',
+    title: 'Mapa pessoal 8 produtos × suas dores',
+    body: 'Curtinho. Quais das skills cruzam com o que mais aperta na sua operação hoje, em ordem de prioridade.',
   },
 ];
 
-const levaEmbora = [
+const faq = [
   {
-    titulo: 'Agente Voz V0 rodando no seu WhatsApp de teste',
-    body: 'Treinado com o conteúdo real da sua loja — cardápio, catálogo, serviços, horários. Continua funcionando depois do workshop.',
+    q: 'É ao vivo ou gravado?',
+    a: 'Você escolhe. <strong>Gravado</strong> tem acesso imediato após o pagamento. <strong>Ao vivo</strong> entra na próxima turma agendada (datas confirmadas por email). Tem plano com os dois — gravação pra rever sempre + 1 sessão ao vivo pra Q&A direto.',
   },
   {
-    titulo: 'Vault de conhecimento da sua operação',
-    body: 'Obsidian + Claude + NotebookLM montados, com 3-5 documentos seus já indexados. Você consulta o conhecimento da loja em linguagem natural.',
+    q: 'Como funciona o acesso ao GitHub?',
+    a: 'Após a confirmação do pagamento, eu adiciono seu usuário GitHub como colaborador do repositório <strong>AtingeHUB Stack</strong>. Você recebe o convite por email em até 1h em horário comercial. O acesso é vitalício e inclui updates futuros enquanto a stack continuar rodando.',
   },
   {
-    titulo: 'Mapa pessoal · 8 produtos × suas 3 dores',
-    body: 'Quais dos 8 produtos AtingeHUB cruzam com as 3 dores mais visíveis da sua operação hoje. Em ordem de prioridade.',
+    q: 'Preciso saber programar?',
+    a: 'Não pra usar as skills básicas. A instalação mínima é <strong>30 minutos de comandos copia-e-cola</strong> documentados no próprio repositório. Pra customização avançada, ajuda saber JavaScript/Python — mas não é pré-requisito.',
   },
   {
-    titulo: 'Próximos passos sem proposta empurrada',
-    body: 'Se a AtingeHUB faz sentido, alinha a continuidade. Se não faz, você sai com os entregáveis e segue sozinho — é seu.',
+    q: 'E se eu travar na instalação?',
+    a: 'Manda print no WhatsApp em horário comercial. Resposta em até 4h em dia útil. Sem ticket, sem fila, sem pacote de suporte caro pra contratar. <strong>Faz parte do acesso.</strong>',
+  },
+  {
+    q: 'Posso assistir a gravação várias vezes?',
+    a: 'Sim, acesso vitalício. Cada bloco é capítulo separado, com timestamps no descritivo — fácil pular pro pedaço que importa quando precisar refrescar.',
+  },
+  {
+    q: 'Quem tem acesso aos updates do repositório?',
+    a: 'Todo mundo que comprou o workshop. Enquanto eu mantiver a AtingeHUB Stack rodando — e ela está em desenvolvimento ativo — você recebe as novas skills no mesmo repositório, sem custo adicional.',
+  },
+  {
+    q: 'Tem reembolso?',
+    a: '7 dias após a compra. Se você acessou o GitHub e não viu valor, devolvo 100%. Depois disso, sem reembolso — porque o acesso ao repositório é o ativo principal e ele já é seu.',
   },
 ];
-
-const whatsappWorkshop = whatsappLink(
-  'Oi Gabriel, quero entrar na lista de pré-inscritos do Workshop AtingeHUB. Trabalho com [setor], minha loja é em [bairro/cidade].'
-);
 ---
 
 <BaseLayout
-  title="Workshop presencial — IA pro seu varejo em 3h, em Sorocaba"
-  description="3 horas, uma sala, 8 a 15 lojistas. Você sai com agente de IA rodando no seu WhatsApp e vault de conhecimento da sua operação montado. Em Sorocaba."
-  jsonLd={pageJsonLd}
+  title="Workshop"
+  description="Workshop online — gravado ou ao vivo. Compra inclui acesso vitalício ao GitHub com 50+ skills AtingeHUB Stack. Você instala sozinho com documentação."
 >
   <Hero
-    eyebrow="Workshop presencial em Sorocaba"
-    title="3 horas. <em>Uma sala.</em><br />Você sai com IA rodando."
-    subtitle="Não é palestra. É <strong>oficina presencial</strong> pra 8 a 15 lojistas de Sorocaba e região. Você instala o que precisa na sua loja durante o encontro — agente no WhatsApp, vault da operação. Sai da sala com algo funcionando."
-    withLogoMark={true}
-    primaryCta={{
-      label: '$ pré-inscrição via WhatsApp',
-      href: whatsappWorkshop,
-      external: true,
-    }}
-    secondaryCta={{ label: 'ver os 8 produtos →', href: '/portfolio' }}
+    eyebrow="Workshop online · 50+ skills no GitHub"
+    titleStart="IA pro seu varejo, em"
+    rotatingWords={['2 horas', 'uma noite', 'um sábado']}
+    subtitle="Compra agora, recebe o <strong>repositório GitHub na hora</strong> com as 50+ skills da AtingeHUB Stack, e escolhe: <strong>gravado pra ver agora</strong> ou <strong>ao vivo na próxima turma</strong>."
+    primaryCta={{ label: 'Comprar acesso', href: '#aplicar' }}
+    secondaryCta={{ label: 'Ver o que tá incluso', href: '#tudo-incluso' }}
   />
 
-  <section class="row para-quem">
+  <section id="funciona" class="section">
     <div class="container-page">
-      <div class="row-header">
-        <span class="num">01</span>
-        <h2>Pra quem é · e pra quem não é</h2>
+      <div class="section-head">
+        <span class="eyebrow">Como funciona</span>
+        <h2>Da compra à IA rodando · 4 passos</h2>
       </div>
-      <p class="sub">Antes da pré-inscrição · 3 sim, 3 não</p>
-      <p class="lead">
-        O workshop é uma <strong>oficina aplicada</strong>. Pressupõe operação rodando e decisão do dono. Não é evento de inspiração — é dia de instalar.
-      </p>
-
-      <div class="quem-grid">
-        <div class="quem-coluna">
-          <p class="quem-head sim"><span>●</span> Faz sentido se você</p>
-          <ul class="quem-lista">
-            {paraQuem.filter((p) => p.cabe).map((p) => (
-              <li class="quem-item sim">
-                <span class="quem-check">✓</span>
-                {p.texto}
-              </li>
-            ))}
-          </ul>
-        </div>
-
-        <div class="quem-coluna">
-          <p class="quem-head nao"><span>●</span> Não faz sentido se você</p>
-          <ul class="quem-lista">
-            {paraQuem.filter((p) => !p.cabe).map((p) => (
-              <li class="quem-item nao">
-                <span class="quem-check">×</span>
-                {p.texto}
-              </li>
-            ))}
-          </ul>
-        </div>
+      <div class="how-grid">
+        {howItWorks.map((s) => (
+          <article class="how-card">
+            <span class="how-num">{s.num}</span>
+            <h3>{s.title}</h3>
+            <p>{s.description}</p>
+          </article>
+        ))}
       </div>
     </div>
   </section>
 
-  <section class="row programa-row">
+  <section class="section-tight roadmap-bg">
     <div class="container-page">
-      <div class="row-header">
-        <span class="num">02</span>
-        <h2>Programa de 3 horas · timeline</h2>
+      <div class="section-head">
+        <span class="eyebrow">Programa do workshop</span>
+        <h2>5 blocos · 2 horas direto na ferramenta</h2>
+        <p class="lead">
+          0% slide motivacional. 100% Claude Code, n8n, Obsidian e Zap rodando na tela.
+        </p>
       </div>
-      <p class="sub">6 blocos · 0% palestra de slide · 100% loja na tela</p>
-      <p class="lead">
-        Cada bloco entrega um pedaço funcionando — não um conceito pra estudar depois. Você sai instalado.
-      </p>
-
-      <ol class="programa-lista">
-        {programa.map((p) => (
-          <li class="programa-item">
-            <span class="programa-hora">{p.hora}</span>
-            <div class="programa-texto">
-              <h3>{p.bloco}</h3>
-              <p>{p.body}</p>
+      <ol class="roadmap-list">
+        {programa.map((r) => (
+          <li class="rm-item">
+            <span class="rm-time">{r.time}</span>
+            <div>
+              <h3>{r.block}</h3>
+              <p>{r.body}</p>
             </div>
           </li>
         ))}
@@ -196,295 +153,362 @@ const whatsappWorkshop = whatsappLink(
     </div>
   </section>
 
-  <section class="row leva-row">
+  <section id="tudo-incluso" class="section">
     <div class="container-page">
-      <div class="row-header">
-        <span class="num">03</span>
-        <h2>O que você leva embora · 4 entregáveis</h2>
+      <div class="section-head">
+        <span class="eyebrow">O que tá incluso</span>
+        <h2>O principal é o repositório · o resto é apoio</h2>
+        <p class="lead">
+          As 50+ skills no GitHub são <strong>o ativo</strong>. O workshop existe pra você ver elas funcionando e ganhar segurança pra instalar sozinho.
+        </p>
       </div>
-      <p class="sub">Coisas funcionando · não certificado de conclusão</p>
-      <p class="lead">
-        No fim das 3h, tudo isso fica com você. Continua rodando depois do workshop, independente de você seguir com a AtingeHUB ou não.
-      </p>
-
-      <div class="leva-grid">
-        {levaEmbora.map((l) => (
-          <article class="leva-card glow-card">
-            <h3>{l.titulo}</h3>
-            <p>{l.body}</p>
+      <div class="get-grid">
+        {youGet.map((it) => (
+          <article class={`get-card ${it.accent ? 'get-accent' : ''}`}>
+            {it.accent && <span class="get-badge">★ destaque</span>}
+            <h3>{it.title}</h3>
+            <p>{it.body}</p>
           </article>
         ))}
       </div>
     </div>
   </section>
 
-  <section class="row logistica-row">
+  <section class="section-tight">
     <div class="container-page">
-      <div class="row-header">
-        <span class="num">04</span>
-        <h2>Logística · data, local, investimento</h2>
-      </div>
-      <p class="sub">Primeira turma · em formação</p>
+      <div class="pricing">
+        <span class="eyebrow">Investimento</span>
+        <h2>3 opções · todas com GitHub vitalício</h2>
+        <p class="pricing-product">Workshop online + 50+ skills da AtingeHUB Stack · pagamento Pix ou cartão</p>
 
-      <div class="logistica-grid">
-        <div class="logistica-item">
-          <p class="logistica-label">Data</p>
-          <p class="logistica-valor">A confirmar</p>
-          <p class="logistica-nota">Pré-inscritos recebem a data fechada com antecedência.</p>
+        <div class="plans">
+          <article class="plan">
+            <h3 class="plan-name">Gravado</h3>
+            <p class="plan-sub">Acesso imediato após pagamento</p>
+            <p class="plan-price"><span class="plan-amount">R$ 297</span><span class="plan-period">à vista</span></p>
+            <ul class="plan-list">
+              <li>Acesso vitalício ao GitHub</li>
+              <li>Gravação completa do workshop</li>
+              <li>Documentação de instalação</li>
+              <li>WhatsApp pra dúvida pontual</li>
+            </ul>
+          </article>
+
+          <article class="plan plan-featured">
+            <span class="plan-tag">mais escolhido</span>
+            <h3 class="plan-name">Gravado + ao vivo</h3>
+            <p class="plan-sub">Acesso imediato + 1 sessão ao vivo</p>
+            <p class="plan-price"><span class="plan-amount">R$ 597</span><span class="plan-period">à vista</span></p>
+            <ul class="plan-list">
+              <li>Tudo do plano Gravado</li>
+              <li><strong>+ 1 sessão ao vivo</strong> com Q&A direto</li>
+              <li>Acesso à comunidade interna</li>
+              <li>Bônus: 30 min 1-pra-1 comigo</li>
+            </ul>
+          </article>
+
+          <article class="plan">
+            <h3 class="plan-name">Ao vivo</h3>
+            <p class="plan-sub">Próxima turma confirmada por email</p>
+            <p class="plan-price"><span class="plan-amount">R$ 497</span><span class="plan-period">à vista</span></p>
+            <ul class="plan-list">
+              <li>Acesso vitalício ao GitHub</li>
+              <li>1 sessão ao vivo + gravação dela</li>
+              <li>Q&A direto na sua dor</li>
+              <li>WhatsApp pra dúvida pontual</li>
+            </ul>
+          </article>
         </div>
-        <div class="logistica-item">
-          <p class="logistica-label">Local</p>
-          <p class="logistica-valor">Sorocaba/SP</p>
-          <p class="logistica-nota">Endereço definido conforme tamanho confirmado da turma. Centro ou Zona Norte.</p>
-        </div>
-        <div class="logistica-item">
-          <p class="logistica-label">Investimento</p>
-          <p class="logistica-valor">A definir</p>
-          <p class="logistica-nota">Comunicado individualmente aos pré-inscritos. Inclui café, material e instalação ao vivo.</p>
-        </div>
-        <div class="logistica-item">
-          <p class="logistica-label">Vagas</p>
-          <p class="logistica-valor">Máx. 15</p>
-          <p class="logistica-nota">Limite pra cada lojista ter atendimento individual e instalação real.</p>
-        </div>
+
+        <p class="pricing-cta-line">
+          Pagamento Pix tem 5% de desconto. Cartão parcela em até 12x. Reembolso 100% em 7 dias.
+        </p>
+        <a href="#aplicar" class="btn btn-primary pricing-cta">Escolher plano e comprar</a>
       </div>
     </div>
   </section>
 
-  <section class="row limite-row">
-    <div class="container-page limite-inner">
-      <div class="row-header">
-        <span class="num">05</span>
-        <h2>Por que limitado a 15</h2>
+  <section class="section-tight faq-bg">
+    <div class="container-page">
+      <div class="section-head">
+        <span class="eyebrow">Perguntas frequentes</span>
+        <h2>Tira a dúvida antes de comprar</h2>
       </div>
-      <p class="sub">Restrição estratégica · não escassez de marketing</p>
-      <div class="limite-prose">
-        <p>Com 15 lojistas dá pra <strong>atender cada um individualmente</strong> entre 02:40 e 03:00. Dá pra instalar agente real na operação de cada um, não simulação. Dá pra entender, em 3 horas, qual é o setor, o tamanho e a dor de cada negócio que está na sala.</p>
-        <p>Acima de 15 vira palestra. <strong>Vira o que o workshop não quer ser.</strong></p>
-        <p>Por isso a pré-inscrição é pelo WhatsApp comigo — em vez de formulário automático. Quero saber quem está vindo antes de fechar a turma.</p>
-      </div>
-
-      <div class="limite-cta">
-        <a href={whatsappWorkshop} target="_blank" rel="noopener" class="btn btn-primary">
-          $ pré-inscrição via WhatsApp
-        </a>
-      </div>
+      <FAQ items={faq} />
     </div>
   </section>
 
-  <WhatsAppCTA
-    title="Bate como faz sentido <em>pra você?</em>"
-    body="Manda mensagem com o setor da sua loja e o bairro/cidade. Eu retorno em algumas horas com data prevista da próxima turma — e te conto se já tem outro lojista do seu setor na lista."
-    message="Oi Gabriel, quero entrar na lista de pré-inscritos do Workshop AtingeHUB. Trabalho com [setor], minha loja é em [bairro/cidade]."
-    cta="$ entrar na lista →"
-  />
+  <div id="aplicar">
+    <WorkshopApplicationForm />
+  </div>
 </BaseLayout>
 
 <style>
-  .para-quem .lead {
-    margin-bottom: 40px;
-  }
-
-  .quem-grid {
+  .how-grid {
     display: grid;
-    gap: 32px;
-  }
-  @media (min-width: 800px) {
-    .quem-grid {
-      grid-template-columns: 1fr 1fr;
-      gap: 48px;
-    }
-  }
-
-  .quem-head {
-    font-family: var(--font-mono);
-    font-size: 11px;
-    letter-spacing: 1.5px;
-    text-transform: uppercase;
-    margin-bottom: 18px;
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-  }
-  .quem-head.sim {
-    color: var(--cadencia);
-  }
-  .quem-head.nao {
-    color: var(--text-dim);
-  }
-  .quem-head span {
-    font-size: 10px;
-  }
-
-  .quem-lista {
-    list-style: none;
-    display: flex;
-    flex-direction: column;
-    gap: 14px;
-  }
-  .quem-item {
-    display: grid;
-    grid-template-columns: 24px 1fr;
-    gap: 12px;
-    font-size: 15px;
-    line-height: 1.65;
-    color: var(--text-muted);
-    padding: 14px 16px;
-    background: var(--bg-card);
-    border: 1px solid var(--border);
-    border-radius: var(--radius-sm);
-  }
-  .quem-item.sim .quem-check {
-    color: var(--cadencia);
-    font-weight: 700;
-  }
-  .quem-item.nao .quem-check {
-    color: var(--text-dim);
-    font-weight: 700;
-  }
-  .quem-check {
-    font-family: var(--font-mono);
-  }
-
-  .programa-row .lead {
-    margin-bottom: 40px;
-  }
-
-  .programa-lista {
-    list-style: none;
-    counter-reset: programa;
-    display: flex;
-    flex-direction: column;
-    gap: 18px;
-  }
-  .programa-item {
-    display: grid;
-    gap: 14px;
-    padding: 22px 24px;
-    background: var(--bg-card);
-    border: 1px solid var(--border);
-    transition: border-color 0.25s;
-  }
-  @media (min-width: 700px) {
-    .programa-item {
-      grid-template-columns: 160px 1fr;
-      gap: 28px;
-    }
-  }
-  .programa-item:hover {
-    border-color: var(--border-strong);
-  }
-  .programa-hora {
-    font-family: var(--font-mono);
-    font-size: 13px;
-    letter-spacing: 0.5px;
-    color: var(--claude);
-    align-self: start;
-    padding-top: 2px;
-  }
-  .programa-texto h3 {
-    font-size: 20px;
-    margin-bottom: 8px;
-  }
-  .programa-texto p {
-    font-size: 14.5px;
-    line-height: 1.7;
-    color: var(--text-muted);
-  }
-
-  .leva-row .lead {
-    margin-bottom: 40px;
-  }
-
-  .leva-grid {
-    display: grid;
-    gap: 18px;
+    gap: 16px;
     grid-template-columns: 1fr;
+    max-width: 1000px;
+    margin: 0 auto;
   }
-  @media (min-width: 700px) {
-    .leva-grid {
-      grid-template-columns: repeat(2, 1fr);
-    }
-  }
-
-  .leva-card {
-    padding: 26px 24px;
-  }
-  .leva-card h3 {
-    font-size: 19px;
-    line-height: 1.25;
-    margin-bottom: 12px;
-  }
-  .leva-card p {
-    font-size: 14.5px;
-    line-height: 1.7;
-    color: var(--text-muted);
-  }
-
-  .logistica-grid {
-    margin-top: 32px;
-    display: grid;
-    gap: 18px;
-    grid-template-columns: 1fr;
-  }
-  @media (min-width: 700px) {
-    .logistica-grid {
-      grid-template-columns: repeat(2, 1fr);
-    }
+  @media (min-width: 600px) {
+    .how-grid { grid-template-columns: repeat(2, 1fr); }
   }
   @media (min-width: 1000px) {
-    .logistica-grid {
-      grid-template-columns: repeat(4, 1fr);
-    }
+    .how-grid { grid-template-columns: repeat(4, 1fr); }
   }
-
-  .logistica-item {
+  .how-card {
     background: var(--bg-card);
     border: 1px solid var(--border);
-    padding: 24px 22px;
+    border-radius: var(--radius-lg);
+    padding: 28px 24px;
   }
-  .logistica-label {
+  .how-card .how-num {
     font-family: var(--font-mono);
-    font-size: 11px;
+    font-size: 12px;
+    color: var(--accent);
     letter-spacing: 1.5px;
-    text-transform: uppercase;
-    color: var(--text-dim);
-    margin-bottom: 10px;
-  }
-  .logistica-valor {
-    font-family: var(--font-display);
-    font-weight: 800;
-    font-size: 28px;
-    color: var(--text);
-    line-height: 1.1;
-    letter-spacing: -0.02em;
     margin-bottom: 14px;
+    display: inline-block;
   }
-  .logistica-nota {
-    font-size: 13px;
+  .how-card h3 {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: var(--text);
+  }
+  .how-card p {
+    font-size: 14px;
     line-height: 1.6;
     color: var(--text-muted);
   }
 
-  .limite-prose {
-    margin-top: 20px;
-    max-width: 760px;
+  .roadmap-bg {
+    background: var(--bg-soft);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
   }
-  .limite-prose p {
-    margin-top: 18px;
+  .roadmap-list {
+    list-style: none;
+    max-width: 820px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .rm-item {
+    display: grid;
+    gap: 12px;
+    padding: 20px 22px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+  }
+  @media (min-width: 600px) {
+    .rm-item { grid-template-columns: 140px 1fr; gap: 24px; }
+  }
+  .rm-time {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    color: var(--accent);
+    letter-spacing: 0.5px;
+    padding-top: 2px;
+  }
+  .rm-item h3 {
     font-size: 17px;
-    line-height: 1.75;
+    font-weight: 600;
+    margin-bottom: 6px;
+    color: var(--text);
+  }
+  .rm-item p {
+    font-size: 14px;
+    line-height: 1.6;
     color: var(--text-muted);
   }
-  .limite-prose p:first-child {
-    margin-top: 8px;
+
+  .get-grid {
+    display: grid;
+    gap: 14px;
+    grid-template-columns: 1fr;
+    max-width: 1080px;
+    margin: 0 auto;
   }
-  .limite-prose strong {
+  @media (min-width: 600px) {
+    .get-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (min-width: 1000px) {
+    .get-grid { grid-template-columns: repeat(3, 1fr); }
+  }
+  .get-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: 22px 22px;
+    position: relative;
+  }
+  .get-accent {
+    border-color: var(--accent);
+    background: linear-gradient(180deg, var(--accent-soft), var(--bg-card) 60%);
+  }
+  .get-badge {
+    display: inline-block;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 10px;
+  }
+  .get-card h3 {
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: var(--text);
+    font-family: var(--font-sans);
+    letter-spacing: -0.005em;
+  }
+  .get-card p {
+    font-size: 14px;
+    line-height: 1.6;
+    color: var(--text-muted);
+  }
+
+  /* ─── Pricing com 3 planos ──────────────────────────── */
+  .pricing {
+    max-width: 1080px;
+    margin: 0 auto;
+    text-align: center;
+  }
+  .pricing .eyebrow {
+    margin-bottom: 14px;
+    display: inline-block;
+  }
+  .pricing h2 {
+    margin-bottom: 8px;
+  }
+  .pricing-product {
+    font-size: 14px;
+    color: var(--text-muted);
+    margin-bottom: 40px;
+  }
+
+  .plans {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 16px;
+    margin-bottom: 32px;
+    text-align: left;
+  }
+  @media (min-width: 900px) {
+    .plans { grid-template-columns: repeat(3, 1fr); }
+  }
+  .plan {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 28px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    transition: border-color 0.2s, transform 0.2s;
+  }
+  .plan:hover {
+    border-color: var(--border-strong);
+    transform: translateY(-2px);
+  }
+  .plan-featured {
+    border-color: var(--accent);
+    background: linear-gradient(180deg, var(--accent-soft), var(--bg-card) 30%);
+    box-shadow: 0 12px 36px rgba(217, 119, 87, 0.18);
+  }
+  .plan-tag {
+    position: absolute;
+    top: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--accent);
+    color: white;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 4px 12px;
+    border-radius: var(--radius-full);
+    white-space: nowrap;
+  }
+  .plan-name {
+    font-family: var(--font-display);
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 4px;
+    letter-spacing: -0.02em;
+  }
+  .plan-sub {
+    font-size: 13px;
+    color: var(--text-muted);
+    margin-bottom: 20px;
+  }
+  .plan-price {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+    margin-bottom: 22px;
+    padding-bottom: 22px;
+    border-bottom: 1px solid var(--border);
+  }
+  .plan-amount {
+    font-family: var(--font-display);
+    font-size: 38px;
+    font-weight: 800;
+    color: var(--text);
+    letter-spacing: -0.03em;
+    line-height: 1;
+  }
+  .plan-period {
+    font-size: 13px;
+    color: var(--text-dim);
+  }
+  .plan-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    flex: 1;
+  }
+  .plan-list li {
+    padding-left: 22px;
+    position: relative;
+    font-size: 14px;
+    color: var(--text-muted);
+    line-height: 1.5;
+  }
+  .plan-list li::before {
+    content: '✓';
+    color: var(--accent);
+    position: absolute;
+    left: 0;
+    font-family: var(--font-mono);
+    font-weight: 700;
+  }
+  .plan-list li strong {
     color: var(--text);
     font-weight: 500;
   }
 
-  .limite-cta {
-    margin-top: 36px;
+  .pricing-cta-line {
+    font-size: 13px;
+    color: var(--text-dim);
+    margin-bottom: 20px;
+  }
+  .pricing-cta {
+    padding: 16px 32px;
+    justify-content: center;
+  }
+
+  .faq-bg {
+    background: var(--bg-soft);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
   }
 </style>

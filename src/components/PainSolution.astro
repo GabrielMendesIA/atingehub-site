@@ -1,0 +1,135 @@
+---
+interface Pair {
+  dor: string;
+  produto: string;
+  pilar: string;
+  body: string;
+  cor: string;
+}
+
+interface Props {
+  items: Pair[];
+}
+
+const { items } = Astro.props;
+---
+
+<div class="pairs">
+  {items.map((p, i) => (
+    <article class="pair" style={`--pair-color: ${p.cor}`}>
+      <div class="pair-num">{String(i + 1).padStart(2, '0')}</div>
+      <div class="pair-dor">
+        <p class="dor-quote">"{p.dor}"</p>
+      </div>
+      <div class="pair-arrow" aria-hidden="true">→</div>
+      <div class="pair-solucao">
+        <p class="solucao-tag">
+          <span class="solucao-dot"></span>
+          <span class="solucao-produto">{p.produto}</span>
+          <span class="solucao-pilar">· {p.pilar}</span>
+        </p>
+        <p class="solucao-body">{p.body}</p>
+      </div>
+    </article>
+  ))}
+</div>
+
+<style>
+  .pairs {
+    max-width: 1080px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+  .pair {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 8px;
+    padding: 32px 0;
+    border-top: 1px solid var(--border);
+    align-items: center;
+  }
+  .pair:last-child {
+    border-bottom: 1px solid var(--border);
+  }
+  @media (min-width: 820px) {
+    .pair {
+      grid-template-columns: 40px 1fr 40px 360px;
+      gap: 28px;
+      padding: 40px 8px;
+    }
+  }
+
+  .pair-num {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--text-dim);
+    letter-spacing: 1.5px;
+    grid-row: 1;
+  }
+  @media (max-width: 819px) {
+    .pair-num { margin-bottom: -4px; }
+  }
+
+  .pair-dor { grid-row: auto; }
+  .dor-quote {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-weight: 600;
+    font-size: clamp(20px, 2.6vw, 28px);
+    line-height: 1.25;
+    letter-spacing: -0.015em;
+    color: var(--text);
+  }
+
+  .pair-arrow {
+    display: none;
+    font-family: var(--font-mono);
+    font-size: 22px;
+    color: var(--pair-color);
+    text-align: center;
+    opacity: 0.7;
+  }
+  @media (min-width: 820px) {
+    .pair-arrow { display: block; }
+  }
+
+  .pair-solucao {
+    padding: 16px 0;
+  }
+  @media (min-width: 820px) {
+    .pair-solucao { padding: 0; }
+  }
+
+  .solucao-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .solucao-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--pair-color);
+    flex-shrink: 0;
+  }
+  .solucao-produto {
+    color: var(--pair-color);
+    font-weight: 600;
+  }
+  .solucao-pilar {
+    color: var(--text-dim);
+    font-weight: 400;
+  }
+  .solucao-body {
+    font-size: 14.5px;
+    line-height: 1.65;
+    color: var(--text-muted);
+  }
+</style>

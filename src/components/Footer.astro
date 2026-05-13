@@ -1,195 +1,124 @@
 ---
-import { site, whatsappLink } from '../config/site';
 import LogoMark from './LogoMark.astro';
-import Wordmark from './Wordmark.astro';
+import { site } from '../config/site';
 
 const year = new Date().getFullYear();
-
-const portfolio = [
-  { label: 'Vitrine', href: '/portfolio/vitrine', color: 'var(--vitrine)' },
-  { label: 'Cérebro', href: '/portfolio/cerebro', color: 'var(--cerebro)' },
-  { label: 'Bancada', href: '/portfolio/bancada', color: 'var(--bancada)' },
-  { label: 'Engrenagens', href: '/portfolio/engrenagens', color: 'var(--engrenagens)' },
-  { label: 'Cadência', href: '/portfolio/cadencia', color: 'var(--cadencia)' },
-  { label: 'Balcão', href: '/portfolio/balcao', color: 'var(--balcao)' },
-  { label: 'Voz', href: '/portfolio/voz', color: 'var(--voz)' },
-  { label: 'Bússola', href: '/portfolio/bussola', color: 'var(--bussola)' },
-];
-
-const empresa = [
-  { label: 'Sobre', href: '/sobre' },
-  { label: 'Manifesto', href: '/manifesto' },
-  { label: 'Por que agora', href: '/por-que-agora' },
-  { label: 'Workshop', href: '/workshop' },
-  { label: 'Contato', href: '/contato' },
-  { label: 'Privacidade', href: '/privacidade' },
-];
 ---
 
 <footer class="site-footer">
   <div class="container-page footer-grid">
-    <div class="footer-brand">
-      <a href="/" class="brand-row" aria-label="AtingeHUB — Home">
+    <div class="foot-brand">
+      <div class="foot-logo">
         <LogoMark size={28} />
-        <Wordmark size="md" />
-      </a>
-      <p class="footer-manifesto">{site.manifesto}</p>
-      <div class="footer-ctas">
-        <a href={whatsappLink()} target="_blank" rel="noopener" class="btn btn-primary">
-          $ conversar
-        </a>
-        <a href={site.social.instagram} target="_blank" rel="noopener" class="btn btn-ghost">
-          @{site.contact.instagram}
-        </a>
+        <span class="foot-name">Atinge<span class="foot-hub">HUB</span></span>
       </div>
+      <p class="foot-tagline">{site.tagline}</p>
+      <p class="foot-email">
+        <a href={`mailto:${site.contact.email}`}>{site.contact.email}</a>
+      </p>
     </div>
 
-    <div>
-      <p class="footer-heading">Portfólio</p>
-      <ul class="footer-list">
-        {portfolio.map((item) => (
-          <li>
-            <a href={item.href} class="footer-product">
-              <span class="dot" style={`background: ${item.color}`}></span>
-              {item.label}
-            </a>
-          </li>
-        ))}
+    <div class="foot-col">
+      <h4>Navegar</h4>
+      <ul>
+        <li><a href="/#servicos">Serviços</a></li>
+        <li><a href="/#processo">Processo</a></li>
+        <li><a href="/workshop">Workshop</a></li>
+        <li><a href="/#contato">Contato</a></li>
       </ul>
     </div>
 
-    <div>
-      <p class="footer-heading">Empresa</p>
-      <ul class="footer-list">
-        {empresa.map((item) => (
-          <li><a href={item.href}>{item.label}</a></li>
-        ))}
-      </ul>
-    </div>
-
-    <div>
-      <p class="footer-heading">Devs & parceiros</p>
-      <ul class="footer-list">
-        <li><a href="https://stack.atingehub.com.br" target="_blank" rel="noopener">AtingeHUB Stack</a></li>
+    <div class="foot-col">
+      <h4>Conectar</h4>
+      <ul>
+        <li><a href={site.social.instagram} target="_blank" rel="noopener">Instagram</a></li>
         <li><a href={site.social.github} target="_blank" rel="noopener">GitHub</a></li>
       </ul>
     </div>
   </div>
 
-  <div class="container-page footer-meta">
-    <span class="mono">© {year} AtingeHUB · {site.contact.address} · Atende {site.contact.region.slice(0, 4).join(' · ')}</span>
-    <a href={`mailto:${site.legal.dpoEmail}`} class="mono">{site.legal.dpoEmail}</a>
+  <div class="container-page foot-base">
+    <p>© {year} {site.name} — {site.contact.address}</p>
+    <p class="foot-region">Atende {site.contact.region.slice(0, 3).join(' · ')}…</p>
   </div>
 </footer>
 
 <style>
   .site-footer {
-    background: var(--bg-soft);
     border-top: 1px solid var(--border);
-    margin-top: var(--space-32);
-    padding-top: var(--space-16);
-    padding-bottom: var(--space-8);
+    background: var(--bg-soft);
+    padding: 64px 0 32px;
+    margin-top: 96px;
   }
 
   .footer-grid {
     display: grid;
-    gap: 48px;
+    grid-template-columns: 1fr;
+    gap: 40px;
   }
-  @media (min-width: 768px) {
+  @media (min-width: 700px) {
     .footer-grid {
-      grid-template-columns: 1.5fr 1fr 1fr 1fr;
+      grid-template-columns: 1.4fr 1fr 1fr;
       gap: 64px;
     }
   }
 
-  .footer-brand {
-    max-width: 380px;
-  }
-
-  .brand-row {
+  .foot-logo {
     display: inline-flex;
     align-items: center;
-    gap: 12px;
-    color: var(--text);
+    gap: 10px;
+    margin-bottom: 14px;
   }
-  .brand-row:hover {
+  .foot-name {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 18px;
     color: var(--text);
+    letter-spacing: -0.02em;
   }
+  .foot-hub { color: var(--accent); font-weight: 900; }
 
-  .footer-manifesto {
-    margin-top: 18px;
+  .foot-tagline {
     color: var(--text-muted);
     font-size: 14px;
-    line-height: 1.7;
+    max-width: 320px;
+  }
+  .foot-email {
+    margin-top: 14px;
+    font-size: 14px;
   }
 
-  .footer-ctas {
-    margin-top: 22px;
-    display: flex;
-    gap: 10px;
-    flex-wrap: wrap;
-  }
-
-  .footer-heading {
-    font-family: var(--font-mono);
-    font-size: 11px;
-    font-weight: 500;
-    text-transform: uppercase;
+  .foot-col h4 {
+    font-family: var(--font-sans);
+    font-size: 12px;
+    font-weight: 600;
     letter-spacing: 1.5px;
+    text-transform: uppercase;
     color: var(--text-dim);
-    margin-bottom: 18px;
+    margin-bottom: 16px;
   }
-
-  .footer-list {
+  .foot-col ul {
+    list-style: none;
     display: flex;
     flex-direction: column;
-    gap: 12px;
-    list-style: none;
+    gap: 10px;
   }
-  .footer-list a {
+  .foot-col a {
     color: var(--text-muted);
     font-size: 14px;
-    transition: color 0.15s;
   }
-  .footer-list a:hover {
-    color: var(--text);
-  }
-  .footer-product {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-  }
-  .footer-product .dot {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    flex-shrink: 0;
-  }
+  .foot-col a:hover { color: var(--text); }
 
-  .footer-meta {
-    margin-top: var(--space-16);
+  .foot-base {
+    margin-top: 56px;
     padding-top: 24px;
     border-top: 1px solid var(--border);
     display: flex;
-    flex-direction: column;
-    gap: 10px;
-    align-items: flex-start;
-  }
-  @media (min-width: 768px) {
-    .footer-meta {
-      flex-direction: row;
-      justify-content: space-between;
-      align-items: center;
-    }
-  }
-  .footer-meta .mono {
-    font-family: var(--font-mono);
-    font-size: 10px;
-    letter-spacing: 1px;
-    text-transform: uppercase;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 12px;
+    font-size: 12px;
     color: var(--text-dim);
   }
-  .footer-meta a.mono:hover {
-    color: var(--text);
-  }
+  .foot-base p { color: var(--text-dim); font-size: 12px; }
 </style>

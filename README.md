@@ -1,43 +1,29 @@
-# Astro Starter Kit: Minimal
+# AtingeHUB Sober
 
-```sh
-npm create astro@latest -- --template minimal
+Versão sóbria do site institucional da AtingeHUB.
+
+Teste de arquitetura inspirado em **chaseai.io** — menos prose-manifesto, menos eyebrow colorida em cada seção, formulários com chips + progress indicator + "o que esperar" lateral. Mantém tokens visuais oficiais (fontes Fraunces/Inter/JetBrains Mono, paleta dark + acento Claude `#D97757`, 8 cor-tags dos produtos).
+
+## Estrutura
+
+- `/` — Home: hero → 4 pilares (Atendimento / Campanhas / Decisão / Operação) → processo em 4 passos → form de booking
+- `/workshop` — Página do Workshop presencial em Sorocaba, com hero → como funciona → roadmap das 3h → o que você leva → preço/condições → FAQ → form de aplicação
+- `/contato` — redireciona pra `/#booking`
+
+## Dev
+
+```
+npm install
+npm run dev
 ```
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+## Diferenças vs. site principal (atingehub-site)
 
-## 🚀 Project Structure
-
-Inside of your Astro project, you'll see the following folders and files:
-
-```text
-/
-├── public/
-├── src/
-│   └── pages/
-│       └── index.astro
-└── package.json
-```
-
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
-
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
-
-Any static assets, like images, can be placed in the `public/` directory.
-
-## 🧞 Commands
-
-All commands are run from the root of the project, from a terminal:
-
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
-
-## 👀 Want to learn more?
-
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+| | atingehub-site (oficial) | atingehub-sober (teste) |
+|---|---|---|
+| Tom | Manifesto, prose longa, italic Fraunces como ênfase contínua | Direto, funcional, italic só nos heros |
+| Captura | 100% WhatsApp link | Form HTML + WhatsApp como fallback |
+| Hero | Terminal animado + manifesto | Headline + palavra rotacionada + 2 CTAs |
+| Seções | row-header numerado em quase tudo | Headers limpos, sem numeração visível |
+| Grid de fundo | Sempre presente, 48px | Removido — fundo sólido |
+| Glow cards | Em quase todo card | Só nos serviços principais |
