@@ -10,6 +10,7 @@ const SITE_URL = 'https://atingehub.com';
 export default defineConfig({
   site: SITE_URL,
   trailingSlash: 'never',
+  output: 'server',
   adapter: vercel(),
   vite: {
     plugins: [tailwindcss()],
@@ -18,7 +19,7 @@ export default defineConfig({
     sitemap(),
     robotsTxt({
       policy: [
-        { userAgent: '*', allow: '/', disallow: ['/_astro/'] },
+        { userAgent: '*', allow: '/', disallow: ['/_astro/', '/api/'] },
       ],
       sitemap: true,
     }),

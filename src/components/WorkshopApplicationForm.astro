@@ -338,7 +338,7 @@ const liveDates = [
     form.addEventListener('input', update);
     form.addEventListener('change', update);
 
-    form.addEventListener('submit', (e) => {
+    form.addEventListener('submit', async (e) => {
       e.preventDefault();
       const fd = new FormData(form);
       const data = Object.fromEntries(fd.entries());
@@ -346,15 +346,44 @@ const liveDates = [
       const mode = modeEl?.dataset.selected || '';
       const price = PRICES[mode] || 0;
 
-      const msg =
-        `Oi Gabriel, quero comprar o Workshop AtingeHUB.\n\n` +
-        `Nome: ${data.name}\nEmail: ${data.email}\nGitHub: @${String(data.github).replace(/^@/, '')}\n` +
-        `WhatsApp: ${data.whatsapp || '—'}\n` +
-        `Modalidade: ${mode}${data.liveDate ? ` (${data.liveDate})` : ''}\n` +
-        `Valor: R$ ${price}\n\n` +
-        `Pode me mandar o link do Pix ou o checkout?`;
-      const url = `https://wa.me/5515998554455?text=${encodeURIComponent(msg)}`;
-      window.open(url, '_blank');
+      const labelEl = submitBtn.querySelector<HTMLElement>('.cta-label');
+      const originalLabel = labelEl?.textContent || 'Comprar acesso';
+      submitBtn.disabled = true;
+      if (labelEl) labelEl.textContent = 'Abrindo checkout…';
+
+      try {
+        const res = await fetch('/api/checkout', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            name: String(data.name || ''),
+            email: String(data.email || ''),
+            github: String(data.github || '').replace(/^@/, '').trim(),
+            whatsapp: String(data.whatsapp || ''),
+            mode,
+            liveDate: String(data.liveDate || ''),
+          }),
+        });
+        const body = await res.json();
+        if (res.ok && body.ok && body.checkoutUrl) {
+          window.location.href = body.checkoutUrl;
+          return;
+        }
+        throw new Error(body.error || 'checkout_error');
+      } catch (err) {
+        console.error('[checkout] api failed, falling back to WhatsApp:', err);
+        const msg =
+          `Oi Gabriel, quero comprar o Workshop AtingeHUB mas o checkout deu erro. Segue meus dados:\n\n` +
+          `Nome: ${data.name}\nEmail: ${data.email}\nGitHub: @${String(data.github).replace(/^@/, '')}\n` +
+          `WhatsApp: ${data.whatsapp || '—'}\n` +
+          `Modalidade: ${mode}${data.liveDate ? ` (${data.liveDate})` : ''}\n` +
+          `Valor: R$ ${price}\n\n` +
+          `Pode me mandar o link do Pix manual?`;
+        const url = `https://wa.me/5515998554455?text=${encodeURIComponent(msg)}`;
+        window.open(url, '_blank');
+        submitBtn.disabled = false;
+        if (labelEl) labelEl.textContent = originalLabel;
+      }
     });
 
     update();

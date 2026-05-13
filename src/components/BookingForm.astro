@@ -126,11 +126,15 @@ const budgetOptions = [
         </div>
 
         <button type="submit" class="btn btn-primary submit" disabled id="bk-submit">
-          Agendar minha conversa
+          <span data-default>Agendar minha conversa</span>
+          <span data-loading hidden>Enviando…</span>
         </button>
-        <p class="form-foot">
+        <p class="form-foot" id="bk-foot">
           Ao enviar, você concorda em receber retorno por email ou WhatsApp em até 4h em dia útil.
         </p>
+        <div class="form-ok" id="bk-ok" hidden>
+          <p><strong>✓ Mensagem enviada.</strong> Retorno em até 4h em dia útil. Se preferir conversar agora, use o WhatsApp na lateral.</p>
+        </div>
       </form>
     </div>
   </div>
@@ -277,6 +281,17 @@ const budgetOptions = [
     text-align: center;
     margin-top: 4px;
   }
+  .form-ok {
+    margin-top: 6px;
+    padding: 18px 20px;
+    background: rgba(37, 211, 102, 0.08);
+    border: 1px solid rgba(37, 211, 102, 0.3);
+    border-radius: var(--radius-md);
+    color: var(--text);
+    font-size: 14.5px;
+    line-height: 1.6;
+  }
+  .form-ok strong { color: var(--success); font-weight: 500; }
 </style>
 
 <script>
@@ -320,7 +335,7 @@ const budgetOptions = [
     form.addEventListener('input', update);
     form.addEventListener('change', update);
 
-    form.addEventListener('submit', (e) => {
+    form.addEventListener('submit', async (e) => {
       e.preventDefault();
       const data: Record<string, string> = {};
       form.querySelectorAll<HTMLInputElement | HTMLTextAreaElement>('input, textarea').forEach((el) => {
@@ -330,14 +345,43 @@ const budgetOptions = [
         const key = g.dataset.chipGroup || 'group';
         data[key] = g.dataset.selected || '';
       });
-      // For now: fallback to WhatsApp with prefilled body
-      const msg =
-        `Oi Gabriel, novo lead via site sober.\n\n` +
-        `Nome: ${data.name}\nEmail: ${data.email}\nWhatsApp: ${data.whatsapp || '—'}\n` +
-        `Setor: ${data.sector}\nPrazo: ${data.timeline}\nFaturamento: ${data.budget}\n\n` +
-        `Dor: ${data.challenge}`;
-      const url = `https://wa.me/5515998554455?text=${encodeURIComponent(msg)}`;
-      window.open(url, '_blank');
+
+      const okBox = document.getElementById('bk-ok')!;
+      const foot = document.getElementById('bk-foot')!;
+      const defaultLabel = submitBtn.querySelector<HTMLElement>('[data-default]')!;
+      const loadingLabel = submitBtn.querySelector<HTMLElement>('[data-loading]')!;
+      submitBtn.disabled = true;
+      defaultLabel.hidden = true;
+      loadingLabel.hidden = false;
+
+      try {
+        const res = await fetch('/api/lead', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data),
+        });
+        const body = await res.json();
+        if (res.ok && body.ok) {
+          form.querySelectorAll<HTMLElement>('.field, .form-progress').forEach((f) => (f.style.display = 'none'));
+          submitBtn.style.display = 'none';
+          foot.style.display = 'none';
+          okBox.hidden = false;
+          return;
+        }
+        throw new Error(body.error || 'api_error');
+      } catch (err) {
+        console.error('[booking] api failed, falling back to WhatsApp:', err);
+        const msg =
+          `Oi Gabriel, tentei enviar pelo site mas deu erro. Segue meu lead:\n\n` +
+          `Nome: ${data.name}\nEmail: ${data.email}\nWhatsApp: ${data.whatsapp || '—'}\n` +
+          `Setor: ${data.sector}\nPrazo: ${data.timeline}\nFaturamento: ${data.budget}\n\n` +
+          `Dor: ${data.challenge}`;
+        const url = `https://wa.me/5515998554455?text=${encodeURIComponent(msg)}`;
+        window.open(url, '_blank');
+        submitBtn.disabled = false;
+        defaultLabel.hidden = false;
+        loadingLabel.hidden = true;
+      }
     });
 
     update();

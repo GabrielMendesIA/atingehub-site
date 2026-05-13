@@ -1,0 +1,114 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { site, whatsappLink } from '../config/site';
+
+export const prerender = false;
+
+const status = Astro.url.searchParams.get('status') || 'pending';
+
+const states = {
+  approved: {
+    eyebrow: 'Pagamento confirmado',
+    title: 'Obrigado · pagamento confirmado.',
+    body: 'Em alguns minutos você recebe: convite do GitHub no email cadastrado, mensagem de boas-vindas no seu WhatsApp, e link da gravação (se for gravado) ou data da próxima turma (se for ao vivo).',
+    cta: 'Voltar pra home',
+  },
+  pending: {
+    eyebrow: 'Pagamento em análise',
+    title: 'Quase lá · pagamento em análise.',
+    body: 'Seu pagamento ainda não foi confirmado pelo Mercado Pago. Geralmente leva alguns minutos. Assim que confirmar, você recebe o convite do GitHub por email e mensagem no WhatsApp.',
+    cta: 'Voltar pra home',
+  },
+  failure: {
+    eyebrow: 'Pagamento não concluído',
+    title: 'O pagamento não foi finalizado.',
+    body: 'Algo deu errado no checkout do Mercado Pago — pode ter sido cartão recusado, conexão perdida ou você fechou a janela. Pode tentar de novo, ou falar comigo direto no WhatsApp pra eu te mandar um Pix manual.',
+    cta: 'Tentar de novo',
+  },
+};
+
+type Status = keyof typeof states;
+const state = states[(status as Status) || 'pending'] || states.pending;
+const ctaHref = status === 'failure' ? '/workshop#aplicar' : '/';
+---
+
+<BaseLayout title="Obrigado" description="Confirmação do checkout do Workshop AtingeHUB.">
+  <section class="thanks">
+    <div class="container-page">
+      <span class="eyebrow thanks-eyebrow">{state.eyebrow}</span>
+      <h1 class="thanks-title">{state.title}</h1>
+      <p class="thanks-body">{state.body}</p>
+
+      <div class="thanks-ctas">
+        <a href={ctaHref} class="btn btn-primary">{state.cta}</a>
+        <a
+          href={whatsappLink('Oi Gabriel, acabei de comprar o Workshop (ou tentei) e quero confirmar.')}
+          target="_blank"
+          rel="noopener"
+          class="btn btn-ghost"
+        >
+          Falar no WhatsApp
+        </a>
+      </div>
+
+      <div class="thanks-meta">
+        <p>Qualquer dúvida sobre o acesso, manda mensagem em <a href={`mailto:${site.contact.email}`}>{site.contact.email}</a> ou WhatsApp {site.contact.whatsappLabel}.</p>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .thanks {
+    padding: 100px 0 120px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .thanks::before {
+    content: '';
+    position: absolute;
+    top: -10%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 700px;
+    height: 350px;
+    background: radial-gradient(ellipse, var(--accent-glow), transparent 70%);
+    opacity: 0.35;
+    pointer-events: none;
+    z-index: 0;
+  }
+  .thanks > .container-page { position: relative; z-index: 1; }
+
+  .thanks-eyebrow {
+    display: inline-block;
+    margin-bottom: 22px;
+  }
+  .thanks-title {
+    font-size: clamp(34px, 5vw, 60px);
+    line-height: 1.05;
+    max-width: 760px;
+    margin: 0 auto 24px;
+  }
+  .thanks-body {
+    max-width: 580px;
+    margin: 0 auto;
+    font-size: 17px;
+    line-height: 1.65;
+    color: var(--text-muted);
+  }
+  .thanks-ctas {
+    margin-top: 40px;
+    display: inline-flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    justify-content: center;
+  }
+  .thanks-meta {
+    margin-top: 48px;
+    font-size: 13px;
+    color: var(--text-dim);
+  }
+  .thanks-meta a { color: var(--text-muted); }
+  .thanks-meta a:hover { color: var(--accent); }
+</style>
