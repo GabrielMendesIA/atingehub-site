@@ -1,103 +1,136 @@
 # AtingeHUB · site oficial
 
-Site institucional da AtingeHUB — sistemas de IA pro varejo brasileiro. Stack: Astro 6 (SSR), Vercel, Tailwind v4, Mercado Pago, Google Sheets, Evolution API, ntfy, GitHub API.
+Site institucional da AtingeHUB. Front em Astro (SSR no Vercel), backend dos formulários em **workflows n8n** que rodam na VPS Hostinger.
 
-## Stack
+## Arquitetura
 
-- **Front**: Astro 6 com `output: 'server'`, adapter Vercel, Tailwind 4
-- **APIs internas** (Vercel Functions):
-  - `POST /api/lead` — recebe form de booking da home
-  - `POST /api/checkout` — cria preferência de pagamento no Mercado Pago
-  - `POST /api/mp-webhook` — recebe confirmação de pagamento e dispara entregas
-- **Integrações**:
-  - **Mercado Pago** · checkout do Workshop (Pix, cartão, boleto)
-  - **GitHub API** · adiciona cliente como colaborador do repo `GabrielMendesIA/atingehub-stack`
-  - **Evolution API** · WhatsApp transacional (notifica dono, adiciona cliente ao grupo de alunos, manda boas-vindas)
-  - **Google Sheets** · planilha de leads + planilha de vendas
-  - **ntfy.sh** · push notifications no celular do dono
+```
+┌──────────────────────────┐
+│ Cliente (browser)        │
+│ atingehub.com            │
+└──────────┬───────────────┘
+           │ POST /api/lead
+           │ POST /api/checkout
+           ▼
+┌──────────────────────────┐
+│ Astro SSR (Vercel)       │
+│ Proxy fino dos formulários│
+└──────────┬───────────────┘
+           │ POST /webhook/atingehub-{lead,checkout,mp-webhook}
+           ▼
+┌──────────────────────────┐
+│ n8n (VPS Hostinger)      │
+│ workflows-mvp.algomaisacai│
+│                           │
+│ atingehub-lead            │ → ntfy + Sheets Leads + Evolution Gabriel
+│ atingehub-checkout        │ → Mercado Pago createPreference
+│ atingehub-mp-webhook      │ → GitHub + Evolution group + Evolution welcome
+│                           │   + Evolution Gabriel + Sheets Vendas + ntfy
+└──────────────────────────┘
+```
+
+Por que essa arquitetura:
+- **n8n é editável visualmente** — adicionar passo (ex. mandar pro Brevo, CRM novo) não exige deploy
+- **Site fica simples** — só 3 endpoints proxy de ~30 linhas cada
+- **Falhas isoladas** — se n8n cair, o front mostra fallback pra WhatsApp; se MP cair, o checkout retorna erro mas n8n nem é chamado
+- **Segredos no n8n** — credenciais MP, Evolution, GitHub, Sheets ficam todos no painel do n8n, não no Vercel
 
 ## Fluxos
 
 ### Lead (form da home)
 
-1. Cliente preenche os 6 campos do formulário em `/#contato`
-2. POST `/api/lead` dispara em paralelo:
-   - Push ntfy com título "Novo lead · <nome>"
-   - Append na planilha Sheets (LEADS)
-   - Mensagem no Zap do dono via Evolution API
-3. Cliente vê confirmação verde inline no próprio form
-4. Se a API falhar, fallback abre WhatsApp com mensagem pré-preenchida
+1. Cliente preenche os 6 campos em `/#contato`
+2. POST `/api/lead` → proxy reencaminha pro n8n
+3. Workflow **atingehub-lead** dispara em paralelo:
+   - ntfy push (topic `atingehub-leads`)
+   - Google Sheets append (planilha Leads)
+   - Evolution sendText pra seu WhatsApp
+4. Cliente vê confirmação verde inline no próprio form
+5. Se a API falhar, fallback abre WhatsApp com mensagem pré-preenchida
 
 ### Compra do Workshop
 
 1. Cliente preenche dados em `/workshop#aplicar` (nome, email, **usuário GitHub**, WhatsApp, modalidade)
-2. POST `/api/checkout` cria preferência no Mercado Pago e retorna `init_point`
-3. Cliente é redirecionado pro checkout do Mercado Pago (Pix/cartão)
-4. MP processa, redireciona pra `/obrigado?status=approved` (ou pending/failure)
-5. MP chama webhook `/api/mp-webhook` no servidor
-6. Webhook valida pagamento e dispara em paralelo:
-   - **GitHub** · adiciona @user como colaborador do repo Stack (permission: pull)
-   - **Evolution group** · adiciona telefone do cliente ao grupo de alunos
-   - **Evolution DM** · manda mensagem de boas-vindas pro cliente
-   - **Evolution DM** · notifica o dono da venda
-   - **Sheets VENDAS** · append da linha
-   - **ntfy** · push "💰 Venda confirmada"
+2. POST `/api/checkout` → proxy → workflow **atingehub-checkout**
+3. n8n calcula preço pela modalidade, cria preferência no Mercado Pago, devolve `init_point`
+4. Cliente é redirecionado pro checkout do MP (Pix/cartão)
+5. MP processa → cliente volta pra `/obrigado?status=approved`
+6. **MP chama webhook** `https://atingehub.com/api/mp-webhook` → proxy → workflow **atingehub-mp-webhook**
+7. Workflow valida (type=payment, status=approved), busca payment no MP API, parseia external_reference, dispara em paralelo:
+   - **GitHub** · PUT collaborator no repo `GabrielMendesIA/atingehub-stack`
+   - **Evolution group** · adiciona cliente no grupo de alunos
+   - **Evolution welcome** · boas-vindas pro cliente no WhatsApp
+   - **Evolution Gabriel** · notifica você
+   - **Sheets Vendas** · append da linha
+   - **ntfy** · push "💰 Venda"
 
-## Configuração (env vars)
+## Configuração
 
-Copie `.env.example` pra `.env.local` (dev) ou configure no Vercel (prod). Cada bloco está documentado no arquivo.
+### No Vercel (Project Settings → Environment Variables)
 
-Resumo do que precisa preencher:
+Só **1 variável** precisa ficar aqui:
+
+| Variável | Valor |
+|---|---|
+| `N8N_BASE_URL` | `https://workflows-mvp.algomaisacai.com.br/webhook` |
+
+### No n8n (Settings → Variables)
+
+As credenciais ficam todas no n8n:
 
 | Variável | Onde pegar |
 |---|---|
 | `MP_ACCESS_TOKEN` | https://www.mercadopago.com.br/developers/panel/credentials |
-| `NTFY_TOPIC` | Inventa um nome (ex `atingehub-leads-Sr0c4ba`) e abre `https://ntfy.sh/<topico>` no celular |
-| `EVOLUTION_BASE_URL` | URL da Evolution API na sua VPS Hostinger |
+| `EVOLUTION_BASE_URL` | URL da Evolution API na sua VPS |
 | `EVOLUTION_INSTANCE` | Nome da instância conectada ao Zap |
 | `EVOLUTION_API_KEY` | API key da instância |
-| `OWNER_WHATSAPP` | Seu telefone E.164 sem + (ex `5515998554455`) |
-| `WORKSHOP_GROUP_JID` | JID do grupo de alunos (`120363xxx@g.us`) · descobre em `GET /group/findAllGroups/{instance}` |
+| `OWNER_WHATSAPP` | `5515998554455` |
+| `WORKSHOP_GROUP_JID` | JID do grupo de alunos (`xxx@g.us`) |
 | `GITHUB_TOKEN` | https://github.com/settings/tokens · classic, escopo `repo` |
-| `GITHUB_REPO` | `GabrielMendesIA/atingehub-stack` (default já configurado) |
-| `GOOGLE_SA_EMAIL` | Email da Service Account no Google Cloud |
-| `GOOGLE_SA_KEY` | Chave privada da Service Account (cole inteira entre aspas, com `\n` literal) |
+| `GITHUB_REPO` | `GabrielMendesIA/atingehub-stack` |
 | `SHEETS_LEADS_ID` | ID da planilha de leads |
 | `SHEETS_SALES_ID` | ID da planilha de vendas |
 
+E **credencial OAuth do Google Sheets** atribuída aos 2 nodes Google Sheets (`Sheets Leads` no workflow `atingehub-lead`, `Sheets Vendas` no `atingehub-mp-webhook`).
+
 ## Webhook do Mercado Pago
 
-Depois do deploy, configure o webhook no painel MP:
+Depois de configurar `MP_ACCESS_TOKEN` no n8n, abrir https://www.mercadopago.com.br/developers/panel/webhooks e cadastrar:
 
-1. Abra https://www.mercadopago.com.br/developers/panel/webhooks
-2. Adicione `https://atingehub.com/api/mp-webhook`
-3. Marque o evento **Payments**
-4. Salve
+- URL: `https://atingehub.com/api/mp-webhook`
+- Evento: **Payments**
 
-Se quiser testar em sandbox antes, crie credencial TEST no painel MP, troque o `MP_ACCESS_TOKEN` por TEST-..., e configure outro webhook apontando pro preview do Vercel.
+(Por que aponta pra `atingehub.com` e não direto pro n8n: domínio estável, e o proxy garante 200 mesmo se n8n falhar — MP não fica reenviando.)
 
-## Planilhas Google (formato esperado)
+## Planilhas Google (formato)
 
 ### Planilha Leads (`SHEETS_LEADS_ID`) — aba `Leads`
-
-Colunas A:H — Timestamp · Nome · Email · WhatsApp · Setor · Prazo · Faturamento · Dor
+Cabeçalho A:H — `Timestamp · Nome · Email · WhatsApp · Setor · Prazo · Faturamento · Dor`
 
 ### Planilha Vendas (`SHEETS_SALES_ID`) — aba `Vendas`
+Cabeçalho A:I — `Timestamp · Nome · Email · WhatsApp · GitHub · Plano · DataTurma · Valor · PaymentID`
 
-Colunas A:J — Timestamp · Nome · Email · WhatsApp · GitHub · Plano · Data turma · Valor · ID MP · Status GitHub
+## Workflows n8n
+
+| Nome | ID | Trigger |
+|---|---|---|
+| `atingehub-lead` | `3eZV1fMJ5VAWMwXA` | POST `/webhook/atingehub-lead` |
+| `atingehub-checkout` | `xx2I4B662RSEzAEp` | POST `/webhook/atingehub-checkout` |
+| `atingehub-mp-webhook` | `i6tVhfm6XAAGKnEO` | POST `/webhook/atingehub-mp-webhook` |
+
+Criados via MCP n8n, todos inativos por padrão — ativa quando estiver com credenciais e variáveis configuradas.
 
 ## Dev local
 
 ```bash
 npm install
 cp .env.example .env.local
-# preencha as variáveis
+# Preencha N8N_BASE_URL no .env.local
 npm run dev
 ```
 
-Pra testar o webhook MP localmente, use [ngrok](https://ngrok.com) ou um Vercel preview deployment.
-
 ## Histórico
 
-- 2026-05-13 · substituição completa do site pela versão sóbria (commit `a5ba634`). Conteúdo anterior preservado em `../atingehub-site-archived-2026-05-13/`.
-- 2026-05-13 · backend completo: APIs lead/checkout/webhook, integrações MP/GitHub/Evolution/Sheets/ntfy.
+- 2026-05-13 · substituição completa do site pela versão sóbria (`a5ba634`). Conteúdo anterior em `../atingehub-site-archived-2026-05-13/`.
+- 2026-05-13 · backend inicial: APIs locais com integrações diretas (`7c2f14a`).
+- 2026-05-13 · migração do backend pra n8n via MCP. APIs viram proxy fino.

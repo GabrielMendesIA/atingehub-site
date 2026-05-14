@@ -1,9 +1,4 @@
 import type { APIRoute } from 'astro';
-import {
-  notifyNtfy,
-  notifyEvolution,
-  appendToSheet,
-} from '../../lib/notifications';
 
 export const prerender = false;
 
@@ -16,6 +11,8 @@ interface LeadPayload {
   challenge: string;
   budget: string;
 }
+
+const N8N_BASE = import.meta.env.N8N_BASE_URL || 'https://workflows-mvp.algomaisacai.com.br/webhook';
 
 function isValidEmail(s: string) {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(s);
@@ -39,66 +36,30 @@ export const POST: APIRoute = async ({ request }) => {
     });
   }
 
-  const ts = new Date().toLocaleString('pt-BR', { timeZone: 'America/Sao_Paulo' });
-  const summary = `Setor: ${data.sector} · Prazo: ${data.timeline} · Faturamento: ${data.budget}`;
+  try {
+    const res = await fetch(`${N8N_BASE}/atingehub-lead`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data),
+    });
 
-  // Notificações em paralelo, sem await pra não bloquear resposta do form
-  // (mas dentro de Promise.allSettled pra tudo ser disparado)
-  const tasks: Promise<unknown>[] = [];
+    if (!res.ok) {
+      console.error('[api/lead] n8n returned', res.status, await res.text());
+      return new Response(JSON.stringify({ ok: false, error: 'n8n_error' }), {
+        status: 502,
+        headers: { 'Content-Type': 'application/json' },
+      });
+    }
 
-  // ntfy push
-  tasks.push(
-    notifyNtfy({
-      title: `Novo lead · ${data.name}`,
-      body: `${summary}\n\n"${data.challenge}"\n\n✉️ ${data.email}\n📱 ${data.whatsapp || '—'}`,
-      tags: ['inbox_tray', 'fire'],
-      priority: 'high',
-    })
-  );
-
-  // Google Sheets
-  const sheetId = import.meta.env.SHEETS_LEADS_ID;
-  if (sheetId) {
-    tasks.push(
-      appendToSheet({
-        sheetId,
-        range: 'Leads!A:H',
-        values: [
-          ts,
-          data.name,
-          data.email,
-          data.whatsapp || '',
-          data.sector,
-          data.timeline,
-          data.budget,
-          data.challenge,
-        ],
-      })
-    );
+    return new Response(JSON.stringify({ ok: true }), {
+      status: 200,
+      headers: { 'Content-Type': 'application/json' },
+    });
+  } catch (err) {
+    console.error('[api/lead] exception:', err);
+    return new Response(JSON.stringify({ ok: false, error: 'network' }), {
+      status: 502,
+      headers: { 'Content-Type': 'application/json' },
+    });
   }
-
-  // Notificação no Zap do Gabriel
-  const ownerPhone = import.meta.env.OWNER_WHATSAPP || '5515998554455';
-  tasks.push(
-    notifyEvolution({
-      to: ownerPhone,
-      text:
-        `🔥 *Novo lead no site*\n\n` +
-        `*${data.name}*\n` +
-        `📧 ${data.email}\n` +
-        `📱 ${data.whatsapp || '—'}\n\n` +
-        `*Setor:* ${data.sector}\n` +
-        `*Prazo:* ${data.timeline}\n` +
-        `*Faturamento:* ${data.budget}\n\n` +
-        `*Dor:*\n${data.challenge}\n\n` +
-        `_Enviado em ${ts}_`,
-    })
-  );
-
-  await Promise.allSettled(tasks);
-
-  return new Response(JSON.stringify({ ok: true }), {
-    status: 200,
-    headers: { 'Content-Type': 'application/json' },
-  });
 };
